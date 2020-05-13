@@ -52,7 +52,7 @@
 			extName : ".class|.json|.xml",
 			exoterical:"true"
 		},{
-			package : "cj.netos.gateway.wybank.services",
+			package : "cj.netos.gateway.wybank.service",
 			extName : ".class|.json|.xml",
 			exoterical:"true"
 		},{

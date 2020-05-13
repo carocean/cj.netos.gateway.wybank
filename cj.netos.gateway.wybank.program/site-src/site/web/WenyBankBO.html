@@ -1,0 +1,25 @@
+WenyBankBO属性：
+
+    String title;
+    String owner;
+    Integer property;//0为个人，1为企业
+    String location;
+    BigDecimal principalRatio;
+    BigDecimal reserveRatio;
+    BigDecimal freeRatio;
+
+用法：
+   wenyBankBO 为内容参数，因此需要放到请求内容中构建该参数，如下：
+   Map map=new Map();
+   map.put("wenyBankBO",bo);
+
+
+例：
+
+{
+    "title":"尉氏县商贸发展科技有限公司",
+    "property":"1",
+    "principalRatio":0.68,
+    "reserveRatio":0.10,
+    "freeRatio":0.22
+}

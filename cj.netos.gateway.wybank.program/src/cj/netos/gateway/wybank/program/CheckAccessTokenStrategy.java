@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class CheckAccessTokenStrategy implements ICheckAccessTokenStrategy {
     String portsAuth;
@@ -24,13 +25,15 @@ public class CheckAccessTokenStrategy implements ICheckAccessTokenStrategy {
     String appKey;
     String appSecret;
     String appid;
+
     @Override
     public void init(IServiceSite site) {
         appid = site.getProperty("appid");
         appKey = site.getProperty("appKey");
         appSecret = site.getProperty("appSecret");
         portsAuth = site.getProperty("ports.auth");
-        client = new OkHttpClient();
+        client = new OkHttpClient().newBuilder().readTimeout(60, TimeUnit.SECONDS).build();
+        site.addService("@.http", client);
     }
 
     @Override
@@ -38,10 +41,11 @@ public class CheckAccessTokenStrategy implements ICheckAccessTokenStrategy {
         Map<String, Object> tokeninfo = _checkAccessToken(accessToken);
         List<String> roles = (List<String>) tokeninfo.get("roles");
         ISecuritySession _securitySession = new DefaultSecuritySession(tokeninfo.get("person") + "", roles, null);
-        int pos=_securitySession.principal().lastIndexOf("@");
+        int pos = _securitySession.principal().lastIndexOf("@");
         String appid = _securitySession.principal().substring(pos + 1);
         _securitySession.property("appid", appid);
-        _securitySession.property("device",tokeninfo.get("device"));
+        _securitySession.property("device", tokeninfo.get("device"));
+        _securitySession.property("accessToken", accessToken);
         return _securitySession;
     }
 

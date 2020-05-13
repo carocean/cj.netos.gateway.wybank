@@ -1,0 +1,40 @@
+
+属性：
+String alias;
+String subject;
+String person;
+BigDecimal ratio;
+
+用法：
+rules 为内容参数，因此需要放到请求内容中构建该参数，如下：
+Map map=new Map();
+map.put("rules",bo);
+
+例：
+
+[
+    {
+        "alias":"平台",
+        "subject":"platform",
+        "person":"superadmin@system.netos",
+        "ratio":0.10
+    },
+    {
+        "alias":"运营商",
+        "subject":"operators",
+        "person":"zxb@gbera.netos",
+        "ratio":0.20
+    },
+    {
+        "alias":"地商",
+        "subject":"districtMerches",
+        "person":"cj@gbera.netos",
+        "ratio":0.40
+    },
+    {
+        "alias":"网络洇金",
+        "subject":"absorbs",
+        "person":"-",
+        "ratio":0.30
+    }
+]

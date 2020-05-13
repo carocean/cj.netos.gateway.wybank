@@ -1,0 +1,32 @@
+属性：
+ BigDecimal ttm;
+ Long minAmount;
+ Long maxAmount;
+
+用法：
+ttmTable 为内容参数，因此需要放到请求内容中构建该参数，如下：
+Map map=new Map();
+map.put("ttmTable",bo);
+
+[
+ {
+   "ttm":1.10,
+   "minAmount":100,
+   "maxAmount":199
+ },
+ {
+  "ttm":1.20,
+  "minAmount":200,
+  "maxAmount":299
+ },
+ {
+  "ttm":1.30,
+  "minAmount":300,
+  "maxAmount":499
+ },
+ {
+  "ttm":1.40,
+  "minAmount":500,
+  "maxAmount":999
+ }
+]
