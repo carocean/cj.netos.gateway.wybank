@@ -18,7 +18,8 @@ repositories {
 
 dependencies {
     compile group: 'cj.netos.openport', name: 'cj.studio.openport', version: ref_cj_studio_openport_version
-    compile group: 'cj.studio.gateway2', name: 'cj.studio.orm.mongodb', version: ref_cj_studio_orm_mongodb
+    compile group: 'cj.studio.gateway2', name: 'cj.studio.orm.mybatis', version: ref_cj_studio_orm_mybatis
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
     implementation project(':cj.netos.gateway.wybank.openports')
     compile group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.3.1'
     // https://mvnrepository.com/artifact/com.rabbitmq/amqp-client
@@ -29,13 +30,13 @@ dependencies {
 }
 task copyRefembeds(type: Copy) {
     from configurations.compileClasspath.files {
-        include 'cj.netos.rabbitmq.producer-*.jar'
+        include 'cj.netos.rabbitmq.producer-*.jar','cj.studio.orm.mybatis-*.jar'
     }
     into 'src/cj/refembeds'
 }
 task copyReferences(type: Copy) {
     from configurations.compileClasspath.files {
-        include 'cj.netos.gateway.wybank.openports-*.jar',  'cj.studio.openport-*.jar','okhttp-*.jar','amqp-client-*.jar','cj.netos.rabbitmq.ultimate-*.jar'
+        include 'cj.netos.gateway.wybank.openports-*.jar',  'cj.studio.openport-*.jar','okhttp-*.jar','amqp-client-*.jar','cj.netos.rabbitmq.ultimate-*.jar', 'mybatis-*.jar','mysql-connector-java-8.0.17.jar'
     }
     into 'src/cj/references'
 }

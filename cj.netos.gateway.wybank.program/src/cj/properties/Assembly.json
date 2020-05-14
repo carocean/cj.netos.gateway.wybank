@@ -1,6 +1,16 @@
 {
 	entryPoint : {
 		plugins: [
+			{
+				name:"mybatis",
+				class:"cj.studio.orm.mybatis.MyBatisPlugin",
+				parameters:{
+					classes:"[
+					]",
+					packages:"[
+					]"
+				}
+			}
 		],
 		activators: [
 			{
@@ -45,6 +55,10 @@
 		}],
 		scans : [{
 			package : "cj.netos.rabbitmq.producer",
+			extName : ".class|.json|.xml",
+			exoterical:"true"
+		},{
+			package : "cj.studio.orm.mybatis",
 			extName : ".class|.json|.xml",
 			exoterical:"true"
 		},{

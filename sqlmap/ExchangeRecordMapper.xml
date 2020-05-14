@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cj.netos.gateway.wybank.mapper.ExchangeRecordMapper">
+  <resultMap id="BaseResultMap" type="cj.netos.gateway.wybank.model.ExchangeRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="exchanger" jdbcType="VARCHAR" property="exchanger" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="currency" jdbcType="VARCHAR" property="currency" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="stock" jdbcType="DECIMAL" property="stock" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="ttm" jdbcType="DECIMAL" property="ttm" />
+    <result column="ref_purchase" jdbcType="VARCHAR" property="refPurchase" />
+    <result column="profit" jdbcType="BIGINT" property="profit" />
+    <result column="dtime" jdbcType="VARCHAR" property="dtime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="bankid" jdbcType="VARCHAR" property="bankid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    sn, exchanger, person_name, currency, amount, stock, price, ttm, ref_purchase, profit, 
+    dtime, `state`, note, bankid
+  </sql>
+  <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.ExchangeRecordExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exchange_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from exchange_record
+    where sn = #{sn,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from exchange_record
+    where sn = #{sn,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cj.netos.gateway.wybank.model.ExchangeRecordExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from exchange_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into exchange_record (sn, exchanger, person_name, 
+      currency, amount, stock, 
+      price, ttm, ref_purchase, 
+      profit, dtime, `state`, 
+      note, bankid)
+    values (#{sn,jdbcType=VARCHAR}, #{exchanger,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
+      #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{stock,jdbcType=DECIMAL}, 
+      #{price,jdbcType=DECIMAL}, #{ttm,jdbcType=DECIMAL}, #{refPurchase,jdbcType=VARCHAR}, 
+      #{profit,jdbcType=BIGINT}, #{dtime,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{note,jdbcType=VARCHAR}, #{bankid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into exchange_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sn != null">
+        sn,
+      </if>
+      <if test="exchanger != null">
+        exchanger,
+      </if>
+      <if test="personName != null">
+        person_name,
+      </if>
+      <if test="currency != null">
+        currency,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="stock != null">
+        stock,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="ttm != null">
+        ttm,
+      </if>
+      <if test="refPurchase != null">
+        ref_purchase,
+      </if>
+      <if test="profit != null">
+        profit,
+      </if>
+      <if test="dtime != null">
+        dtime,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="bankid != null">
+        bankid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sn != null">
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="exchanger != null">
+        #{exchanger,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null">
+        #{stock,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="ttm != null">
+        #{ttm,jdbcType=DECIMAL},
+      </if>
+      <if test="refPurchase != null">
+        #{refPurchase,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null">
+        #{profit,jdbcType=BIGINT},
+      </if>
+      <if test="dtime != null">
+        #{dtime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="bankid != null">
+        #{bankid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cj.netos.gateway.wybank.model.ExchangeRecordExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from exchange_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update exchange_record
+    <set>
+      <if test="record.sn != null">
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchanger != null">
+        exchanger = #{record.exchanger,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personName != null">
+        person_name = #{record.personName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currency != null">
+        currency = #{record.currency,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.stock != null">
+        stock = #{record.stock,jdbcType=DECIMAL},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ttm != null">
+        ttm = #{record.ttm,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refPurchase != null">
+        ref_purchase = #{record.refPurchase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profit != null">
+        profit = #{record.profit,jdbcType=BIGINT},
+      </if>
+      <if test="record.dtime != null">
+        dtime = #{record.dtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null">
+        `state` = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.note != null">
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankid != null">
+        bankid = #{record.bankid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update exchange_record
+    set sn = #{record.sn,jdbcType=VARCHAR},
+      exchanger = #{record.exchanger,jdbcType=VARCHAR},
+      person_name = #{record.personName,jdbcType=VARCHAR},
+      currency = #{record.currency,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=BIGINT},
+      stock = #{record.stock,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=DECIMAL},
+      ttm = #{record.ttm,jdbcType=DECIMAL},
+      ref_purchase = #{record.refPurchase,jdbcType=VARCHAR},
+      profit = #{record.profit,jdbcType=BIGINT},
+      dtime = #{record.dtime,jdbcType=VARCHAR},
+      `state` = #{record.state,jdbcType=INTEGER},
+      note = #{record.note,jdbcType=VARCHAR},
+      bankid = #{record.bankid,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update exchange_record
+    <set>
+      <if test="exchanger != null">
+        exchanger = #{exchanger,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="currency != null">
+        currency = #{currency,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="stock != null">
+        stock = #{stock,jdbcType=DECIMAL},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="ttm != null">
+        ttm = #{ttm,jdbcType=DECIMAL},
+      </if>
+      <if test="refPurchase != null">
+        ref_purchase = #{refPurchase,jdbcType=VARCHAR},
+      </if>
+      <if test="profit != null">
+        profit = #{profit,jdbcType=BIGINT},
+      </if>
+      <if test="dtime != null">
+        dtime = #{dtime,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="note != null">
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="bankid != null">
+        bankid = #{bankid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update exchange_record
+    set exchanger = #{exchanger,jdbcType=VARCHAR},
+      person_name = #{personName,jdbcType=VARCHAR},
+      currency = #{currency,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=BIGINT},
+      stock = #{stock,jdbcType=DECIMAL},
+      price = #{price,jdbcType=DECIMAL},
+      ttm = #{ttm,jdbcType=DECIMAL},
+      ref_purchase = #{refPurchase,jdbcType=VARCHAR},
+      profit = #{profit,jdbcType=BIGINT},
+      dtime = #{dtime,jdbcType=VARCHAR},
+      `state` = #{state,jdbcType=INTEGER},
+      note = #{note,jdbcType=VARCHAR},
+      bankid = #{bankid,jdbcType=VARCHAR}
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
+</mapper>
