@@ -38,7 +38,7 @@ public class WenyBankService implements IWenyBankService {
         bankInfo.setCtime(BankUtils.dateTimeToSecond(System.currentTimeMillis()));
         bankInfo.setFreeRatio(wenyBankBO.getFreeRatio());
         try {
-            bankInfo.setId(new IdWorker(1).nextId() + "");
+            bankInfo.setId(IdWorker.nextId() );
         } catch (Exception e) {
             e.printStackTrace();
         }

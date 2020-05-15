@@ -60,15 +60,44 @@ public class ExchangeRecord {
 
     /**
      * Column: profit
-     * Remark: 净赚多少钱
+     * Remark: 净赚多少钱 Amount-purchaseAmount
      */
     private Long profit;
+
+    /**
+     * Column: purchase_amount
+     * Remark: 原申购金
+     */
+    private Long purchaseAmount;
+
+    /**
+     * Column: principal_amount
+     * Remark: 原申购本金
+     */
+    private Long principalAmount;
+
+    /**
+     * Column: service_feeAmount
+     * Remark: 原申购服务费
+     */
+    private Long serviceFeeamount;
+
+    /**
+     * Column: purchase_price
+     * Remark: 申购的价格
+     */
+    private BigDecimal purchasePrice;
 
     /**
      * Column: dtime
      * Remark: 成交时间
      */
     private String dtime;
+
+    /**
+     * Column: ctime
+     */
+    private String ctime;
 
     /**
      * Column: state
@@ -167,12 +196,52 @@ public class ExchangeRecord {
         this.profit = profit;
     }
 
+    public Long getPurchaseAmount() {
+        return purchaseAmount;
+    }
+
+    public void setPurchaseAmount(Long purchaseAmount) {
+        this.purchaseAmount = purchaseAmount;
+    }
+
+    public Long getPrincipalAmount() {
+        return principalAmount;
+    }
+
+    public void setPrincipalAmount(Long principalAmount) {
+        this.principalAmount = principalAmount;
+    }
+
+    public Long getServiceFeeamount() {
+        return serviceFeeamount;
+    }
+
+    public void setServiceFeeamount(Long serviceFeeamount) {
+        this.serviceFeeamount = serviceFeeamount;
+    }
+
+    public BigDecimal getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(BigDecimal purchasePrice) {
+        this.purchasePrice = purchasePrice;
+    }
+
     public String getDtime() {
         return dtime;
     }
 
     public void setDtime(String dtime) {
         this.dtime = dtime == null ? null : dtime.trim();
+    }
+
+    public String getCtime() {
+        return ctime;
+    }
+
+    public void setCtime(String ctime) {
+        this.ctime = ctime == null ? null : ctime.trim();
     }
 
     public Integer getState() {

@@ -788,6 +788,246 @@ public class ExchangeRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andPurchaseAmountIsNull() {
+            addCriterion("purchase_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountIsNotNull() {
+            addCriterion("purchase_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountEqualTo(Long value) {
+            addCriterion("purchase_amount =", value, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountNotEqualTo(Long value) {
+            addCriterion("purchase_amount <>", value, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountGreaterThan(Long value) {
+            addCriterion("purchase_amount >", value, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("purchase_amount >=", value, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountLessThan(Long value) {
+            addCriterion("purchase_amount <", value, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountLessThanOrEqualTo(Long value) {
+            addCriterion("purchase_amount <=", value, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountIn(List<Long> values) {
+            addCriterion("purchase_amount in", values, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountNotIn(List<Long> values) {
+            addCriterion("purchase_amount not in", values, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountBetween(Long value1, Long value2) {
+            addCriterion("purchase_amount between", value1, value2, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchaseAmountNotBetween(Long value1, Long value2) {
+            addCriterion("purchase_amount not between", value1, value2, "purchaseAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountIsNull() {
+            addCriterion("principal_amount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountIsNotNull() {
+            addCriterion("principal_amount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountEqualTo(Long value) {
+            addCriterion("principal_amount =", value, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountNotEqualTo(Long value) {
+            addCriterion("principal_amount <>", value, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountGreaterThan(Long value) {
+            addCriterion("principal_amount >", value, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountGreaterThanOrEqualTo(Long value) {
+            addCriterion("principal_amount >=", value, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountLessThan(Long value) {
+            addCriterion("principal_amount <", value, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountLessThanOrEqualTo(Long value) {
+            addCriterion("principal_amount <=", value, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountIn(List<Long> values) {
+            addCriterion("principal_amount in", values, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountNotIn(List<Long> values) {
+            addCriterion("principal_amount not in", values, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountBetween(Long value1, Long value2) {
+            addCriterion("principal_amount between", value1, value2, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPrincipalAmountNotBetween(Long value1, Long value2) {
+            addCriterion("principal_amount not between", value1, value2, "principalAmount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountIsNull() {
+            addCriterion("service_feeAmount is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountIsNotNull() {
+            addCriterion("service_feeAmount is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountEqualTo(Long value) {
+            addCriterion("service_feeAmount =", value, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountNotEqualTo(Long value) {
+            addCriterion("service_feeAmount <>", value, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountGreaterThan(Long value) {
+            addCriterion("service_feeAmount >", value, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountGreaterThanOrEqualTo(Long value) {
+            addCriterion("service_feeAmount >=", value, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountLessThan(Long value) {
+            addCriterion("service_feeAmount <", value, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountLessThanOrEqualTo(Long value) {
+            addCriterion("service_feeAmount <=", value, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountIn(List<Long> values) {
+            addCriterion("service_feeAmount in", values, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountNotIn(List<Long> values) {
+            addCriterion("service_feeAmount not in", values, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountBetween(Long value1, Long value2) {
+            addCriterion("service_feeAmount between", value1, value2, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andServiceFeeamountNotBetween(Long value1, Long value2) {
+            addCriterion("service_feeAmount not between", value1, value2, "serviceFeeamount");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceIsNull() {
+            addCriterion("purchase_price is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceIsNotNull() {
+            addCriterion("purchase_price is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceEqualTo(BigDecimal value) {
+            addCriterion("purchase_price =", value, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceNotEqualTo(BigDecimal value) {
+            addCriterion("purchase_price <>", value, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceGreaterThan(BigDecimal value) {
+            addCriterion("purchase_price >", value, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("purchase_price >=", value, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceLessThan(BigDecimal value) {
+            addCriterion("purchase_price <", value, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("purchase_price <=", value, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceIn(List<BigDecimal> values) {
+            addCriterion("purchase_price in", values, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceNotIn(List<BigDecimal> values) {
+            addCriterion("purchase_price not in", values, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("purchase_price between", value1, value2, "purchasePrice");
+            return (Criteria) this;
+        }
+
+        public Criteria andPurchasePriceNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("purchase_price not between", value1, value2, "purchasePrice");
+            return (Criteria) this;
+        }
+
         public Criteria andDtimeIsNull() {
             addCriterion("dtime is null");
             return (Criteria) this;
@@ -855,6 +1095,76 @@ public class ExchangeRecordExample {
 
         public Criteria andDtimeNotBetween(String value1, String value2) {
             addCriterion("dtime not between", value1, value2, "dtime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeIsNull() {
+            addCriterion("ctime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeIsNotNull() {
+            addCriterion("ctime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeEqualTo(String value) {
+            addCriterion("ctime =", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeNotEqualTo(String value) {
+            addCriterion("ctime <>", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeGreaterThan(String value) {
+            addCriterion("ctime >", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeGreaterThanOrEqualTo(String value) {
+            addCriterion("ctime >=", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeLessThan(String value) {
+            addCriterion("ctime <", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeLessThanOrEqualTo(String value) {
+            addCriterion("ctime <=", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeLike(String value) {
+            addCriterion("ctime like", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeNotLike(String value) {
+            addCriterion("ctime not like", value, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeIn(List<String> values) {
+            addCriterion("ctime in", values, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeNotIn(List<String> values) {
+            addCriterion("ctime not in", values, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeBetween(String value1, String value2) {
+            addCriterion("ctime between", value1, value2, "ctime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCtimeNotBetween(String value1, String value2) {
+            addCriterion("ctime not between", value1, value2, "ctime");
             return (Criteria) this;
         }
 

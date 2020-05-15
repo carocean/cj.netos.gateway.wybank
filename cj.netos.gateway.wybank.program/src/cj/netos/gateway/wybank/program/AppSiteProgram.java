@@ -12,7 +12,5 @@ public class AppSiteProgram extends GatewayAppSiteProgram {
 
     @Override
     protected void onstart(Destination dest, String assembliesHome, ProgramAdapterType type) throws CircuitException {
-        IRabbitMQProducer rabbitMQ = (IRabbitMQProducer) site.getService("rabbitMQProducer");
-        rabbitMQ.open(assembliesHome);
     }
 }
