@@ -43,6 +43,8 @@ public class AckExchangeCommand implements IConsumerCommand {
             msg = msg.substring(0, 200);
         }
         exchangeReceiptBusinessService.ackFailure(record_sn.toString(), state.toString(), msg);
-        purchaseReceiptBusinessService.ackExchangedFailure(record.getRefPurchase());
+        if (record != null) {
+            purchaseReceiptBusinessService.ackExchangedFailure(record.getRefPurchase());
+        }
     }
 }
