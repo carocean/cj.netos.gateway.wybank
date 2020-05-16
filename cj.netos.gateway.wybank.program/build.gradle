@@ -29,7 +29,7 @@ dependencies {
 }
 task copyRefembeds(type: Copy) {
     from configurations.compileClasspath.files {
-        include ''
+        include 'cj.studio.orm.mybatis-*.jar'
     }
     into 'src/cj/refembeds'
 }
