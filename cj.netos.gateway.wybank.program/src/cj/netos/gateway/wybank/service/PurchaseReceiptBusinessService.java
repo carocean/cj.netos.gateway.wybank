@@ -17,6 +17,7 @@ import cj.studio.ecm.annotation.CjServiceSite;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
+import com.rabbitmq.client.LongString;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -46,7 +47,7 @@ public class PurchaseReceiptBusinessService implements IPurchaseReceiptBusinessS
         }
         BankInfo bankInfo = wenyBankService.getWenyBank(wenyBankID);
         if (bankInfo == null) {
-            throw new CircuitException("404", String.format("纹银银行不存在:%s" , wenyBankID));
+            throw new CircuitException("404", String.format("纹银银行不存在:%s", wenyBankID));
         }
         PurchaseRecord record = new PurchaseRecord();
         record.setSn(IdWorker.nextId());
@@ -60,6 +61,7 @@ public class PurchaseReceiptBusinessService implements IPurchaseReceiptBusinessS
         record.setPrincipalRatio(bankInfo.getPrincipalRatio());
         record.setPersonName((String) person.get("nickName"));
         record.setPurchaser(securitySession.principal());
+        record.setDevice((String) securitySession.property("device"));
         long service_fee = record.getFeeRatio().multiply(new BigDecimal(amount)).setScale(14, BigDecimal.ROUND_DOWN).longValue();
         record.setServiceFee(service_fee);
         long principal = record.getPrincipalRatio().multiply(new BigDecimal(amount)).setScale(14, BigDecimal.ROUND_DOWN).longValue();
@@ -93,5 +95,35 @@ public class PurchaseReceiptBusinessService implements IPurchaseReceiptBusinessS
     @Override
     public PurchaseRecord getPurchaseRecord(String purchaseSN) {
         return purchaseRecordMapper.selectByPrimaryKey(purchaseSN);
+    }
+
+    @CjTransaction
+    @Override
+    public void ackSuccess(String record_sn, BigDecimal stock, BigDecimal price) {
+        purchaseRecordMapper.ackSuccess(record_sn, stock, price, BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+    }
+
+    @CjTransaction
+    @Override
+    public void ackFailure(String record_sn, String status, String message) {
+        purchaseRecordMapper.ackFailure(record_sn, status, message, BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+    }
+
+    @CjTransaction
+    @Override
+    public void flagExchanging(String record_sn) {
+        purchaseRecordMapper.updateState(record_sn, 2,BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+    }
+
+    @CjTransaction
+    @Override
+    public void ackExchangedSuccess(String record_sn) {
+        purchaseRecordMapper.updateState(record_sn, 3,BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+    }
+
+    @CjTransaction
+    @Override
+    public void ackExchangedFailure(String record_sn) {
+        purchaseRecordMapper.ackExchangedFailure(record_sn,"600","承兑失败",BankUtils.dateTimeToSecond(System.currentTimeMillis()));
     }
 }

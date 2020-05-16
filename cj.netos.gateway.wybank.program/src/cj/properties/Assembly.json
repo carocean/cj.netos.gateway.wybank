@@ -54,10 +54,6 @@
 			extName:".jss.js"
 		}],
 		scans : [{
-			package : "cj.netos.rabbitmq.producer",
-			extName : ".class|.json|.xml",
-			exoterical:"true"
-		},{
 			package : "cj.studio.orm.mybatis",
 			extName : ".class|.json|.xml",
 			exoterical:"true"
@@ -73,6 +69,10 @@
 				package : "cj.netos.gateway.wybank.ports",
 				extName : ".class|.json|.xml",
 				exoterical:"true"
+		},{
+			package : "cj.netos.gateway.wybank.cmd",
+			extName : ".class|.json|.xml",
+			exoterical:"true"
 		}
 		]
 

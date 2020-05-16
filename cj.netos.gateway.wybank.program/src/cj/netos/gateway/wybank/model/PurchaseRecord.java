@@ -60,7 +60,7 @@ public class PurchaseRecord {
 
     /**
      * Column: state
-     * Remark: 0申购中 1成功 2失败
+     * Remark: -1申购失败 0申购中 1申购成功 2承兑中 3已承兑
      */
     private Integer state;
 
@@ -132,6 +132,24 @@ public class PurchaseRecord {
      * Remark: 设备
      */
     private String device;
+
+    /**
+     * Column: status
+     * Remark: 记录返回码 
+     */
+    private String status;
+
+    /**
+     * Column: message
+     * Remark: 交易处理返回结果
+     */
+    private String message;
+
+    /**
+     * Column: dtime
+     * Remark: 更新时间
+     */
+    private String dtime;
 
     public String getSn() {
         return sn;
@@ -307,5 +325,29 @@ public class PurchaseRecord {
 
     public void setDevice(String device) {
         this.device = device == null ? null : device.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message == null ? null : message.trim();
+    }
+
+    public String getDtime() {
+        return dtime;
+    }
+
+    public void setDtime(String dtime) {
+        this.dtime = dtime == null ? null : dtime.trim();
     }
 }

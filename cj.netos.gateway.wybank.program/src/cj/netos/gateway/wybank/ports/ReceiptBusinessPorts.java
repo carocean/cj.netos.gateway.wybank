@@ -86,7 +86,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
             throw new CircuitException("500", String.format("不是申购者本人:%s!=%s", securitySession.principal(), purchaseRecord.getPurchaser()));
         }
         if (purchaseRecord.getState() != 1) {
-            throw new CircuitException("501", String.format("申购单未完成，不能承兑。purchaseSN=%s", purchaseRecord.getSn()));
+            throw new CircuitException("501", String.format("申购单未完成，或已承兑。purchaseSN=%s", purchaseRecord.getSn()));
         }
         ExchangeRecord exchangeRecord = exchangeReceiptBusinessService.exchange(purchaseRecord, note);
 

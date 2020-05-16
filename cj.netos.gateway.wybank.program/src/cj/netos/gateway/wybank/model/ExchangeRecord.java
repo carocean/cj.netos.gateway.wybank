@@ -116,6 +116,18 @@ public class ExchangeRecord {
      */
     private String bankid;
 
+    /**
+     * Column: status
+     * Remark: 返回状态码
+     */
+    private String status;
+
+    /**
+     * Column: message
+     * Remark: 返回结果
+     */
+    private String message;
+
     public String getSn() {
         return sn;
     }
@@ -266,5 +278,21 @@ public class ExchangeRecord {
 
     public void setBankid(String bankid) {
         this.bankid = bankid == null ? null : bankid.trim();
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status == null ? null : status.trim();
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message == null ? null : message.trim();
     }
 }

@@ -2,7 +2,10 @@ package cj.netos.gateway.wybank.mapper;
 
 import cj.netos.gateway.wybank.model.ExchangeRecord;
 import cj.netos.gateway.wybank.model.ExchangeRecordExample;
+
+import java.math.BigDecimal;
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface ExchangeRecordMapper {
@@ -61,4 +64,9 @@ public interface ExchangeRecordMapper {
      * @mbg.generated generated automatically, do not modify!
      */
     int updateByPrimaryKey(ExchangeRecord record);
+
+    void ackSuccess(@Param(value = "sn") String sn, @Param(value = "amount") long amount, @Param(value = "profit") long profit, @Param(value = "price") BigDecimal price, @Param(value = "dtime") String dtime);
+
+    void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "dtime") String dtime);
+
 }

@@ -2,6 +2,7 @@ package cj.netos.gateway.wybank.service;
 
 import cj.netos.gateway.wybank.IExchangeReceiptBusinessService;
 import cj.netos.gateway.wybank.IPersonService;
+import cj.netos.gateway.wybank.IPurchaseReceiptBusinessService;
 import cj.netos.gateway.wybank.IWenyBankService;
 import cj.netos.gateway.wybank.mapper.ExchangeRecordMapper;
 import cj.netos.gateway.wybank.mapper.PurchaseRecordMapper;
@@ -18,6 +19,8 @@ import cj.studio.ecm.annotation.CjServiceSite;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 
+import java.math.BigDecimal;
+
 @CjBridge(aspects = "@transaction")
 @CjService(name = "exchangeReceiptBusinessService")
 public class ExchangeReceiptBusinessService implements IExchangeReceiptBusinessService {
@@ -30,6 +33,8 @@ public class ExchangeReceiptBusinessService implements IExchangeReceiptBusinessS
     @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.ExchangeRecordMapper")
     ExchangeRecordMapper exchangeRecordMapper;
 
+    @CjServiceRef
+    IPurchaseReceiptBusinessService purchaseReceiptBusinessService;
 
     @CjTransaction
     @Override
@@ -53,6 +58,25 @@ public class ExchangeReceiptBusinessService implements IExchangeReceiptBusinessS
         record.setTtm(purchaseRecord.getTtm());
 
         exchangeRecordMapper.insert(record);
+        purchaseReceiptBusinessService.flagExchanging(purchaseRecord.getSn());
         return record;
+    }
+
+    @CjTransaction
+    @Override
+    public ExchangeRecord getExchangeRecord(String sn) {
+        return exchangeRecordMapper.selectByPrimaryKey(sn);
+    }
+
+    @CjTransaction
+    @Override
+    public void ackSuccess(String sn, long amount, long profit, BigDecimal price) {
+        exchangeRecordMapper.ackSuccess(sn, amount, profit, price, BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+    }
+
+    @CjTransaction
+    @Override
+    public void ackFailure(String sn, String status, String message) {
+        exchangeRecordMapper.ackFailure(sn, status, message, BankUtils.dateTimeToSecond(System.currentTimeMillis()));
     }
 }

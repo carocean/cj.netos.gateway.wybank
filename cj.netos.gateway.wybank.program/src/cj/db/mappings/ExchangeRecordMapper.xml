@@ -22,6 +22,8 @@
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="note" jdbcType="VARCHAR" property="note" />
     <result column="bankid" jdbcType="VARCHAR" property="bankid" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -87,7 +89,7 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     sn, exchanger, person_name, currency, amount, stock, price, ttm, ref_purchase, profit, 
     purchase_amount, principal_amount, service_feeAmount, purchase_price, dtime, ctime, 
-    `state`, note, bankid
+    `state`, note, bankid, `status`, message
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.ExchangeRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -131,14 +133,16 @@
       profit, purchase_amount, principal_amount, 
       service_feeAmount, purchase_price, dtime, 
       ctime, `state`, note, 
-      bankid)
+      bankid, `status`, message
+      )
     values (#{sn,jdbcType=VARCHAR}, #{exchanger,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
       #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{stock,jdbcType=DECIMAL}, 
       #{price,jdbcType=DECIMAL}, #{ttm,jdbcType=DECIMAL}, #{refPurchase,jdbcType=VARCHAR}, 
       #{profit,jdbcType=BIGINT}, #{purchaseAmount,jdbcType=BIGINT}, #{principalAmount,jdbcType=BIGINT}, 
       #{serviceFeeamount,jdbcType=BIGINT}, #{purchasePrice,jdbcType=DECIMAL}, #{dtime,jdbcType=VARCHAR}, 
       #{ctime,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
-      #{bankid,jdbcType=VARCHAR})
+      #{bankid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -201,6 +205,12 @@
       <if test="bankid != null">
         bankid,
       </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sn != null">
@@ -259,6 +269,12 @@
       </if>
       <if test="bankid != null">
         #{bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -330,6 +346,12 @@
       <if test="record.bankid != null">
         bankid = #{record.bankid,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null">
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -356,7 +378,9 @@
       ctime = #{record.ctime,jdbcType=VARCHAR},
       `state` = #{record.state,jdbcType=INTEGER},
       note = #{record.note,jdbcType=VARCHAR},
-      bankid = #{record.bankid,jdbcType=VARCHAR}
+      bankid = #{record.bankid,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=VARCHAR},
+      message = #{record.message,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -419,6 +443,12 @@
       <if test="bankid != null">
         bankid = #{bankid,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
     </set>
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
@@ -442,7 +472,32 @@
       ctime = #{ctime,jdbcType=VARCHAR},
       `state` = #{state,jdbcType=INTEGER},
       note = #{note,jdbcType=VARCHAR},
-      bankid = #{bankid,jdbcType=VARCHAR}
+      bankid = #{bankid,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR}
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
+
+  <update id="ackSuccess" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
+    update exchange_record
+    set
+    amount = #{amount,jdbcType=BIGINT},
+    price = #{price,jdbcType=DECIMAL},
+    profit = #{profit,jdbcType=BIGINT},
+    dtime = #{dtime,jdbcType=VARCHAR},
+    `state` = 1,
+    `status` = "200",
+    message = "OK"
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
+
+  <update id="ackFailure" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
+    update exchange_record
+    set
+    dtime = #{dtime,jdbcType=VARCHAR},
+    `state` = -1,
+    `status` = #{status,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
 </mapper>
