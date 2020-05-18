@@ -350,4 +350,24 @@
       shunter = #{shunter,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
+
+  <update id="ackSuccess" parameterType="cj.netos.gateway.wybank.model.WithdrawRecord">
+    update withdraw_record
+    set
+    real_amount = #{realAmount,jdbcType=BIGINT},
+    `state` = 1,
+    dtime = #{dtime,jdbcType=VARCHAR},
+    `status` = "200",
+    message = "OK"
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
+  <update id="ackFailure" parameterType="cj.netos.gateway.wybank.model.WithdrawRecord">
+    update withdraw_record
+    set
+    `state` = -1,
+    dtime = #{dtime,jdbcType=VARCHAR},
+    `status` = #{status,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR}
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
 </mapper>

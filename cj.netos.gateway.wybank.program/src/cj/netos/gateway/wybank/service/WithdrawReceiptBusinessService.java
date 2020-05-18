@@ -57,4 +57,22 @@ public class WithdrawReceiptBusinessService implements IWithdrawReceiptBusinessS
         withdrawRecordMapper.insert(record);
         return record;
     }
+
+    @CjTransaction
+    @Override
+    public WithdrawRecord getRecord(String sn) {
+        return withdrawRecordMapper.selectByPrimaryKey(sn);
+    }
+
+    @CjTransaction
+    @Override
+    public void ackSuccess(String sn, Long realAmount) {
+        withdrawRecordMapper.ackSuccess(sn, realAmount,BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+    }
+
+    @CjTransaction
+    @Override
+    public void ackFailure(String sn, String status, String message) {
+        withdrawRecordMapper.ackFailure(sn, status, message,BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+    }
 }
