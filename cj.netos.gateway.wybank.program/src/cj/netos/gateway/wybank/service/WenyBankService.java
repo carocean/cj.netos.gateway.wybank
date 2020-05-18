@@ -93,6 +93,7 @@ public class WenyBankService implements IWenyBankService {
     public void setShunters(String banksn, List<Shunter> shunters) {
         emptyShunters(banksn);
         for (Shunter shunter : shunters) {
+            shunter.setBankid(banksn);
             shunterMapper.insert(shunter);
         }
     }

@@ -131,6 +131,16 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="netos.weny.main#shunt_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="ShuntRecord" />
+              <option name="tableComment" value="分账流水表（不论是ports api触发还是申购事件触发均记录）" />
+              <option name="tableName" value="shunt_record" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.weny.main#shunter">
           <value>
             <TableInfo>

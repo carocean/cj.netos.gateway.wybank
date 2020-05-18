@@ -108,12 +108,6 @@ public class WenyBankPorts implements IWenyBankPorts {
             throw new CircuitException("404", "banksn 参数为空");
         }
         BigDecimal count = new BigDecimal(0.0);
-        for (ShunterBO rule : shunters) {
-            count = count.add(rule.getRatio());
-        }
-        if (count.compareTo(new BigDecimal(1.0)) != 0) {
-            throw new CircuitException("500", "分账套餐总和不为1");
-        }
         List<Shunter> shunterList = new ArrayList<>();
         for (ShunterBO bo : shunters) {
             if (StringUtil.isEmpty(bo.getCode())) {
@@ -121,10 +115,16 @@ public class WenyBankPorts implements IWenyBankPorts {
             }
             Shunter shunter = new Shunter();
             shunter.setAlias(bo.getAlias());
-            shunter.setBankid(bo.getBankid());
+            shunter.setBankid(banksn);
             shunter.setCode(bo.getCode());
             shunter.setRatio(bo.getRatio());
             shunter.setNote(bo.getNote());
+            shunterList.add(shunter);
+
+            count = count.add(bo.getRatio());
+        }
+        if (count.compareTo(new BigDecimal(1.0)) != 0) {
+            throw new CircuitException("500", "分账套餐总和不为1");
         }
         wenyBankService.setShunters(banksn, shunterList);
     }

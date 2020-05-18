@@ -1,9 +1,9 @@
 
 属性：
+String code;
 String alias;
-String subject;
-String person;
 BigDecimal ratio;
+String note;
 
 用法：
 rules 为内容参数，因此需要放到请求内容中构建该参数，如下：
@@ -15,26 +15,26 @@ map.put("rules",bo);
 [
     {
         "alias":"平台",
-        "subject":"platform",
-        "person":"superadmin@system.netos",
+        "code":"platform",
+        "note":"",
         "ratio":0.10
     },
     {
         "alias":"运营商",
-        "subject":"operators",
-        "person":"zxb@gbera.netos",
+        "code":"operators",
+        "note":"",
         "ratio":0.20
     },
     {
         "alias":"地商",
-        "subject":"districtMerches",
-        "person":"cj@gbera.netos",
+        "code":"districtMerches",
+        "note":"",
         "ratio":0.40
     },
     {
         "alias":"网络洇金",
-        "subject":"absorbs",
-        "person":"-",
+        "code":"absorbs",
+        "note":"",
         "ratio":0.30
     }
 ]
