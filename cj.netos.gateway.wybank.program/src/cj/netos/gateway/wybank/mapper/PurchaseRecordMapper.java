@@ -67,8 +67,7 @@ public interface PurchaseRecordMapper {
 
     void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "dtime") String dtime);
 
-    void updateState(@Param(value = "sn") String sn,@Param(value = "state") int state, @Param(value = "dtime") String dtime);
+    void updateState(@Param(value = "sn") String sn, @Param(value = "state") int state, @Param(value = "dtime") String dtime);
 
     void ackExchangedFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "dtime") String dtime);
-
 }

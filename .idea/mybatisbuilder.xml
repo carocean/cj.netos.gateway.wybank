@@ -88,7 +88,7 @@
         <option name="javaModelConfig">
           <JavaModelGeneratorConfiguration>
             <option name="targetPackage" value="cj.netos.gateway.wybank.model" />
-            <option name="targetProject" value="$PROJECT_DIR$/cj.netos.gateway.wybank.program/src" />
+            <option name="targetProject" value="$PROJECT_DIR$/cj.netos.gateway.wybank.openports/src" />
           </JavaModelGeneratorConfiguration>
         </option>
         <option name="sqlMapConfig">
@@ -131,6 +131,46 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="netos.weny.main#shunter">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="Shunter" />
+              <option name="tableComment" value="分账器，定义分账比例&#10;" />
+              <option name="tableName" value="shunter" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.weny.main#shunter_details">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="ShunterDetails" />
+              <option name="tableComment" value="分账明细。加起来等于shunter_record的amount&#10;庸余：记录分账时shunter_rule规则的快照" />
+              <option name="tableName" value="shunter_details" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.weny.main#shunter_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="ShunterRecord" />
+              <option name="tableComment" value="" />
+              <option name="tableName" value="shunter_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.weny.main#shunter_rights">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="ShunterRights" />
+              <option name="tableComment" value="分账金提现权限。限定哪些person可取现" />
+              <option name="tableName" value="shunter_rights" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.weny.main#shunter_rule">
           <value>
             <TableInfo>
@@ -148,6 +188,26 @@
               <option name="domainName" value="TtmConfig" />
               <option name="tableComment" value="市盈率配置" />
               <option name="tableName" value="ttm_config" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.weny.main#withdraw_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="WithdrawRecord" />
+              <option name="tableComment" value="向分账器提现记录流水表" />
+              <option name="tableName" value="withdraw_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.weny.main#withdraw_rights">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="WithdrawRights" />
+              <option name="tableComment" value="对分账器的提现权限。限定哪些person可取现" />
+              <option name="tableName" value="withdraw_rights" />
             </TableInfo>
           </value>
         </entry>

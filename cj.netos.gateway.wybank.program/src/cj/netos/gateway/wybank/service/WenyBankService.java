@@ -1,12 +1,12 @@
 package cj.netos.gateway.wybank.service;
 
 import cj.netos.gateway.wybank.IWenyBankService;
-import cj.netos.gateway.wybank.bo.ShunterRuleBO;
 import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
 import cj.netos.gateway.wybank.mapper.BankInfoMapper;
-import cj.netos.gateway.wybank.mapper.ShunterRuleMapper;
+import cj.netos.gateway.wybank.mapper.ShunterMapper;
 import cj.netos.gateway.wybank.mapper.TtmConfigMapper;
+import cj.netos.gateway.wybank.mapper.WithdrawRightsMapper;
 import cj.netos.gateway.wybank.model.*;
 import cj.netos.gateway.wybank.util.BankUtils;
 import cj.netos.gateway.wybank.util.IdWorker;
@@ -16,6 +16,7 @@ import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,11 +26,14 @@ public class WenyBankService implements IWenyBankService {
     @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.BankInfoMapper")
     BankInfoMapper bankInfoMapper;
 
-    @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.ShunterRuleMapper")
-    ShunterRuleMapper shunterRuleMapper;
+    @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.ShunterMapper")
+    ShunterMapper shunterMapper;
 
     @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.TtmConfigMapper")
     TtmConfigMapper ttmConfigMapper;
+
+    @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.WithdrawRightsMapper")
+    WithdrawRightsMapper withdrawRightsMapper;
 
     @CjTransaction
     @Override
@@ -38,7 +42,7 @@ public class WenyBankService implements IWenyBankService {
         bankInfo.setCtime(BankUtils.dateTimeToSecond(System.currentTimeMillis()));
         bankInfo.setFreeRatio(wenyBankBO.getFreeRatio());
         try {
-            bankInfo.setId(IdWorker.nextId() );
+            bankInfo.setId(IdWorker.nextId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -86,26 +90,19 @@ public class WenyBankService implements IWenyBankService {
 
     @CjTransaction
     @Override
-    public void setShunterRules(String banksn, List<ShunterRuleBO> rules) {
-        emptyShunterRules(banksn);
-        for (ShunterRuleBO bo : rules) {
-            ShunterRule rule = new ShunterRule();
-            rule.setBankid(banksn);
-            rule.setId(Encript.md5(UUID.randomUUID().toString()));
-            rule.setPerson(bo.getPerson());
-            rule.setSubject(bo.getSubject());
-            rule.setRatio(bo.getRatio());
-            rule.setAlias(bo.getAlias());
-            shunterRuleMapper.insert(rule);
+    public void setShunters(String banksn, List<Shunter> shunters) {
+        emptyShunters(banksn);
+        for (Shunter shunter : shunters) {
+            shunterMapper.insert(shunter);
         }
     }
 
     @CjTransaction
     @Override
-    public void emptyShunterRules(String banksn) {
-        ShunterRuleExample example = new ShunterRuleExample();
+    public void emptyShunters(String banksn) {
+        ShunterExample example = new ShunterExample();
         example.createCriteria().andBankidEqualTo(banksn);
-        shunterRuleMapper.deleteByExample(example);
+        shunterMapper.deleteByExample(example);
     }
 
     @CjTransaction
@@ -133,10 +130,10 @@ public class WenyBankService implements IWenyBankService {
 
     @CjTransaction
     @Override
-    public List<ShunterRule> getShunterRules(String banksn) {
-        ShunterRuleExample example = new ShunterRuleExample();
+    public List<Shunter> getShunters(String banksn) {
+        ShunterExample example = new ShunterExample();
         example.createCriteria().andBankidEqualTo(banksn);
-        return shunterRuleMapper.selectByExample(example);
+        return shunterMapper.selectByExample(example);
     }
 
     @CjTransaction
@@ -145,5 +142,39 @@ public class WenyBankService implements IWenyBankService {
         TtmConfigExample example = new TtmConfigExample();
         example.createCriteria().andBankidEqualTo(banksn);
         return ttmConfigMapper.selectByExample(example);
+    }
+
+    @CjTransaction
+    @Override
+    public void addWithdrawRights(String banksn, String shunter, List<String> personList) {
+        for (String person : personList) {
+            WithdrawRights rights = new WithdrawRights();
+            rights.setId(IdWorker.nextId());
+            rights.setShunter(shunter);
+            rights.setPerson(person);
+            rights.setBankid(banksn);
+            withdrawRightsMapper.insert(rights);
+        }
+    }
+
+    @CjTransaction
+    @Override
+    public void emptyWithdrawRights(String banksn, String shunter) {
+        WithdrawRightsExample example = new WithdrawRightsExample();
+        example.createCriteria().andBankidEqualTo(banksn).andShunterEqualTo(shunter);
+        withdrawRightsMapper.deleteByExample(example);
+    }
+
+    @CjTransaction
+    @Override
+    public List<String> getWithdrawRights(String banksn, String shunter) {
+        WithdrawRightsExample example = new WithdrawRightsExample();
+        example.createCriteria().andBankidEqualTo(banksn).andShunterEqualTo(shunter);
+        List<WithdrawRights> list = withdrawRightsMapper.selectByExample(example);
+        List<String> persons = new ArrayList<>();
+        for (WithdrawRights rights : list) {
+            persons.add(rights.getPerson());
+        }
+        return persons;
     }
 }

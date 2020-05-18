@@ -33,7 +33,9 @@
         <mapper resource="cj/db/mappings/BankInfoMapper.xml"/>
         <mapper resource="cj/db/mappings/ExchangeRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/PurchaseRecordMapper.xml"/>
-        <mapper resource="cj/db/mappings/ShunterRuleMapper.xml"/>
         <mapper resource="cj/db/mappings/TtmConfigMapper.xml"/>
+        <mapper resource="cj/db/mappings/ShunterMapper.xml"/>
+        <mapper resource="cj/db/mappings/WithdrawRightsMapper.xml"/>
+        <mapper resource="cj/db/mappings/WithdrawRecordMapper.xml"/>
     </mappers>
 </configuration>

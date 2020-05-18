@@ -1,11 +1,11 @@
 package cj.netos.gateway.wybank.ports;
 
 import cj.netos.gateway.wybank.IWenyBankService;
-import cj.netos.gateway.wybank.bo.ShunterRuleBO;
+import cj.netos.gateway.wybank.bo.ShunterBO;
 import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
 import cj.netos.gateway.wybank.model.BankInfo;
-import cj.netos.gateway.wybank.model.ShunterRule;
+import cj.netos.gateway.wybank.model.Shunter;
 import cj.netos.gateway.wybank.model.TtmConfig;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjService;
@@ -102,46 +102,59 @@ public class WenyBankPorts implements IWenyBankPorts {
 
 
     @Override
-    public void setShunterRules(ISecuritySession securitySession, String banksn, List<ShunterRuleBO> rules) throws CircuitException {
+    public void setShunters(ISecuritySession securitySession, String banksn, List<ShunterBO> shunters) throws CircuitException {
         demandAdminRights(securitySession);
         if (StringUtil.isEmpty(banksn)) {
             throw new CircuitException("404", "banksn 参数为空");
         }
         BigDecimal count = new BigDecimal(0.0);
-        for (ShunterRuleBO rule : rules) {
+        for (ShunterBO rule : shunters) {
             count = count.add(rule.getRatio());
         }
         if (count.compareTo(new BigDecimal(1.0)) != 0) {
             throw new CircuitException("500", "分账套餐总和不为1");
         }
-        wenyBankService.setShunterRules(banksn, rules);
+        List<Shunter> shunterList = new ArrayList<>();
+        for (ShunterBO bo : shunters) {
+            if (StringUtil.isEmpty(bo.getCode())) {
+                throw new CircuitException("404", "分账器code为空");
+            }
+            Shunter shunter = new Shunter();
+            shunter.setAlias(bo.getAlias());
+            shunter.setBankid(bo.getBankid());
+            shunter.setCode(bo.getCode());
+            shunter.setRatio(bo.getRatio());
+            shunter.setNote(bo.getNote());
+        }
+        wenyBankService.setShunters(banksn, shunterList);
     }
 
 
     @Override
-    public void emptyShunterRules(ISecuritySession securitySession, String banksn) throws CircuitException {
+    public void emptyShunters(ISecuritySession securitySession, String banksn) throws CircuitException {
         demandAdminRights(securitySession);
         if (StringUtil.isEmpty(banksn)) {
             throw new CircuitException("404", "banksn 参数为空");
         }
-        wenyBankService.emptyShunterRules(banksn);
+        wenyBankService.emptyShunters(banksn);
     }
 
 
     @Override
-    public List<ShunterRuleBO> getShunterRules(ISecuritySession securitySession, String banksn) throws CircuitException {
+    public List<ShunterBO> getShunters(ISecuritySession securitySession, String banksn) throws CircuitException {
         demandAdminRights(securitySession);
         if (StringUtil.isEmpty(banksn)) {
             throw new CircuitException("404", "banksn 参数为空");
         }
-        List<ShunterRule> rules = wenyBankService.getShunterRules(banksn);
-        List<ShunterRuleBO> list = new ArrayList<>();
-        for (ShunterRule rule : rules) {
-            ShunterRuleBO bo = new ShunterRuleBO();
-            bo.setAlias(rule.getAlias());
-            bo.setPerson(rule.getPerson());
-            bo.setRatio(rule.getRatio());
-            bo.setSubject(rule.getSubject());
+        List<Shunter> rules = wenyBankService.getShunters(banksn);
+        List<ShunterBO> list = new ArrayList<>();
+        for (Shunter shunter : rules) {
+            ShunterBO bo = new ShunterBO();
+            bo.setAlias(shunter.getAlias());
+            bo.setBankid( shunter.getBankid());
+            bo.setRatio(shunter.getRatio());
+            bo.setCode(shunter.getCode());
+            bo.setNote(shunter.getNote());
             list.add(bo);
         }
         return list;
@@ -185,4 +198,50 @@ public class WenyBankPorts implements IWenyBankPorts {
         wenyBankService.emptyTTMTable(banksn);
     }
 
+    @Override
+    public void addWithdrawRights(ISecuritySession securitySession, String banksn, String shunter, String persons) throws CircuitException {
+        demandAdminRights(securitySession);
+        if (StringUtil.isEmpty(banksn)) {
+            throw new CircuitException("404", "banksn 参数为空");
+        }
+        if (StringUtil.isEmpty(shunter)) {
+            throw new CircuitException("404", "shunter 参数为空");
+        }
+        if (StringUtil.isEmpty(persons)) {
+            throw new CircuitException("404", "persons 参数为空");
+        }
+        List<String> personList = new ArrayList<>();
+        String[] arr=persons.split(";");
+        for (String p : arr) {
+            if (StringUtil.isEmpty(p)) {
+                continue;
+            }
+            personList.add(p);
+        }
+        wenyBankService.addWithdrawRights(banksn, shunter, personList);
+    }
+
+    @Override
+    public void emptyWithdrawRights(ISecuritySession securitySession, String banksn, String shunter) throws CircuitException {
+        demandAdminRights(securitySession);
+        if (StringUtil.isEmpty(banksn)) {
+            throw new CircuitException("404", "banksn 参数为空");
+        }
+        if (StringUtil.isEmpty(shunter)) {
+            throw new CircuitException("404", "shunter 参数为空");
+        }
+        wenyBankService.emptyWithdrawRights(banksn, shunter);
+    }
+
+    @Override
+    public List<String> getWithdrawRights(ISecuritySession securitySession, String banksn, String shunter) throws CircuitException {
+        demandAdminRights(securitySession);
+        if (StringUtil.isEmpty(banksn)) {
+            throw new CircuitException("404", "banksn 参数为空");
+        }
+        if (StringUtil.isEmpty(shunter)) {
+            throw new CircuitException("404", "shunter 参数为空");
+        }
+      return  wenyBankService.getWithdrawRights(banksn, shunter);
+    }
 }

@@ -1,15 +1,13 @@
 package cj.netos.gateway.wybank.ports;
 
-import cj.netos.gateway.wybank.bo.ShunterRuleBO;
+import cj.netos.gateway.wybank.bo.ShunterBO;
 import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
 import cj.studio.ecm.net.CircuitException;
-import cj.studio.openport.AccessTokenIn;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
 import cj.studio.openport.PKeyInRequest;
 import cj.studio.openport.annotations.CjOpenport;
-import cj.studio.openport.annotations.CjOpenportAppSecurity;
 import cj.studio.openport.annotations.CjOpenportParameter;
 import cj.studio.openport.annotations.CjOpenports;
 
@@ -53,21 +51,21 @@ public interface IWenyBankPorts extends IOpenportService {
     ) throws CircuitException;
 
 
-    @CjOpenport(usage = "设置一套分账规则", command = "post")
-    void setShunterRules(ISecuritySession securitySession,
-                         @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn,
-                         @CjOpenportParameter(usage = "分账规则，比率必须加起来等1", name = "rules", elementType = ShunterRuleBO.class, in = PKeyInRequest.content, simpleModelFile = "/ShunterRuleBO.html") List<ShunterRuleBO> rules
+    @CjOpenport(usage = "设置一套分账器", command = "post")
+    void setShunters(ISecuritySession securitySession,
+                     @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn,
+                     @CjOpenportParameter(usage = "分账器，比率必须加起来等1", name = "shunters", elementType = ShunterBO.class, in = PKeyInRequest.content, simpleModelFile = "/ShunterRuleBO.html") List<ShunterBO> shunters
     ) throws CircuitException;
 
 
-    @CjOpenport(usage = "清空分账规则")
-    void emptyShunterRules(ISecuritySession securitySession,
-                           @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    @CjOpenport(usage = "清空分账器")
+    void emptyShunters(ISecuritySession securitySession,
+                       @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
 
-    @CjOpenport(usage = "获取分账规则")
-    List<ShunterRuleBO> getShunterRules(ISecuritySession securitySession,
-                                        @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    @CjOpenport(usage = "获取分账器")
+    List<ShunterBO> getShunters(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
 
     @CjOpenport(usage = "设置一套市盈率", command = "post")
@@ -85,5 +83,25 @@ public interface IWenyBankPorts extends IOpenportService {
     @CjOpenport(usage = "获取市盈率配置")
     List<TTMBO> getTTMTable(ISecuritySession securitySession,
                             @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "添加提现权限")
+    void addWithdrawRights(ISecuritySession securitySession,
+                           @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn,
+                           @CjOpenportParameter(usage = "目标分账器", name = "shunter") String shunter,
+                           @CjOpenportParameter(usage = "具有权限的所有用户，以;号隔开", name = "persons") String persons
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "清空提现权限")
+    void emptyWithdrawRights(ISecuritySession securitySession,
+                             @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn,
+                             @CjOpenportParameter(usage = "目标分账器", name = "shunter") String shunter
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取提现权限。返回person集合")
+    List<String> getWithdrawRights(ISecuritySession securitySession,
+                                   @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn,
+                                   @CjOpenportParameter(usage = "目标分账器", name = "shunter") String shunter
+
     ) throws CircuitException;
 }
