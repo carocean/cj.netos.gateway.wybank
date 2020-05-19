@@ -3,10 +3,9 @@ package cj.netos.gateway.wybank.ports;
 import cj.netos.gateway.wybank.*;
 import cj.netos.gateway.wybank.bo.ExchangeBO;
 import cj.netos.gateway.wybank.bo.PurchaseBO;
-import cj.netos.gateway.wybank.bo.ShuntBO;
+import cj.netos.gateway.wybank.bo.ShuntRecordBO;
 import cj.netos.gateway.wybank.bo.WithdrawBO;
 import cj.netos.gateway.wybank.model.*;
-import cj.netos.gateway.wybank.util.IdWorker;
 import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
@@ -179,7 +178,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
     }
 
     @Override
-    public ShuntBO shunt(ISecuritySession securitySession, String wenyBankID, long req_amount, String note) throws CircuitException {
+    public ShuntRecordBO shunt(ISecuritySession securitySession, String wenyBankID, long req_amount, String note) throws CircuitException {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
@@ -218,7 +217,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
         byte[] body = new Gson().toJson(record).getBytes();
         rabbitMQ.publish(properties, body);
 
-        ShuntBO bo = new ShuntBO();
+        ShuntRecordBO bo = new ShuntRecordBO();
         bo.load(record);
         return bo;
     }

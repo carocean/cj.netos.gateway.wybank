@@ -131,6 +131,16 @@
             </TableInfo>
           </value>
         </entry>
+        <entry key="netos.weny.main#shunt_details">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="ShuntDetails" />
+              <option name="tableComment" value="分账结果" />
+              <option name="tableName" value="shunt_details" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.weny.main#shunt_record">
           <value>
             <TableInfo>

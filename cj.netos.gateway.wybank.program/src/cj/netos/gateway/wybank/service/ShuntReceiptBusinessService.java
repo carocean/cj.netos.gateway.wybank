@@ -1,7 +1,9 @@
 package cj.netos.gateway.wybank.service;
 
 import cj.netos.gateway.wybank.IShuntReceiptBusinessService;
+import cj.netos.gateway.wybank.mapper.ShuntDetailsMapper;
 import cj.netos.gateway.wybank.mapper.ShuntRecordMapper;
+import cj.netos.gateway.wybank.model.ShuntDetails;
 import cj.netos.gateway.wybank.model.ShuntRecord;
 import cj.netos.gateway.wybank.model.Shunter;
 import cj.netos.gateway.wybank.util.BankUtils;
@@ -21,6 +23,8 @@ public class ShuntReceiptBusinessService implements IShuntReceiptBusinessService
     @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.ShuntRecordMapper")
     ShuntRecordMapper shuntRecordMapper;
 
+    @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.ShuntDetailsMapper")
+    ShuntDetailsMapper shuntDetailsMapper;
     @CjTransaction
     @Override
     public ShuntRecord shunt(String operator,String personName, String wenyBankID, List<Shunter> shunters, long req_amount, String note) throws CircuitException {
@@ -45,7 +49,10 @@ public class ShuntReceiptBusinessService implements IShuntReceiptBusinessService
 
     @CjTransaction
     @Override
-    public void ackSuccess(String sn, Long realAmount, Integer source) {
+    public void ackSuccess(String sn, Long realAmount, Integer source, List<ShuntDetails> details) {
+        for (ShuntDetails shuntDetails : details) {
+            shuntDetailsMapper.insert(shuntDetails);
+        }
         shuntRecordMapper.ackSuccess(sn, realAmount,source, BankUtils.dateTimeToSecond(System.currentTimeMillis()));
     }
 

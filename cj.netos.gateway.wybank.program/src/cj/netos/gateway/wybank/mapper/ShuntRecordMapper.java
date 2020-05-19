@@ -62,8 +62,7 @@ public interface ShuntRecordMapper {
      */
     int updateByPrimaryKey(ShuntRecord record);
 
-    void ackSuccess(@Param(value = "sn") String sn, @Param(value = "realAmount") Long realAmount,@Param(value = "source") int source, @Param(value = "dtime") String dtime);
+    void ackSuccess(@Param(value = "sn") String sn, @Param(value = "realAmount") Long realAmount, @Param(value = "source") int source, @Param(value = "dtime") String dtime);
 
-    void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message,@Param(value = "source") int source, @Param(value = "dtime") String dtime);
-
+    void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "source") int source, @Param(value = "dtime") String dtime);
 }

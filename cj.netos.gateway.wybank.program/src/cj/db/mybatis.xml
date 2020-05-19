@@ -38,5 +38,6 @@
         <mapper resource="cj/db/mappings/WithdrawRightsMapper.xml"/>
         <mapper resource="cj/db/mappings/WithdrawRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/ShuntRecordMapper.xml"/>
+        <mapper resource="cj/db/mappings/ShuntDetailsMapper.xml"/>
     </mappers>
 </configuration>

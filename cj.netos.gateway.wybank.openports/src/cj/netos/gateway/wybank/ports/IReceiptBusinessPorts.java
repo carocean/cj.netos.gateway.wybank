@@ -2,7 +2,7 @@ package cj.netos.gateway.wybank.ports;
 
 import cj.netos.gateway.wybank.bo.ExchangeBO;
 import cj.netos.gateway.wybank.bo.PurchaseBO;
-import cj.netos.gateway.wybank.bo.ShuntBO;
+import cj.netos.gateway.wybank.bo.ShuntRecordBO;
 import cj.netos.gateway.wybank.bo.WithdrawBO;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.IOpenportService;
@@ -36,9 +36,9 @@ public interface IReceiptBusinessPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenport(usage = "触发分账。从自由金余额中分账给各分账器")
-    ShuntBO shunt(ISecuritySession securitySession,
-                  @CjOpenportParameter(usage = "纹银银行行号", name = "wenyBankID") String wenyBankID,
-                  @CjOpenportParameter(usage = "请求的分账金额，根据自由金额实际可能小于等于请求金", name = "req_amount") long req_amount,
-                  @CjOpenportParameter(usage = "备注", name = "note") String note
+    ShuntRecordBO shunt(ISecuritySession securitySession,
+                        @CjOpenportParameter(usage = "纹银银行行号", name = "wenyBankID") String wenyBankID,
+                        @CjOpenportParameter(usage = "请求的分账金额，根据自由金额实际可能小于等于请求金", name = "req_amount") long req_amount,
+                        @CjOpenportParameter(usage = "备注", name = "note") String note
     ) throws CircuitException;
 }
