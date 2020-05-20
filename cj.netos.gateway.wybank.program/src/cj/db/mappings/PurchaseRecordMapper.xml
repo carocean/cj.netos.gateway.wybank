@@ -578,4 +578,12 @@
      dtime = #{dtime,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
+  <select id="page" parameterType="cj.netos.gateway.wybank.model.PurchaseRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from purchase_record
+    where bankid = #{bankid,jdbcType=VARCHAR}
+    order by ptime desc, dtime desc
+    limit #{offset},#{limit}
+  </select>
 </mapper>

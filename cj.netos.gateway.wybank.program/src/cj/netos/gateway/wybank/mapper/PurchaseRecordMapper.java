@@ -70,4 +70,7 @@ public interface PurchaseRecordMapper {
     void updateState(@Param(value = "sn") String sn, @Param(value = "state") int state, @Param(value = "dtime") String dtime);
 
     void ackExchangedFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "dtime") String dtime);
+
+    List<PurchaseRecord> page(@Param(value = "bankid") String bankid, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
+
 }

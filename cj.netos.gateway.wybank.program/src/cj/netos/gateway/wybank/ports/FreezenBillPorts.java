@@ -90,7 +90,7 @@ public class FreezenBillPorts implements IFreezenBillPorts {
     }
 
     @Override
-    public List<FreezenBill> getBillOfMonth(ISecuritySession securitySession, String wenyBankID, int month) throws CircuitException {
+    public List<FreezenBill> getBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month, int limit, long offset) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -102,7 +102,7 @@ public class FreezenBillPorts implements IFreezenBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&month=%s", ports, wenyBankID, month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&limit=%s&offset=%s", ports, wenyBankID, year, month, limit, offset);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "getBillOfMonth")
@@ -139,7 +139,7 @@ public class FreezenBillPorts implements IFreezenBillPorts {
     }
 
     @Override
-    public long totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int month) throws CircuitException {
+    public long totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID,int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -151,7 +151,7 @@ public class FreezenBillPorts implements IFreezenBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&month=%s", ports, wenyBankID, month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID,year, month);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalInBillOfMonth")
@@ -188,7 +188,7 @@ public class FreezenBillPorts implements IFreezenBillPorts {
 
 
     @Override
-    public long totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, int month) throws CircuitException {
+    public long totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID,int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -200,7 +200,7 @@ public class FreezenBillPorts implements IFreezenBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&month=%s", ports, wenyBankID, month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID,year, month);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalOutBillOfMonth")

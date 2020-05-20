@@ -23,14 +23,18 @@ public interface IStockBillPorts extends IOpenportService {
 
     @CjOpenport(usage = "获取指定月份账单")
     List<StockBill> getBillOfMonth(ISecuritySession securitySession,
-                                  @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
-                                  @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month
+                                   @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+                                   @CjOpenportParameter(usage = "年份", name = "year") int year,
+                                   @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month,
+                                   @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                   @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取指定月份账单入账总量")
     BigDecimal totalInBillOfMonth(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+            @CjOpenportParameter(usage = "年份", name = "year") int year,
             @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month
     ) throws CircuitException;
 
@@ -45,6 +49,7 @@ public interface IStockBillPorts extends IOpenportService {
     BigDecimal totalOutBillOfMonth(
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+            @CjOpenportParameter(usage = "年份", name = "year") int year,
             @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month
     ) throws CircuitException;
 

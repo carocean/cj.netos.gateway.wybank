@@ -22,18 +22,20 @@ public interface IPriceBillPorts extends IOpenportService {
     @CjOpenport(usage = "按月获取价格单")
     List<PriceBill> getPriceBillOfMonth(ISecuritySession securitySession,
                                         @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
-                                        @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month
+                                        @CjOpenportParameter(usage = "年", name = "year") int year,
+                                        @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month,
+                                        @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                        @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
 
     @CjOpenport(usage = "按日获取价格单")
-    List<PriceBill> getPriceBillOfCurrentDay(ISecuritySession securitySession,
-                                             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
-                                             @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month,
-                                             @CjOpenportParameter(usage = "日", name = "day") int day
+    List<PriceBill> getPriceBillOfDay(ISecuritySession securitySession,
+                                      @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+                                      @CjOpenportParameter(usage = "年", name = "year") int year,
+                                      @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month,
+                                      @CjOpenportParameter(usage = "日", name = "day") int day,
+                                      @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                      @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
 
-    @CjOpenport(usage = "获取当前周")
-    List<PriceBill> getPriceBillOfCurrentWeek(ISecuritySession securitySession,
-                                              @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID
-    ) throws CircuitException;
 }

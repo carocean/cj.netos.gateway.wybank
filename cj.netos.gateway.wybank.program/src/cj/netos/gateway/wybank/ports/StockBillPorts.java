@@ -1,7 +1,6 @@
 package cj.netos.gateway.wybank.ports;
 
 import cj.netos.gateway.wybank.IWenyBankService;
-import cj.netos.gateway.wybank.bo.FundBill;
 import cj.netos.gateway.wybank.bo.StockBill;
 import cj.netos.gateway.wybank.model.BankInfo;
 import cj.studio.ecm.IServiceSite;
@@ -91,8 +90,9 @@ public class StockBillPorts implements IStockBillPorts {
         }.getType());
     }
 
+
     @Override
-    public List<StockBill> getBillOfMonth(ISecuritySession securitySession, String wenyBankID, int month) throws CircuitException {
+    public List<StockBill> getBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month, int limit, long offset) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -104,7 +104,7 @@ public class StockBillPorts implements IStockBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&month=%s", ports, wenyBankID, month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&limit=%s&offset=%s", ports, wenyBankID, year, month, limit, offset);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "getBillOfMonth")
@@ -141,7 +141,7 @@ public class StockBillPorts implements IStockBillPorts {
     }
 
     @Override
-    public BigDecimal totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int month) throws CircuitException {
+    public BigDecimal totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -153,7 +153,7 @@ public class StockBillPorts implements IStockBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&month=%s", ports, wenyBankID, month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID, year, month);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalInBillOfMonth")
@@ -190,7 +190,7 @@ public class StockBillPorts implements IStockBillPorts {
 
 
     @Override
-    public BigDecimal totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, int month) throws CircuitException {
+    public BigDecimal totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -202,7 +202,7 @@ public class StockBillPorts implements IStockBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&month=%s", ports, wenyBankID, month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID, year, month);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalOutBillOfMonth")

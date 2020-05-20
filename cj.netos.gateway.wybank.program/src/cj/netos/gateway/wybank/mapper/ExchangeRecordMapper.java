@@ -66,4 +66,7 @@ public interface ExchangeRecordMapper {
     void ackSuccess(@Param(value = "sn") String sn, @Param(value = "amount") long amount, @Param(value = "profit") long profit, @Param(value = "price") BigDecimal price, @Param(value = "dtime") String dtime);
 
     void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "dtime") String dtime);
+
+    List<ExchangeRecord> page(@Param(value = "bankid") String bankid, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
+
 }

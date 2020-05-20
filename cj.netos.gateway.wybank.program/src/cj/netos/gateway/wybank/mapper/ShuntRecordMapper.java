@@ -65,4 +65,7 @@ public interface ShuntRecordMapper {
     void ackSuccess(@Param(value = "sn") String sn, @Param(value = "realAmount") Long realAmount, @Param(value = "source") int source, @Param(value = "dtime") String dtime);
 
     void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "source") int source, @Param(value = "dtime") String dtime);
+
+    List<ShuntRecord> page(@Param(value = "bankid") String bankid, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
+
 }
