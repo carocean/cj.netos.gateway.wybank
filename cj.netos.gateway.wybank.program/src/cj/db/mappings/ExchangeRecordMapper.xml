@@ -24,6 +24,7 @@
     <result column="bankid" jdbcType="VARCHAR" property="bankid" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -89,7 +90,7 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     sn, exchanger, person_name, currency, amount, stock, price, ttm, ref_purchase, profit, 
     purchase_amount, principal_amount, service_feeAmount, purchase_price, dtime, ctime, 
-    `state`, note, bankid, `status`, message
+    `state`, note, bankid, `status`, message, out_trade_sn
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.ExchangeRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -133,16 +134,16 @@
       profit, purchase_amount, principal_amount, 
       service_feeAmount, purchase_price, dtime, 
       ctime, `state`, note, 
-      bankid, `status`, message
-      )
+      bankid, `status`, message, 
+      out_trade_sn)
     values (#{sn,jdbcType=VARCHAR}, #{exchanger,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
       #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{stock,jdbcType=DECIMAL}, 
       #{price,jdbcType=DECIMAL}, #{ttm,jdbcType=DECIMAL}, #{refPurchase,jdbcType=VARCHAR}, 
       #{profit,jdbcType=BIGINT}, #{purchaseAmount,jdbcType=BIGINT}, #{principalAmount,jdbcType=BIGINT}, 
       #{serviceFeeamount,jdbcType=BIGINT}, #{purchasePrice,jdbcType=DECIMAL}, #{dtime,jdbcType=VARCHAR}, 
       #{ctime,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{note,jdbcType=VARCHAR}, 
-      #{bankid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}
-      )
+      #{bankid,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
+      #{outTradeSn,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -211,6 +212,9 @@
       <if test="message != null">
         message,
       </if>
+      <if test="outTradeSn != null">
+        out_trade_sn,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sn != null">
@@ -275,6 +279,9 @@
       </if>
       <if test="message != null">
         #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeSn != null">
+        #{outTradeSn,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -352,6 +359,9 @@
       <if test="record.message != null">
         message = #{record.message,jdbcType=VARCHAR},
       </if>
+      <if test="record.outTradeSn != null">
+        out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -380,7 +390,8 @@
       note = #{record.note,jdbcType=VARCHAR},
       bankid = #{record.bankid,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=VARCHAR},
-      message = #{record.message,jdbcType=VARCHAR}
+      message = #{record.message,jdbcType=VARCHAR},
+      out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -449,6 +460,9 @@
       <if test="message != null">
         message = #{message,jdbcType=VARCHAR},
       </if>
+      <if test="outTradeSn != null">
+        out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      </if>
     </set>
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
@@ -474,7 +488,8 @@
       note = #{note,jdbcType=VARCHAR},
       bankid = #{bankid,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=VARCHAR},
-      message = #{message,jdbcType=VARCHAR}
+      message = #{message,jdbcType=VARCHAR},
+      out_trade_sn = #{outTradeSn,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
 
@@ -502,7 +517,7 @@
   </update>
   <select id="page" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List" />
     from exchange_record
     where bankid = #{bankid,jdbcType=VARCHAR}
     order by ctime desc, dtime desc

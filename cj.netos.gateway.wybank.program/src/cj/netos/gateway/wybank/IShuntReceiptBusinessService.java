@@ -8,7 +8,7 @@ import cj.studio.ecm.net.CircuitException;
 import java.util.List;
 
 public interface IShuntReceiptBusinessService {
-    ShuntRecord shunt(String operator,String personName, String wenyBankID, List<Shunter> shunters, long req_amount, String note) throws CircuitException;
+    ShuntRecord shunt(String operator,String personName, String wenyBankID, List<Shunter> shunters, long req_amount, String out_trade_sn,String note) throws CircuitException;
 
     void ackSuccess(String sn, Long realAmount, Integer source, List<ShuntDetails> details);
 

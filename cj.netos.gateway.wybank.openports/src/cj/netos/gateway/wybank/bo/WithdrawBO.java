@@ -19,5 +19,6 @@ public class WithdrawBO extends WithdrawRecord {
         setState(record.getState());
         setStatus(record.getStatus());
         setWithdrawer(record.getWithdrawer());
+        setOutTradeSn(record.getOutTradeSn());
     }
 }

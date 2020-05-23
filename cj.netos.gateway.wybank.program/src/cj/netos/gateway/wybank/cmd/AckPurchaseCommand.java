@@ -2,6 +2,7 @@ package cj.netos.gateway.wybank.cmd;
 
 import cj.netos.gateway.wybank.IPurchaseReceiptBusinessService;
 import cj.netos.gateway.wybank.IShuntReceiptBusinessService;
+import cj.netos.gateway.wybank.ITradeEventNotify;
 import cj.netos.gateway.wybank.IWenyBankService;
 import cj.netos.gateway.wybank.model.PurchaseRecord;
 import cj.netos.gateway.wybank.model.ShuntRecord;
@@ -38,6 +39,9 @@ public class AckPurchaseCommand implements IConsumerCommand {
     @CjServiceRef
     IWenyBankService wenyBankService;
 
+    @CjServiceRef
+    ITradeEventNotify tradeEventNotify;
+
     @Override
     public void command(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws RabbitMQException, RetryCommandException {
         LongString state = (LongString) properties.getHeaders().get("state");
@@ -50,6 +54,7 @@ public class AckPurchaseCommand implements IConsumerCommand {
             record.setStock(response.getStock());
             record.setPrice(response.getPrice());
             purchaseReceiptBusinessService.ackSuccess(record_sn.toString(), response.getStock(), response.getPrice());
+            tradeEventNotify.send("purchase", response.getStatus(), response.getMessage(),response);
             //触发分账
             try {
                 onshunt(record);
@@ -63,12 +68,13 @@ public class AckPurchaseCommand implements IConsumerCommand {
             msg = msg.substring(0, 200);
         }
         purchaseReceiptBusinessService.ackFailure(record_sn.toString(), state.toString(), msg);
+        tradeEventNotify.send("purchase", state.toString(),msg,record);
     }
 
     private void onshunt(PurchaseRecord purchaseRecord) throws CircuitException {
         List<Shunter> shunters = wenyBankService.getShunters(purchaseRecord.getBankid());
 
-        ShuntRecord record = shuntReceiptBusinessService.shunt(purchaseRecord.getPurchaser(), purchaseRecord.getPersonName(), purchaseRecord.getBankid(), shunters, purchaseRecord.getFreeAmount(), "自由分账");
+        ShuntRecord record = shuntReceiptBusinessService.shunt(purchaseRecord.getPurchaser(), purchaseRecord.getPersonName(), purchaseRecord.getBankid(), shunters, purchaseRecord.getFreeAmount(), purchaseRecord.getOutTradeSn(), "自由分账");
         record.setSource(1);
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wybank.ports")
@@ -82,6 +88,6 @@ public class AckPurchaseCommand implements IConsumerCommand {
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish(properties, body);
+        rabbitMQ.publish("shunt",properties, body);
     }
 }

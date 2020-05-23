@@ -57,7 +57,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.wybank.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -157,7 +157,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.wybank.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -257,7 +257,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.wybank.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -357,7 +357,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.wybank.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -457,7 +457,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.wybank.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -557,7 +557,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.shunter.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -662,7 +662,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.shunter.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
@@ -713,7 +713,7 @@ public class BucketPorts implements IBucketPorts {
         String appid = site.getProperty("appid");
         String appKey = site.getProperty("appKey");
         String appSecret = site.getProperty("appSecret");
-        String ports = site.getProperty("ports.ec.wybank.trade.balance");
+        String ports = site.getProperty("ports.oc.wybank.balance");
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));

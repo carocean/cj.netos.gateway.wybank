@@ -16,6 +16,7 @@
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="message" jdbcType="VARCHAR" property="message" />
     <result column="shunter" jdbcType="VARCHAR" property="shunter" />
+    <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -80,7 +81,7 @@
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     sn, withdrawer, person_name, req_amount, real_amount, `state`, bankid, ctime, dtime, 
-    note, `status`, message, shunter
+    note, `status`, message, shunter, out_trade_sn
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.WithdrawRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -122,12 +123,12 @@
       req_amount, real_amount, `state`, 
       bankid, ctime, dtime, 
       note, `status`, message, 
-      shunter)
+      shunter, out_trade_sn)
     values (#{sn,jdbcType=VARCHAR}, #{withdrawer,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
       #{reqAmount,jdbcType=BIGINT}, #{realAmount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
       #{bankid,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{dtime,jdbcType=VARCHAR}, 
       #{note,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
-      #{shunter,jdbcType=VARCHAR})
+      #{shunter,jdbcType=VARCHAR}, #{outTradeSn,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.WithdrawRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -172,6 +173,9 @@
       <if test="shunter != null">
         shunter,
       </if>
+      <if test="outTradeSn != null">
+        out_trade_sn,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="sn != null">
@@ -212,6 +216,9 @@
       </if>
       <if test="shunter != null">
         #{shunter,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeSn != null">
+        #{outTradeSn,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -265,6 +272,9 @@
       <if test="record.shunter != null">
         shunter = #{record.shunter,jdbcType=VARCHAR},
       </if>
+      <if test="record.outTradeSn != null">
+        out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -285,7 +295,8 @@
       note = #{record.note,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=VARCHAR},
       message = #{record.message,jdbcType=VARCHAR},
-      shunter = #{record.shunter,jdbcType=VARCHAR}
+      shunter = #{record.shunter,jdbcType=VARCHAR},
+      out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -330,6 +341,9 @@
       <if test="shunter != null">
         shunter = #{shunter,jdbcType=VARCHAR},
       </if>
+      <if test="outTradeSn != null">
+        out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      </if>
     </set>
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
@@ -347,7 +361,8 @@
       note = #{note,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=VARCHAR},
       message = #{message,jdbcType=VARCHAR},
-      shunter = #{shunter,jdbcType=VARCHAR}
+      shunter = #{shunter,jdbcType=VARCHAR},
+      out_trade_sn = #{outTradeSn,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
 
@@ -372,7 +387,7 @@
   </update>
   <select id="page" parameterType="cj.netos.gateway.wybank.model.WithdrawRecord" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List" />
     from withdraw_record
     where bankid = #{bankid,jdbcType=VARCHAR}
     order by ctime desc, dtime desc

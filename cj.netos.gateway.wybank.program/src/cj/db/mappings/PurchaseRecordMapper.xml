@@ -27,6 +27,7 @@
     <result column="device" jdbcType="VARCHAR" property="device" />
     <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn" />
     <result column="dtime" jdbcType="VARCHAR" property="dtime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -93,7 +94,8 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     sn, purchaser, person_name, currency, amount, stock, price, ttm, ptime, `state`, 
     note, service_fee, principal_amount, fee_ratio, principal_ratio, tail_amount, free_ratio, 
-    reserve_ratio, free_amount, reserve_amount, bankid, device, `status`, message, dtime
+    reserve_ratio, free_amount, reserve_amount, bankid, device, `status`, message, out_trade_sn, 
+    dtime
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.PurchaseRecordExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -139,7 +141,7 @@
       tail_amount, free_ratio, reserve_ratio, 
       free_amount, reserve_amount, bankid, 
       device, `status`, message, 
-      dtime)
+      out_trade_sn, dtime)
     values (#{sn,jdbcType=VARCHAR}, #{purchaser,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
       #{currency,jdbcType=VARCHAR}, #{amount,jdbcType=BIGINT}, #{stock,jdbcType=DECIMAL}, 
       #{price,jdbcType=DECIMAL}, #{ttm,jdbcType=DECIMAL}, #{ptime,jdbcType=VARCHAR}, 
@@ -148,7 +150,7 @@
       #{tailAmount,jdbcType=BIGINT}, #{freeRatio,jdbcType=DECIMAL}, #{reserveRatio,jdbcType=DECIMAL}, 
       #{freeAmount,jdbcType=BIGINT}, #{reserveAmount,jdbcType=BIGINT}, #{bankid,jdbcType=VARCHAR}, 
       #{device,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
-      #{dtime,jdbcType=VARCHAR})
+      #{outTradeSn,jdbcType=VARCHAR}, #{dtime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.PurchaseRecord">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -226,6 +228,9 @@
       <if test="message != null">
         message,
       </if>
+      <if test="outTradeSn != null">
+        out_trade_sn,
+      </if>
       <if test="dtime != null">
         dtime,
       </if>
@@ -302,6 +307,9 @@
       </if>
       <if test="message != null">
         #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeSn != null">
+        #{outTradeSn,jdbcType=VARCHAR},
       </if>
       <if test="dtime != null">
         #{dtime,jdbcType=VARCHAR},
@@ -391,6 +399,9 @@
       <if test="record.message != null">
         message = #{record.message,jdbcType=VARCHAR},
       </if>
+      <if test="record.outTradeSn != null">
+        out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      </if>
       <if test="record.dtime != null">
         dtime = #{record.dtime,jdbcType=VARCHAR},
       </if>
@@ -426,6 +437,7 @@
       device = #{record.device,jdbcType=VARCHAR},
       `status` = #{record.status,jdbcType=VARCHAR},
       message = #{record.message,jdbcType=VARCHAR},
+      out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
       dtime = #{record.dtime,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -504,6 +516,9 @@
       <if test="message != null">
         message = #{message,jdbcType=VARCHAR},
       </if>
+      <if test="outTradeSn != null">
+        out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      </if>
       <if test="dtime != null">
         dtime = #{dtime,jdbcType=VARCHAR},
       </if>
@@ -536,6 +551,7 @@
       device = #{device,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=VARCHAR},
       message = #{message,jdbcType=VARCHAR},
+      out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
       dtime = #{dtime,jdbcType=VARCHAR}
     where sn = #{sn,jdbcType=VARCHAR}
   </update>
@@ -580,7 +596,7 @@
   </update>
   <select id="page" parameterType="cj.netos.gateway.wybank.model.PurchaseRecord" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List"/>
+    <include refid="Base_Column_List" />
     from purchase_record
     where bankid = #{bankid,jdbcType=VARCHAR}
     order by ptime desc, dtime desc

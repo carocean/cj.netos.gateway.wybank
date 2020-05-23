@@ -18,6 +18,7 @@ public class ShuntRecordBO extends ShuntRecord {
         setSource(record.getSource());
         setState(record.getState());
         setStatus(record.getStatus());
+        setOutTradeSn(record.getOutTradeSn());
     }
 
 }

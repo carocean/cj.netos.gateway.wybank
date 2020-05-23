@@ -5,7 +5,7 @@ import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
 
 public interface IWithdrawReceiptBusinessService {
-    WithdrawRecord withdraw(ISecuritySession securitySession, String wenyBankID, String shunter, long req_amount, String note) throws CircuitException;
+    WithdrawRecord withdraw(String withdrawer,String withdrawerName, String wenyBankID, String shunter, long req_amount,String out_trade_sn, String note) throws CircuitException;
 
     WithdrawRecord getRecord(String sn);
 

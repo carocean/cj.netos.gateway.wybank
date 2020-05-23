@@ -1678,6 +1678,76 @@ public class PurchaseRecordExample {
             return (Criteria) this;
         }
 
+        public Criteria andOutTradeSnIsNull() {
+            addCriterion("out_trade_sn is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnIsNotNull() {
+            addCriterion("out_trade_sn is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnEqualTo(String value) {
+            addCriterion("out_trade_sn =", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnNotEqualTo(String value) {
+            addCriterion("out_trade_sn <>", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnGreaterThan(String value) {
+            addCriterion("out_trade_sn >", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnGreaterThanOrEqualTo(String value) {
+            addCriterion("out_trade_sn >=", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnLessThan(String value) {
+            addCriterion("out_trade_sn <", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnLessThanOrEqualTo(String value) {
+            addCriterion("out_trade_sn <=", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnLike(String value) {
+            addCriterion("out_trade_sn like", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnNotLike(String value) {
+            addCriterion("out_trade_sn not like", value, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnIn(List<String> values) {
+            addCriterion("out_trade_sn in", values, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnNotIn(List<String> values) {
+            addCriterion("out_trade_sn not in", values, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnBetween(String value1, String value2) {
+            addCriterion("out_trade_sn between", value1, value2, "outTradeSn");
+            return (Criteria) this;
+        }
+
+        public Criteria andOutTradeSnNotBetween(String value1, String value2) {
+            addCriterion("out_trade_sn not between", value1, value2, "outTradeSn");
+            return (Criteria) this;
+        }
+
         public Criteria andDtimeIsNull() {
             addCriterion("dtime is null");
             return (Criteria) this;

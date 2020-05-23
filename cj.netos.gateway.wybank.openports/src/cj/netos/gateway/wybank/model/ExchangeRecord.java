@@ -128,6 +128,12 @@ public class ExchangeRecord {
      */
     private String message;
 
+    /**
+     * Column: out_trade_sn
+     * Remark: 外部系统交易订单号，在完成后由通知外部系统确认订单
+     */
+    private String outTradeSn;
+
     public String getSn() {
         return sn;
     }
@@ -294,5 +300,13 @@ public class ExchangeRecord {
 
     public void setMessage(String message) {
         this.message = message == null ? null : message.trim();
+    }
+
+    public String getOutTradeSn() {
+        return outTradeSn;
+    }
+
+    public void setOutTradeSn(String outTradeSn) {
+        this.outTradeSn = outTradeSn == null ? null : outTradeSn.trim();
     }
 }

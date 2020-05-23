@@ -17,7 +17,6 @@ import com.rabbitmq.client.AMQP;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @CjService(name = "/trade/receipt.ports")
 public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
@@ -39,11 +38,9 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
     @CjServiceRef
     IWenyBankService wenyBankService;
 
-    @CjServiceRef
-    IPersonService personService;
 
     @Override
-    public PurchaseBO purchase(ISecuritySession securitySession, String wenyBankID, long amount, String note) throws CircuitException {
+    public PurchaseBO purchase(ISecuritySession securitySession, String wenyBankID, String purchaser, String purchaserName, long amount, String out_trade_sn, String note) throws CircuitException {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
@@ -51,7 +48,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
             throw new CircuitException("500", "金额为负数");
         }
 
-        PurchaseRecord record = purchaseReceiptBusinessService.purchase(securitySession, wenyBankID, amount, note);
+        PurchaseRecord record = purchaseReceiptBusinessService.purchase(purchaser, purchaserName, wenyBankID, amount, out_trade_sn, note);
 
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wybank.ports")
@@ -60,15 +57,15 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                         put("command", "purchase");
                         put("purchaser", record.getPurchaser());
                         put("purchaserName", record.getPersonName());
-                        put("appid", (String) securitySession.property("appid"));
                         put("wenyBankID", wenyBankID);
                         put("record_sn", record.getSn());
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish(properties, body);
+        rabbitMQ.publish("oc",properties, body);
 
         PurchaseBO bo = new PurchaseBO();
+        bo.setOutTradeSn(record.getOutTradeSn());
         bo.setAmount(record.getAmount());
         bo.setBankid(record.getBankid());
         bo.setCurrency(record.getCurrency());
@@ -87,8 +84,9 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
         return bo;
     }
 
+
     @Override
-    public ExchangeBO exchange(ISecuritySession securitySession, String purchaseSN, String note) throws CircuitException {
+    public ExchangeBO exchange(ISecuritySession securitySession, String purchaseSN, String out_trade_sn, String note) throws CircuitException {
         if (StringUtil.isEmpty(purchaseSN)) {
             throw new CircuitException("404", "申购单号为空");
         }
@@ -96,13 +94,13 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
         if (purchaseRecord == null) {
             throw new CircuitException("404", "申购单不存在");
         }
-        if (!purchaseRecord.getPurchaser().equals(securitySession.principal())) {
-            throw new CircuitException("500", String.format("不是申购者本人:%s!=%s", securitySession.principal(), purchaseRecord.getPurchaser()));
-        }
+//        if (!purchaseRecord.getPurchaser().equals(securitySession.principal())) {
+//            throw new CircuitException("500", String.format("不是申购者本人:%s!=%s", securitySession.principal(), purchaseRecord.getPurchaser()));
+//        }
         if (purchaseRecord.getState() != 1) {
             throw new CircuitException("501", String.format("申购单未完成，或已承兑。purchaseSN=%s", purchaseRecord.getSn()));
         }
-        ExchangeRecord exchangeRecord = exchangeReceiptBusinessService.exchange(purchaseRecord, note);
+        ExchangeRecord exchangeRecord = exchangeReceiptBusinessService.exchange(purchaseRecord, out_trade_sn, note);
 
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wybank.ports")
@@ -111,13 +109,12 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                         put("command", "exchange");
                         put("exchanger", exchangeRecord.getExchanger());
                         put("exchangerName", exchangeRecord.getPersonName());
-                        put("appid", (String) securitySession.property("appid"));
                         put("wenyBankID", exchangeRecord.getBankid());
                         put("record_sn", exchangeRecord.getSn());
                     }
                 }).build();
         byte[] body = new Gson().toJson(exchangeRecord).getBytes();
-        rabbitMQ.publish(properties, body);
+        rabbitMQ.publish("oc",properties, body);
 
         ExchangeBO bo = new ExchangeBO();
         bo.setBankid(exchangeRecord.getBankid());
@@ -134,12 +131,13 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
         bo.setState(exchangeRecord.getState());
         bo.setStock(exchangeRecord.getStock());
         bo.setTtm(exchangeRecord.getTtm());
+        bo.setOutTradeSn(exchangeRecord.getOutTradeSn());
         return bo;
 
     }
 
     @Override
-    public WithdrawBO withdraw(ISecuritySession securitySession, String wenyBankID, String shunter, long req_amount, String note) throws CircuitException {
+    public WithdrawBO withdraw(ISecuritySession securitySession, String wenyBankID, String shunter, String withdrawer, String withdrawerName, long req_amount, String out_trade_sn, String note) throws CircuitException {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
@@ -150,11 +148,11 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
             throw new CircuitException("500", "请求金额为负数");
         }
         List<String> persons = wenyBankService.getWithdrawRights(wenyBankID, shunter);
-        if (!persons.contains(securitySession.principal())) {
-            throw new CircuitException("800", "无提现权限。用户:" + securitySession.principal());
+        if (!persons.contains(withdrawer)) {
+            throw new CircuitException("800", "无提现权限。用户:" + withdrawer);
         }
 
-        WithdrawRecord record = withdrawReceiptBusinessService.withdraw(securitySession, wenyBankID, shunter, req_amount, note);
+        WithdrawRecord record = withdrawReceiptBusinessService.withdraw(withdrawer,withdrawerName, wenyBankID, shunter, req_amount, out_trade_sn, note);
 
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wybank.ports")
@@ -163,14 +161,13 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                         put("command", "withdraw");
                         put("withdrawer", record.getWithdrawer());
                         put("withdrawerName", record.getPersonName());
-                        put("appid", (String) securitySession.property("appid"));
                         put("wenyBankID", wenyBankID);
                         put("shunter", shunter);
                         put("record_sn", record.getSn());
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish(properties, body);
+        rabbitMQ.publish("shunt",properties, body);
 
         WithdrawBO bo = new WithdrawBO();
         bo.load(record);
@@ -178,7 +175,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
     }
 
     @Override
-    public ShuntRecordBO shunt(ISecuritySession securitySession, String wenyBankID, long req_amount, String note) throws CircuitException {
+    public ShuntRecordBO shunt(ISecuritySession securitySession, String wenyBankID, String operator, String operatorName, long req_amount, String out_trade_sn, String note) throws CircuitException {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
@@ -186,8 +183,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
         if (req_amount < 0) {
             throw new CircuitException("500", "请求金额为负数");
         }
-        Map<String, Object> person = (Map<String, Object>) personService.getPersonInfo((String) securitySession.property("accessToken"));
-        if (person == null) {
+        if (operator == null) {
             throw new CircuitException("404", String.format("用户不存在:" + securitySession.principal()));
         }
 
@@ -200,7 +196,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
         }
         List<Shunter> shunters = wenyBankService.getShunters(wenyBankID);
 
-        ShuntRecord record = shuntReceiptBusinessService.shunt((String) person.get("person"), (String) person.get("nickName"), wenyBankID, shunters, req_amount, note);
+        ShuntRecord record = shuntReceiptBusinessService.shunt(operator, operatorName, wenyBankID, shunters, req_amount, out_trade_sn, note);
 
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wybank.ports")
@@ -209,16 +205,16 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                         put("command", "shunt");
                         put("operator", record.getOperator());
                         put("operatorName", record.getPersonName());
-                        put("appid", (String) securitySession.property("appid"));
                         put("wenyBankID", wenyBankID);
                         put("record_sn", record.getSn());
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish(properties, body);
+        rabbitMQ.publish("shunt",properties, body);
 
         ShuntRecordBO bo = new ShuntRecordBO();
         bo.load(record);
         return bo;
     }
+
 }

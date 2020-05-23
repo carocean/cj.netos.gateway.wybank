@@ -7,7 +7,7 @@ public class PurchaseBO {
      * Column: sn
      */
     private String sn;
-
+    String outTradeSn;
     /**
      * Column: purchaser
      * Remark: 申购人
@@ -90,6 +90,14 @@ public class PurchaseBO {
      * Column: bankid
      */
     private String bankid;
+
+    public String getOutTradeSn() {
+        return outTradeSn;
+    }
+
+    public void setOutTradeSn(String outTradeSn) {
+        this.outTradeSn = outTradeSn;
+    }
 
     public String getSn() {
         return sn;

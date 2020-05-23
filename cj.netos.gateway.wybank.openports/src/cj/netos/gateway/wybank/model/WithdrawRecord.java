@@ -77,6 +77,12 @@ public class WithdrawRecord {
      */
     private String shunter;
 
+    /**
+     * Column: out_trade_sn
+     * Remark: 外部系统交易订单号，在完成后由通知外部系统确认订单
+     */
+    private String outTradeSn;
+
     public String getSn() {
         return sn;
     }
@@ -179,5 +185,13 @@ public class WithdrawRecord {
 
     public void setShunter(String shunter) {
         this.shunter = shunter == null ? null : shunter.trim();
+    }
+
+    public String getOutTradeSn() {
+        return outTradeSn;
+    }
+
+    public void setOutTradeSn(String outTradeSn) {
+        this.outTradeSn = outTradeSn == null ? null : outTradeSn.trim();
     }
 }

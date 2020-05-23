@@ -66,6 +66,5 @@ public interface WithdrawRecordMapper {
 
     void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "dtime") String dtime);
 
-    List<WithdrawRecord> page(@Param(value = "bankid") String bankid, @Param(value = "limit")int limit, @Param(value = "offset")long offset);
-
+    List<WithdrawRecord> page(@Param(value = "bankid") String bankid, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 }

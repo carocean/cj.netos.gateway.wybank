@@ -18,7 +18,7 @@
 				class: 'cj.studio.openport.OpenportEntryPointActivator',
 				parameters: {
 					"publicAPIPath": '/portsapi',
-					checkAppSignStrategy: '',
+					checkAppSignStrategy: 'cj.netos.gateway.wybank.program.AppSignStrategy',
 					checkAccessTokenStrategy: 'cj.netos.gateway.wybank.program.CheckAccessTokenStrategy'
 				}
 			}

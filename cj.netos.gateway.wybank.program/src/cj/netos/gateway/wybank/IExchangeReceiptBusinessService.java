@@ -7,7 +7,7 @@ import cj.studio.ecm.net.CircuitException;
 import java.math.BigDecimal;
 
 public interface IExchangeReceiptBusinessService {
-    ExchangeRecord exchange(PurchaseRecord purchaseRecord, String note) throws CircuitException;
+    ExchangeRecord exchange(PurchaseRecord purchaseRecord,String out_trade_sn, String note) throws CircuitException;
 
     ExchangeRecord getExchangeRecord(String sn);
 

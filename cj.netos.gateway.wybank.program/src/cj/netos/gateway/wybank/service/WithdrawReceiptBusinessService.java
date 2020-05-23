@@ -31,11 +31,7 @@ public class WithdrawReceiptBusinessService implements IWithdrawReceiptBusinessS
 
     @CjTransaction
     @Override
-    public WithdrawRecord withdraw(ISecuritySession securitySession, String wenyBankID, String shunter, long req_amount, String note) throws CircuitException {
-        Map<String, Object> person = (Map<String, Object>) personService.getPersonInfo((String) securitySession.property("accessToken"));
-        if (person == null) {
-            throw new CircuitException("404", String.format("用户不存在:" + securitySession.principal()));
-        }
+    public WithdrawRecord withdraw(String withdrawer,String withdrawerName, String wenyBankID, String shunter, long req_amount,String out_trade_sn, String note) throws CircuitException {
         BankInfo bankInfo = wenyBankService.getWenyBank(wenyBankID);
         if (bankInfo == null) {
             throw new CircuitException("404", String.format("纹银银行不存在:%s", wenyBankID));
@@ -46,13 +42,14 @@ public class WithdrawReceiptBusinessService implements IWithdrawReceiptBusinessS
         record.setCtime(BankUtils.dateTimeToSecond(System.currentTimeMillis()));
         record.setDtime(record.getCtime());
         record.setNote(note);
-        record.setPersonName((String) person.get("nickName"));
+        record.setPersonName(withdrawerName);
         record.setRealAmount(0L);
         record.setReqAmount(req_amount);
         record.setShunter(shunter);
         record.setSn(IdWorker.nextId());
         record.setState(0);
-        record.setWithdrawer((String) person.get("person"));
+        record.setWithdrawer(withdrawer);
+        record.setOutTradeSn(out_trade_sn);
 
         withdrawRecordMapper.insert(record);
         return record;

@@ -1,374 +1,387 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cj.netos.gateway.wybank.mapper.ShuntRecordMapper">
-    <resultMap id="BaseResultMap" type="cj.netos.gateway.wybank.model.ShuntRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        <id column="sn" jdbcType="VARCHAR" property="sn"/>
-        <result column="operator" jdbcType="VARCHAR" property="operator"/>
-        <result column="person_name" jdbcType="VARCHAR" property="personName"/>
-        <result column="req_amount" jdbcType="BIGINT" property="reqAmount"/>
-        <result column="real_amount" jdbcType="BIGINT" property="realAmount"/>
-        <result column="state" jdbcType="INTEGER" property="state"/>
-        <result column="bankid" jdbcType="VARCHAR" property="bankid"/>
-        <result column="ctime" jdbcType="VARCHAR" property="ctime"/>
-        <result column="dtime" jdbcType="VARCHAR" property="dtime"/>
-        <result column="note" jdbcType="VARCHAR" property="note"/>
-        <result column="status" jdbcType="VARCHAR" property="status"/>
-        <result column="message" jdbcType="VARCHAR" property="message"/>
-        <result column="source" jdbcType="INTEGER" property="source"/>
-        <result column="shunters" jdbcType="VARCHAR" property="shunters"/>
-    </resultMap>
-    <sql id="Example_Where_Clause">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+  <resultMap id="BaseResultMap" type="cj.netos.gateway.wybank.model.ShuntRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="sn" jdbcType="VARCHAR" property="sn" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="person_name" jdbcType="VARCHAR" property="personName" />
+    <result column="req_amount" jdbcType="BIGINT" property="reqAmount" />
+    <result column="real_amount" jdbcType="BIGINT" property="realAmount" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="bankid" jdbcType="VARCHAR" property="bankid" />
+    <result column="ctime" jdbcType="VARCHAR" property="ctime" />
+    <result column="dtime" jdbcType="VARCHAR" property="dtime" />
+    <result column="note" jdbcType="VARCHAR" property="note" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="shunters" jdbcType="VARCHAR" property="shunters" />
+    <result column="out_trade_sn" jdbcType="VARCHAR" property="outTradeSn" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
             </foreach>
-        </where>
-    </sql>
-    <sql id="Base_Column_List">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        sn, `operator`, person_name, req_amount, real_amount, `state`, bankid, ctime, dtime,
-        note, `status`, message, `source`, shunters
-    </sql>
-    <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.ShuntRecordExample"
-            resultMap="BaseResultMap">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        select
-        <if test="distinct">
-            distinct
+          </trim>
         </if>
-        <include refid="Base_Column_List"/>
-        from shunt_record
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-    </select>
-    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        select
-        <include refid="Base_Column_List"/>
-        from shunt_record
-        where sn = #{sn,jdbcType=VARCHAR}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        delete from shunt_record
-        where sn = #{sn,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByExample" parameterType="cj.netos.gateway.wybank.model.ShuntRecordExample">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        delete from shunt_record
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </delete>
-    <insert id="insert" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        insert into shunt_record (sn, `operator`, person_name,
-        req_amount, real_amount, `state`,
-        bankid, ctime, dtime,
-        note, `status`, message,
-        `source`, shunters)
-        values (#{sn,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR},
-        #{reqAmount,jdbcType=BIGINT}, #{realAmount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER},
-        #{bankid,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{dtime,jdbcType=VARCHAR},
-        #{note,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR},
-        #{source,jdbcType=INTEGER}, #{shunters,jdbcType=VARCHAR})
-    </insert>
-    <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        insert into shunt_record
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="sn != null">
-                sn,
-            </if>
-            <if test="operator != null">
-                `operator`,
-            </if>
-            <if test="personName != null">
-                person_name,
-            </if>
-            <if test="reqAmount != null">
-                req_amount,
-            </if>
-            <if test="realAmount != null">
-                real_amount,
-            </if>
-            <if test="state != null">
-                `state`,
-            </if>
-            <if test="bankid != null">
-                bankid,
-            </if>
-            <if test="ctime != null">
-                ctime,
-            </if>
-            <if test="dtime != null">
-                dtime,
-            </if>
-            <if test="note != null">
-                note,
-            </if>
-            <if test="status != null">
-                `status`,
-            </if>
-            <if test="message != null">
-                message,
-            </if>
-            <if test="source != null">
-                `source`,
-            </if>
-            <if test="shunters != null">
-                shunters,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="sn != null">
-                #{sn,jdbcType=VARCHAR},
-            </if>
-            <if test="operator != null">
-                #{operator,jdbcType=VARCHAR},
-            </if>
-            <if test="personName != null">
-                #{personName,jdbcType=VARCHAR},
-            </if>
-            <if test="reqAmount != null">
-                #{reqAmount,jdbcType=BIGINT},
-            </if>
-            <if test="realAmount != null">
-                #{realAmount,jdbcType=BIGINT},
-            </if>
-            <if test="state != null">
-                #{state,jdbcType=INTEGER},
-            </if>
-            <if test="bankid != null">
-                #{bankid,jdbcType=VARCHAR},
-            </if>
-            <if test="ctime != null">
-                #{ctime,jdbcType=VARCHAR},
-            </if>
-            <if test="dtime != null">
-                #{dtime,jdbcType=VARCHAR},
-            </if>
-            <if test="note != null">
-                #{note,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=VARCHAR},
-            </if>
-            <if test="message != null">
-                #{message,jdbcType=VARCHAR},
-            </if>
-            <if test="source != null">
-                #{source,jdbcType=INTEGER},
-            </if>
-            <if test="shunters != null">
-                #{shunters,jdbcType=VARCHAR},
-            </if>
-        </trim>
-    </insert>
-    <select id="countByExample" parameterType="cj.netos.gateway.wybank.model.ShuntRecordExample"
-            resultType="java.lang.Long">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        select count(*) from shunt_record
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update shunt_record
-        <set>
-            <if test="record.sn != null">
-                sn = #{record.sn,jdbcType=VARCHAR},
-            </if>
-            <if test="record.operator != null">
-                `operator` = #{record.operator,jdbcType=VARCHAR},
-            </if>
-            <if test="record.personName != null">
-                person_name = #{record.personName,jdbcType=VARCHAR},
-            </if>
-            <if test="record.reqAmount != null">
-                req_amount = #{record.reqAmount,jdbcType=BIGINT},
-            </if>
-            <if test="record.realAmount != null">
-                real_amount = #{record.realAmount,jdbcType=BIGINT},
-            </if>
-            <if test="record.state != null">
-                `state` = #{record.state,jdbcType=INTEGER},
-            </if>
-            <if test="record.bankid != null">
-                bankid = #{record.bankid,jdbcType=VARCHAR},
-            </if>
-            <if test="record.ctime != null">
-                ctime = #{record.ctime,jdbcType=VARCHAR},
-            </if>
-            <if test="record.dtime != null">
-                dtime = #{record.dtime,jdbcType=VARCHAR},
-            </if>
-            <if test="record.note != null">
-                note = #{record.note,jdbcType=VARCHAR},
-            </if>
-            <if test="record.status != null">
-                `status` = #{record.status,jdbcType=VARCHAR},
-            </if>
-            <if test="record.message != null">
-                message = #{record.message,jdbcType=VARCHAR},
-            </if>
-            <if test="record.source != null">
-                `source` = #{record.source,jdbcType=INTEGER},
-            </if>
-            <if test="record.shunters != null">
-                shunters = #{record.shunters,jdbcType=VARCHAR},
-            </if>
-        </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExample" parameterType="map">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update shunt_record
-        set sn = #{record.sn,jdbcType=VARCHAR},
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    sn, `operator`, person_name, req_amount, real_amount, `state`, bankid, ctime, dtime, 
+    note, `status`, message, `source`, shunters, out_trade_sn
+  </sql>
+  <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.ShuntRecordExample" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shunt_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select 
+    <include refid="Base_Column_List" />
+    from shunt_record
+    where sn = #{sn,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from shunt_record
+    where sn = #{sn,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="cj.netos.gateway.wybank.model.ShuntRecordExample">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    delete from shunt_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into shunt_record (sn, `operator`, person_name, 
+      req_amount, real_amount, `state`, 
+      bankid, ctime, dtime, 
+      note, `status`, message, 
+      `source`, shunters, out_trade_sn
+      )
+    values (#{sn,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, #{personName,jdbcType=VARCHAR}, 
+      #{reqAmount,jdbcType=BIGINT}, #{realAmount,jdbcType=BIGINT}, #{state,jdbcType=INTEGER}, 
+      #{bankid,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, #{dtime,jdbcType=VARCHAR}, 
+      #{note,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
+      #{source,jdbcType=INTEGER}, #{shunters,jdbcType=VARCHAR}, #{outTradeSn,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    insert into shunt_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sn != null">
+        sn,
+      </if>
+      <if test="operator != null">
+        `operator`,
+      </if>
+      <if test="personName != null">
+        person_name,
+      </if>
+      <if test="reqAmount != null">
+        req_amount,
+      </if>
+      <if test="realAmount != null">
+        real_amount,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="bankid != null">
+        bankid,
+      </if>
+      <if test="ctime != null">
+        ctime,
+      </if>
+      <if test="dtime != null">
+        dtime,
+      </if>
+      <if test="note != null">
+        note,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="source != null">
+        `source`,
+      </if>
+      <if test="shunters != null">
+        shunters,
+      </if>
+      <if test="outTradeSn != null">
+        out_trade_sn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sn != null">
+        #{sn,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
+        #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqAmount != null">
+        #{reqAmount,jdbcType=BIGINT},
+      </if>
+      <if test="realAmount != null">
+        #{realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="bankid != null">
+        #{bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
+        #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="dtime != null">
+        #{dtime,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="shunters != null">
+        #{shunters,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeSn != null">
+        #{outTradeSn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cj.netos.gateway.wybank.model.ShuntRecordExample" resultType="java.lang.Long">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    select count(*) from shunt_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update shunt_record
+    <set>
+      <if test="record.sn != null">
+        sn = #{record.sn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operator != null">
         `operator` = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personName != null">
         person_name = #{record.personName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reqAmount != null">
         req_amount = #{record.reqAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.realAmount != null">
         real_amount = #{record.realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.state != null">
         `state` = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.bankid != null">
         bankid = #{record.bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dtime != null">
         dtime = #{record.dtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null">
         note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
         `status` = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null">
         message = #{record.message,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null">
         `source` = #{record.source,jdbcType=INTEGER},
-        shunters = #{record.shunters,jdbcType=VARCHAR}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByPrimaryKeySelective" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update shunt_record
-        <set>
-            <if test="operator != null">
-                `operator` = #{operator,jdbcType=VARCHAR},
-            </if>
-            <if test="personName != null">
-                person_name = #{personName,jdbcType=VARCHAR},
-            </if>
-            <if test="reqAmount != null">
-                req_amount = #{reqAmount,jdbcType=BIGINT},
-            </if>
-            <if test="realAmount != null">
-                real_amount = #{realAmount,jdbcType=BIGINT},
-            </if>
-            <if test="state != null">
-                `state` = #{state,jdbcType=INTEGER},
-            </if>
-            <if test="bankid != null">
-                bankid = #{bankid,jdbcType=VARCHAR},
-            </if>
-            <if test="ctime != null">
-                ctime = #{ctime,jdbcType=VARCHAR},
-            </if>
-            <if test="dtime != null">
-                dtime = #{dtime,jdbcType=VARCHAR},
-            </if>
-            <if test="note != null">
-                note = #{note,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                `status` = #{status,jdbcType=VARCHAR},
-            </if>
-            <if test="message != null">
-                message = #{message,jdbcType=VARCHAR},
-            </if>
-            <if test="source != null">
-                `source` = #{source,jdbcType=INTEGER},
-            </if>
-            <if test="shunters != null">
-                shunters = #{shunters,jdbcType=VARCHAR},
-            </if>
-        </set>
-        where sn = #{sn,jdbcType=VARCHAR}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
-        <!-- @mbg.generated: generated automatically, do not modify! -->
-        update shunt_record
-        set `operator` = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shunters != null">
+        shunters = #{record.shunters,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outTradeSn != null">
+        out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update shunt_record
+    set sn = #{record.sn,jdbcType=VARCHAR},
+      `operator` = #{record.operator,jdbcType=VARCHAR},
+      person_name = #{record.personName,jdbcType=VARCHAR},
+      req_amount = #{record.reqAmount,jdbcType=BIGINT},
+      real_amount = #{record.realAmount,jdbcType=BIGINT},
+      `state` = #{record.state,jdbcType=INTEGER},
+      bankid = #{record.bankid,jdbcType=VARCHAR},
+      ctime = #{record.ctime,jdbcType=VARCHAR},
+      dtime = #{record.dtime,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=VARCHAR},
+      message = #{record.message,jdbcType=VARCHAR},
+      `source` = #{record.source,jdbcType=INTEGER},
+      shunters = #{record.shunters,jdbcType=VARCHAR},
+      out_trade_sn = #{record.outTradeSn,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update shunt_record
+    <set>
+      <if test="operator != null">
+        `operator` = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="personName != null">
         person_name = #{personName,jdbcType=VARCHAR},
+      </if>
+      <if test="reqAmount != null">
         req_amount = #{reqAmount,jdbcType=BIGINT},
+      </if>
+      <if test="realAmount != null">
         real_amount = #{realAmount,jdbcType=BIGINT},
+      </if>
+      <if test="state != null">
         `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="bankid != null">
         bankid = #{bankid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
+      </if>
+      <if test="dtime != null">
         dtime = #{dtime,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null">
         note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
         `status` = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
         message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null">
         `source` = #{source,jdbcType=INTEGER},
-        shunters = #{shunters,jdbcType=VARCHAR}
-        where sn = #{sn,jdbcType=VARCHAR}
-    </update>
+      </if>
+      <if test="shunters != null">
+        shunters = #{shunters,jdbcType=VARCHAR},
+      </if>
+      <if test="outTradeSn != null">
+        out_trade_sn = #{outTradeSn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
+    <!-- @mbg.generated: generated automatically, do not modify! -->
+    update shunt_record
+    set `operator` = #{operator,jdbcType=VARCHAR},
+      person_name = #{personName,jdbcType=VARCHAR},
+      req_amount = #{reqAmount,jdbcType=BIGINT},
+      real_amount = #{realAmount,jdbcType=BIGINT},
+      `state` = #{state,jdbcType=INTEGER},
+      bankid = #{bankid,jdbcType=VARCHAR},
+      ctime = #{ctime,jdbcType=VARCHAR},
+      dtime = #{dtime,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      `source` = #{source,jdbcType=INTEGER},
+      shunters = #{shunters,jdbcType=VARCHAR},
+      out_trade_sn = #{outTradeSn,jdbcType=VARCHAR}
+    where sn = #{sn,jdbcType=VARCHAR}
+  </update>
 
     <update id="ackSuccess" parameterType="cj.netos.gateway.wybank.model.ShuntRecord">
     update shunt_record
@@ -393,7 +406,7 @@
   </update>
     <select id="page" parameterType="cj.netos.gateway.wybank.model.ShuntRecord" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List" />
         from shunt_record
         where bankid = #{bankid,jdbcType=VARCHAR}
         order by ctime desc, dtime desc

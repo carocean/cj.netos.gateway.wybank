@@ -1,6 +1,7 @@
 package cj.netos.gateway.wybank.cmd;
 
 import cj.netos.gateway.wybank.IShuntReceiptBusinessService;
+import cj.netos.gateway.wybank.ITradeEventNotify;
 import cj.netos.gateway.wybank.IWithdrawReceiptBusinessService;
 import cj.netos.gateway.wybank.model.ShuntRecord;
 import cj.netos.gateway.wybank.model.WithdrawRecord;
@@ -20,7 +21,8 @@ import com.rabbitmq.client.LongString;
 public class AckWithdrawCommand implements IConsumerCommand {
     @CjServiceRef
     IWithdrawReceiptBusinessService withdrawReceiptBusinessService;
-
+    @CjServiceRef
+    ITradeEventNotify tradeEventNotify;
     @Override
     public void command(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws RabbitMQException, RetryCommandException {
         LongString state = (LongString) properties.getHeaders().get("state");
@@ -32,6 +34,7 @@ public class AckWithdrawCommand implements IConsumerCommand {
             record.setState(1);
             record.setRealAmount(response.getRealAmount());
             withdrawReceiptBusinessService.ackSuccess(record_sn.toString(), response.getRealAmount());
+            tradeEventNotify.send("purchase", response.getStatus(), response.getMessage(),response);
             return;
         }
         String msg = message == null ? "" : message.toString();
@@ -39,5 +42,6 @@ public class AckWithdrawCommand implements IConsumerCommand {
             msg = msg.substring(0, 200);
         }
         withdrawReceiptBusinessService.ackFailure(record_sn.toString(), state.toString(), msg);
+        tradeEventNotify.send("purchase", state.toString(),msg,record);
     }
 }

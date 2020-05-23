@@ -38,7 +38,7 @@ public class ExchangeReceiptBusinessService implements IExchangeReceiptBusinessS
 
     @CjTransaction
     @Override
-    public ExchangeRecord exchange(PurchaseRecord purchaseRecord, String note) throws CircuitException {
+    public ExchangeRecord exchange(PurchaseRecord purchaseRecord, String out_tade_sn, String note) throws CircuitException {
 
         ExchangeRecord record = new ExchangeRecord();
         record.setBankid(purchaseRecord.getBankid());
@@ -56,6 +56,7 @@ public class ExchangeReceiptBusinessService implements IExchangeReceiptBusinessS
         record.setState(0);
         record.setStock(purchaseRecord.getStock());
         record.setTtm(purchaseRecord.getTtm());
+        record.setOutTradeSn(out_tade_sn);
 
         exchangeRecordMapper.insert(record);
         purchaseReceiptBusinessService.flagExchanging(purchaseRecord.getSn());

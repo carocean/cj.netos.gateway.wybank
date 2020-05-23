@@ -27,7 +27,7 @@ public class ShuntReceiptBusinessService implements IShuntReceiptBusinessService
     ShuntDetailsMapper shuntDetailsMapper;
     @CjTransaction
     @Override
-    public ShuntRecord shunt(String operator,String personName, String wenyBankID, List<Shunter> shunters, long req_amount, String note) throws CircuitException {
+    public ShuntRecord shunt(String operator,String personName, String wenyBankID, List<Shunter> shunters, long req_amount,String out_trade_sn, String note) throws CircuitException {
 
         ShuntRecord record = new ShuntRecord();
         record.setBankid(wenyBankID);
@@ -42,6 +42,7 @@ public class ShuntReceiptBusinessService implements IShuntReceiptBusinessService
         record.setState(0);
         record.setSource(0);
         record.setShunters(new Gson().toJson(shunters));
+        record.setOutTradeSn(out_trade_sn);
 
         shuntRecordMapper.insert(record);
         return record;

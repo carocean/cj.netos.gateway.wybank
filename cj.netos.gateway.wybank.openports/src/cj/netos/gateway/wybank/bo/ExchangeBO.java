@@ -83,6 +83,15 @@ public class ExchangeBO {
      * Column: bankid
      */
     private String bankid;
+    String outTradeSn;
+
+    public String getOutTradeSn() {
+        return outTradeSn;
+    }
+
+    public void setOutTradeSn(String outTradeSn) {
+        this.outTradeSn = outTradeSn;
+    }
 
     public String getSn() {
         return sn;

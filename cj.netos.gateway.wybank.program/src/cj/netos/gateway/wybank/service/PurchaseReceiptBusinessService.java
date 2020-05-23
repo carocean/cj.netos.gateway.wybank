@@ -26,8 +26,6 @@ import java.util.Map;
 @CjBridge(aspects = "@transaction")
 @CjService(name = "purchaseReceiptBusinessService")
 public class PurchaseReceiptBusinessService implements IPurchaseReceiptBusinessService {
-    @CjServiceRef
-    IPersonService personService;
 
     @CjServiceRef
     IWenyBankService wenyBankService;
@@ -40,10 +38,9 @@ public class PurchaseReceiptBusinessService implements IPurchaseReceiptBusinessS
 
     @CjTransaction
     @Override
-    public PurchaseRecord purchase(ISecuritySession securitySession, String wenyBankID, long amount, String note) throws CircuitException {
-        Map<String, Object> person = (Map<String, Object>) personService.getPersonInfo((String) securitySession.property("accessToken"));
-        if (person == null) {
-            throw new CircuitException("404", String.format("用户不存在:" + securitySession.principal()));
+    public PurchaseRecord purchase(String purchaser,String purchaserName, String wenyBankID, long amount,String out_trade_sn, String note) throws CircuitException {
+        if (purchaser == null) {
+            throw new CircuitException("404", String.format("用户不存在:" + purchaser));
         }
         BankInfo bankInfo = wenyBankService.getWenyBank(wenyBankID);
         if (bankInfo == null) {
@@ -51,6 +48,7 @@ public class PurchaseReceiptBusinessService implements IPurchaseReceiptBusinessS
         }
         PurchaseRecord record = new PurchaseRecord();
         record.setSn(IdWorker.nextId());
+        record.setOutTradeSn(out_trade_sn);
         record.setAmount(amount);
         record.setBankid(wenyBankID);
         record.setCurrency("CNY");
@@ -59,9 +57,9 @@ public class PurchaseReceiptBusinessService implements IPurchaseReceiptBusinessS
         record.setFreeRatio(bankInfo.getFreeRatio());
         record.setFeeRatio(bankInfo.getFreeRatio().add(bankInfo.getReserveRatio()));
         record.setPrincipalRatio(bankInfo.getPrincipalRatio());
-        record.setPersonName((String) person.get("nickName"));
-        record.setPurchaser(securitySession.principal());
-        record.setDevice((String) securitySession.property("device"));
+        record.setPersonName(purchaserName);
+        record.setPurchaser(purchaser);
+//        record.setDevice((String) securitySession.property("device"));
         long service_fee = record.getFeeRatio().multiply(new BigDecimal(amount)).setScale(14, BigDecimal.ROUND_DOWN).longValue();
         record.setServiceFee(service_fee);
         long principal = record.getPrincipalRatio().multiply(new BigDecimal(amount)).setScale(14, BigDecimal.ROUND_DOWN).longValue();

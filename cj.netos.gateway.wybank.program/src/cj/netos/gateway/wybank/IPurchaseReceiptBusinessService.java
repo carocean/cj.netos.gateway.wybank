@@ -8,7 +8,7 @@ import com.rabbitmq.client.LongString;
 import java.math.BigDecimal;
 
 public interface IPurchaseReceiptBusinessService {
-    PurchaseRecord purchase(ISecuritySession securitySession, String wenyBankID, long amount, String note) throws CircuitException;
+    PurchaseRecord purchase(String purchaser,String purchaserName, String wenyBankID, long amount,String out_trade_sn, String note) throws CircuitException;
 
     PurchaseRecord getPurchaseRecord(String purchaseSN);
 
