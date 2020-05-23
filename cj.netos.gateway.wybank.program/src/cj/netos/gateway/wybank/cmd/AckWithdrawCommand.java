@@ -34,7 +34,7 @@ public class AckWithdrawCommand implements IConsumerCommand {
             record.setState(1);
             record.setRealAmount(response.getRealAmount());
             withdrawReceiptBusinessService.ackSuccess(record_sn.toString(), response.getRealAmount());
-            tradeEventNotify.send("purchase", response.getStatus(), response.getMessage(),response);
+            tradeEventNotify.send("withdraw", response.getStatus(), response.getMessage(),response);
             return;
         }
         String msg = message == null ? "" : message.toString();
@@ -42,6 +42,6 @@ public class AckWithdrawCommand implements IConsumerCommand {
             msg = msg.substring(0, 200);
         }
         withdrawReceiptBusinessService.ackFailure(record_sn.toString(), state.toString(), msg);
-        tradeEventNotify.send("purchase", state.toString(),msg,record);
+        tradeEventNotify.send("withdraw", state.toString(),msg,record);
     }
 }

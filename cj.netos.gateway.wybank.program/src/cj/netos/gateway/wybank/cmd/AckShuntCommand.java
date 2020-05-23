@@ -39,7 +39,7 @@ public class AckShuntCommand implements IConsumerCommand {
             record.setState(1);
             record.setRealAmount(res_record.getRealAmount());
             shuntReceiptBusinessService.ackSuccess(record_sn.toString(), res_record.getRealAmount(), res_record.getSource(), response.getDetails());
-            tradeEventNotify.send("purchase", response.getStatus(), response.getMessage(),response);
+            tradeEventNotify.send("shunt", response.getStatus(), response.getMessage(),response);
             return;
         }
         String msg = message == null ? "" : message.toString();
@@ -47,6 +47,6 @@ public class AckShuntCommand implements IConsumerCommand {
             msg = msg.substring(0, 200);
         }
         shuntReceiptBusinessService.ackFailure(record_sn.toString(), state.toString(), msg, res_record.getSource());
-        tradeEventNotify.send("purchase", state.toString(),msg,record);
+        tradeEventNotify.send("shunt", state.toString(),msg,record);
     }
 }

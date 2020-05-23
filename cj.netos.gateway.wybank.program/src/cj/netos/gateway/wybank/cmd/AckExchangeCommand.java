@@ -38,7 +38,7 @@ public class AckExchangeCommand implements IConsumerCommand {
             record.setPrice(response.getPrice());
             exchangeReceiptBusinessService.ackSuccess(record_sn.toString(), response.getAmount(), response.getProfit(), response.getPrice());
             purchaseReceiptBusinessService.ackExchangedSuccess(record.getRefPurchase());
-            tradeEventNotify.send("purchase", response.getStatus(), response.getMessage(),response);
+            tradeEventNotify.send("exchange", response.getStatus(), response.getMessage(),response);
             return;
         }
         String msg = message == null ? "" : message.toString();
@@ -49,6 +49,6 @@ public class AckExchangeCommand implements IConsumerCommand {
         if (record != null) {
             purchaseReceiptBusinessService.ackExchangedFailure(record.getRefPurchase());
         }
-        tradeEventNotify.send("purchase", state.toString(),msg,record);
+        tradeEventNotify.send("exchange", state.toString(),msg,record);
     }
 }
