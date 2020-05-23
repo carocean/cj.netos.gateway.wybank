@@ -49,7 +49,7 @@ routing:
       title: 钱包交易网关
       castmode: unicast
       routingKeys:
-        - wallet.gateway-1
-        - wallet.gateway-2
-        - wallet.gateway-3
-        - wallet.gateway-4
+        - wallet.gateway.1
+        - wallet.gateway.2
+        - wallet.gateway.3
+        - wallet.gateway.4
