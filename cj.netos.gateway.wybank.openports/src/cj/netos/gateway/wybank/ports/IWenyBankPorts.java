@@ -33,6 +33,10 @@ public interface IWenyBankPorts extends IOpenportService {
                                     @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
 
+    @CjOpenport(usage = "获取一个银行的概要信息")
+    Map<String, Object> getWenyBankInfo(ISecuritySession securitySession,
+                                    @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
     @CjOpenport(usage = "停止运营")
     void stopWenyBank(ISecuritySession securitySession,
                       @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn

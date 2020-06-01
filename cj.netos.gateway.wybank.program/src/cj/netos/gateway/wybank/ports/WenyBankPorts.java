@@ -71,6 +71,21 @@ public class WenyBankPorts implements IWenyBankPorts {
         return new Gson().fromJson(new Gson().toJson(bankInfo), HashMap.class);
     }
 
+    @Override
+    public Map<String, Object> getWenyBankInfo(ISecuritySession securitySession, String banksn) throws CircuitException {
+        if (StringUtil.isEmpty(banksn)) {
+            throw new CircuitException("404", "banksn 参数为空");
+        }
+        BankInfo bankInfo = wenyBankService.getWenyBank(banksn);
+        Map<String, Object> map = new HashMap<>();
+        map.put("creator", bankInfo.getCreator());
+        map.put("property",bankInfo.getProperty());
+        map.put("ctime", bankInfo.getCtime());
+        map.put("id", bankInfo.getId());
+        map.put("state", bankInfo.getState());
+        map.put("title", bankInfo.getTitle());
+        return map;
+    }
 
     @Override
     public void stopWenyBank(ISecuritySession securitySession, String banksn) throws CircuitException {
