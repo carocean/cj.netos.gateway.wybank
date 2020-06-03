@@ -2,9 +2,11 @@ package cj.netos.gateway.wybank.ports;
 
 import cj.netos.gateway.wybank.bo.FundBill;
 import cj.studio.ecm.net.CircuitException;
+import cj.studio.openport.AccessTokenIn;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
 import cj.studio.openport.annotations.CjOpenport;
+import cj.studio.openport.annotations.CjOpenportAppSecurity;
 import cj.studio.openport.annotations.CjOpenportParameter;
 import cj.studio.openport.annotations.CjOpenports;
 
@@ -56,5 +58,22 @@ public interface IFundBillPorts extends IOpenportService {
             ISecuritySession securitySession,
             @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
             @CjOpenportParameter(usage = "年份", name = "year") int year
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取指定日的申购总金额")
+    long totalPurchaseFundOfDay(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+                                @CjOpenportParameter(usage = "年份。", name = "year") int year,
+                                @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month,
+                                @CjOpenportParameter(usage = "天。", name = "day") int day
+    ) throws CircuitException;
+
+
+    @CjOpenport(usage = "获取指定日的承兑总金额")
+    long totalExchangeFundOfDay(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+                                @CjOpenportParameter(usage = "年份。", name = "year") int year,
+                                @CjOpenportParameter(usage = "月份。（java特性，实际用份减1）", name = "month") int month,
+                                @CjOpenportParameter(usage = "天。", name = "day") int day
     ) throws CircuitException;
 }
