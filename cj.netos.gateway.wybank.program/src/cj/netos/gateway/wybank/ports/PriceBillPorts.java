@@ -42,7 +42,7 @@ public class PriceBillPorts implements IPriceBillPorts {
 
     @Override
     public List<PriceBill> pagePriceBill(ISecuritySession securitySession, String wenyBankID, int limit, long offset) throws CircuitException {
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -91,7 +91,7 @@ public class PriceBillPorts implements IPriceBillPorts {
 
     @Override
     public List<PriceBill> getPriceBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month, int limit, long offset) throws CircuitException {
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -140,7 +140,7 @@ public class PriceBillPorts implements IPriceBillPorts {
 
     @Override
     public List<PriceBill> getPriceBillOfDay(ISecuritySession securitySession, String wenyBankID, int year, int month, int day, int limit, long offset) throws CircuitException {
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
