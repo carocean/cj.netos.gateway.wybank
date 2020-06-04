@@ -90,6 +90,53 @@ public class PriceBillPorts implements IPriceBillPorts {
     }
 
     @Override
+    public List<PriceBill> getAfterTimePriceBill(ISecuritySession securitySession, String wenyBankID, String ctime) throws CircuitException {
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+
+        String appid = site.getProperty("appid");
+        String appKey = site.getProperty("appKey");
+        String appSecret = site.getProperty("appSecret");
+        String ports = site.getProperty("ports.oc.wybank.bill.price");
+
+        String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
+        String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
+        String portsUrl = String.format("%s?wenyBankID=%s&ctime=%s", ports, wenyBankID, ctime);
+        final Request request = new Request.Builder()
+                .url(portsUrl)
+                .addHeader("Rest-Command", "getAfterTimePriceBill")
+                .addHeader("app-id", appid)
+                .addHeader("app-key", appKey)
+                .addHeader("app-nonce", nonce)
+                .addHeader("app-sign", sign)
+                .addHeader("person", securitySession.principal())
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        return new Gson().fromJson(json, new TypeToken<ArrayList<PriceBill>>() {
+        }.getType());
+    }
+
+    @Override
     public List<PriceBill> getPriceBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month, int limit, long offset) throws CircuitException {
 //        demandBankOwner(securitySession, wenyBankID);
 

@@ -19,6 +19,12 @@ public interface IPriceBillPorts extends IOpenportService {
                                   @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
 
+    @CjOpenport(usage = "取时间之后的价格清单")
+    List<PriceBill> getAfterTimePriceBill(ISecuritySession securitySession,
+                                          @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+                                          @CjOpenportParameter(usage = "创建时间", name = "ctime") String ctime
+    ) throws CircuitException;
+
     @CjOpenport(usage = "按月获取价格单")
     List<PriceBill> getPriceBillOfMonth(ISecuritySession securitySession,
                                         @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
