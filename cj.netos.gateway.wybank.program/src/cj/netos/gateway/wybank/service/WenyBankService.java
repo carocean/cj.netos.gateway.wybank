@@ -47,13 +47,15 @@ public class WenyBankService implements IWenyBankService {
             e.printStackTrace();
         }
         bankInfo.setLocation(wenyBankBO.getLocation());
-        bankInfo.setOwner(wenyBankBO.getOwner());
         bankInfo.setPrincipalRatio(wenyBankBO.getPrincipalRatio());
-        bankInfo.setProperty(wenyBankBO.getProperty());
         bankInfo.setReserveRatio(wenyBankBO.getReserveRatio());
         bankInfo.setState(0);
         bankInfo.setTitle(wenyBankBO.getTitle());
         bankInfo.setCreator(creator);
+        bankInfo.setMasterId(wenyBankBO.getMasterId());
+        bankInfo.setMasterType(wenyBankBO.getMasterType());
+        bankInfo.setMasterPerson(wenyBankBO.getMasterPerson());
+
         bankInfoMapper.insert(bankInfo);
         return bankInfo;
     }

@@ -4,12 +4,46 @@ import java.math.BigDecimal;
 
 public class WenyBankBO {
     private String title;
-    private String owner;
-    private Integer property;
     private String location;
     private BigDecimal principalRatio;
     private BigDecimal reserveRatio;
     private BigDecimal freeRatio;
+    private String masterId;
+    private Integer masterType;
+    private String masterPerson;
+    private String icon;
+
+    public String getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(String masterId) {
+        this.masterId = masterId;
+    }
+
+    public Integer getMasterType() {
+        return masterType;
+    }
+
+    public void setMasterType(Integer masterType) {
+        this.masterType = masterType;
+    }
+
+    public String getMasterPerson() {
+        return masterPerson;
+    }
+
+    public void setMasterPerson(String masterPerson) {
+        this.masterPerson = masterPerson;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
     public String getTitle() {
         return title;
@@ -19,21 +53,6 @@ public class WenyBankBO {
         this.title = title;
     }
 
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner;
-    }
-
-    public Integer getProperty() {
-        return property;
-    }
-
-    public void setProperty(Integer property) {
-        this.property = property;
-    }
 
     public String getLocation() {
         return location;

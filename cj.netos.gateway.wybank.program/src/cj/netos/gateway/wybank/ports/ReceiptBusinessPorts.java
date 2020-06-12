@@ -191,7 +191,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
         if (bankInfo == null) {
             throw new CircuitException("404", String.format("纹银银行不存在:%s", wenyBankID));
         }
-        if (!securitySession.roleIn("platform:administrators") && !securitySession.principal().equals(bankInfo.getOwner())) {
+        if (!securitySession.roleIn("platform:administrators") && !securitySession.principal().equals(bankInfo.getMasterPerson())) {
             throw new CircuitException("800", "拒绝访问");
         }
         List<Shunter> shunters = wenyBankService.getShunters(wenyBankID);

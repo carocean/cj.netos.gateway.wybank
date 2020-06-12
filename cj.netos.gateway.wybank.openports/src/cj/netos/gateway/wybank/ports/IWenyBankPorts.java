@@ -3,6 +3,7 @@ package cj.netos.gateway.wybank.ports;
 import cj.netos.gateway.wybank.bo.ShunterBO;
 import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
+import cj.netos.gateway.wybank.model.BankInfo;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
@@ -34,7 +35,7 @@ public interface IWenyBankPorts extends IOpenportService {
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取一个银行的概要信息")
-    Map<String, Object> getWenyBankInfo(ISecuritySession securitySession,
+    BankInfo getWenyBankInfo(ISecuritySession securitySession,
                                     @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
     @CjOpenport(usage = "停止运营")

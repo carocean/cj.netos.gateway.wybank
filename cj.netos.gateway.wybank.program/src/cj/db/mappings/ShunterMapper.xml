@@ -3,10 +3,10 @@
 <mapper namespace="cj.netos.gateway.wybank.mapper.ShunterMapper">
   <resultMap id="BaseResultMap" type="cj.netos.gateway.wybank.model.Shunter">
     <!-- @mbg.generated: generated automatically, do not modify! -->
+    <id column="bankid" jdbcType="VARCHAR" property="bankid" />
     <id column="code" jdbcType="VARCHAR" property="code" />
     <result column="alias" jdbcType="VARCHAR" property="alias" />
     <result column="ratio" jdbcType="DECIMAL" property="ratio" />
-    <result column="bankid" jdbcType="VARCHAR" property="bankid" />
     <result column="note" jdbcType="VARCHAR" property="note" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -71,7 +71,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    code, `alias`, ratio, bankid, note
+    bankid, code, `alias`, ratio, note
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.ShunterExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -88,17 +88,19 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="map" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     select 
     <include refid="Base_Column_List" />
     from shunter
-    where code = #{code,jdbcType=VARCHAR}
+    where bankid = #{bankid,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="map">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     delete from shunter
-    where code = #{code,jdbcType=VARCHAR}
+    where bankid = #{bankid,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cj.netos.gateway.wybank.model.ShunterExample">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -109,15 +111,18 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.gateway.wybank.model.Shunter">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into shunter (code, `alias`, ratio, 
-      bankid, note)
-    values (#{code,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{ratio,jdbcType=DECIMAL}, 
-      #{bankid,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR})
+    insert into shunter (bankid, code, `alias`, 
+      ratio, note)
+    values (#{bankid,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, 
+      #{ratio,jdbcType=DECIMAL}, #{note,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.Shunter">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into shunter
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bankid != null">
+        bankid,
+      </if>
       <if test="code != null">
         code,
       </if>
@@ -127,14 +132,14 @@
       <if test="ratio != null">
         ratio,
       </if>
-      <if test="bankid != null">
-        bankid,
-      </if>
       <if test="note != null">
         note,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bankid != null">
+        #{bankid,jdbcType=VARCHAR},
+      </if>
       <if test="code != null">
         #{code,jdbcType=VARCHAR},
       </if>
@@ -143,9 +148,6 @@
       </if>
       <if test="ratio != null">
         #{ratio,jdbcType=DECIMAL},
-      </if>
-      <if test="bankid != null">
-        #{bankid,jdbcType=VARCHAR},
       </if>
       <if test="note != null">
         #{note,jdbcType=VARCHAR},
@@ -163,6 +165,9 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update shunter
     <set>
+      <if test="record.bankid != null">
+        bankid = #{record.bankid,jdbcType=VARCHAR},
+      </if>
       <if test="record.code != null">
         code = #{record.code,jdbcType=VARCHAR},
       </if>
@@ -171,9 +176,6 @@
       </if>
       <if test="record.ratio != null">
         ratio = #{record.ratio,jdbcType=DECIMAL},
-      </if>
-      <if test="record.bankid != null">
-        bankid = #{record.bankid,jdbcType=VARCHAR},
       </if>
       <if test="record.note != null">
         note = #{record.note,jdbcType=VARCHAR},
@@ -186,10 +188,10 @@
   <update id="updateByExample" parameterType="map">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update shunter
-    set code = #{record.code,jdbcType=VARCHAR},
+    set bankid = #{record.bankid,jdbcType=VARCHAR},
+      code = #{record.code,jdbcType=VARCHAR},
       `alias` = #{record.alias,jdbcType=VARCHAR},
       ratio = #{record.ratio,jdbcType=DECIMAL},
-      bankid = #{record.bankid,jdbcType=VARCHAR},
       note = #{record.note,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -205,22 +207,20 @@
       <if test="ratio != null">
         ratio = #{ratio,jdbcType=DECIMAL},
       </if>
-      <if test="bankid != null">
-        bankid = #{bankid,jdbcType=VARCHAR},
-      </if>
       <if test="note != null">
         note = #{note,jdbcType=VARCHAR},
       </if>
     </set>
-    where code = #{code,jdbcType=VARCHAR}
+    where bankid = #{bankid,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cj.netos.gateway.wybank.model.Shunter">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     update shunter
     set `alias` = #{alias,jdbcType=VARCHAR},
       ratio = #{ratio,jdbcType=DECIMAL},
-      bankid = #{bankid,jdbcType=VARCHAR},
       note = #{note,jdbcType=VARCHAR}
-    where code = #{code,jdbcType=VARCHAR}
+    where bankid = #{bankid,jdbcType=VARCHAR}
+      and code = #{code,jdbcType=VARCHAR}
   </update>
 </mapper>

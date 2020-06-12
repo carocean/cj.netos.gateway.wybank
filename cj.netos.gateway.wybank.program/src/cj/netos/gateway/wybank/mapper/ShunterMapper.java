@@ -20,7 +20,7 @@ public interface ShunterMapper {
     /**
      * @mbg.generated generated automatically, do not modify!
      */
-    int deleteByPrimaryKey(String code);
+    int deleteByPrimaryKey(@Param("bankid") String bankid, @Param("code") String code);
 
     /**
      * @mbg.generated generated automatically, do not modify!
@@ -40,7 +40,7 @@ public interface ShunterMapper {
     /**
      * @mbg.generated generated automatically, do not modify!
      */
-    Shunter selectByPrimaryKey(String code);
+    Shunter selectByPrimaryKey(@Param("bankid") String bankid, @Param("code") String code);
 
     /**
      * @mbg.generated generated automatically, do not modify!

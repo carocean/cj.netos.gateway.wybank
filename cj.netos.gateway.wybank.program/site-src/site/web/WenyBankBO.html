@@ -1,12 +1,14 @@
 WenyBankBO属性：
 
-    String title;
-    String owner;
-    Integer property;//0为个人，1为企业
-    String location;
-    BigDecimal principalRatio;
-    BigDecimal reserveRatio;
-    BigDecimal freeRatio;
+ String title;
+ String location;
+ BigDecimal principalRatio;
+ BigDecimal reserveRatio;
+ BigDecimal freeRatio;
+ String masterId;//业主的标识，关联运营商或地商标识
+ Integer masterType;//0为地商； 1为市商（该标记永不用，留给将来市商兼容地商业务用） 2为运营商；
+ String masterPerson;//业主所有权人，格式是公号，为yong yu字段，对应地商或运营商的业主字段
+ String icon;
 
 用法：
    wenyBankBO 为内容参数，因此需要放到请求内容中构建该参数，如下：
@@ -17,9 +19,14 @@ WenyBankBO属性：
 例：
 
 {
-    "title":"尉氏县商贸发展科技有限公司",
+    "title":"尉氏商贸",
     "property":"1",
     "principalRatio":0.68,
     "reserveRatio":0.10,
-    "freeRatio":0.22
+    "freeRatio":0.22,
+    "icon":"",
+    "masterId":"",
+    "masterType":0,
+    "masterPerson":"cj@gbera.netos".
+    "location":""
 }

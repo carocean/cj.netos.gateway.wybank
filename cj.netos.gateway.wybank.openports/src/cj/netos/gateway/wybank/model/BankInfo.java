@@ -18,18 +18,6 @@ public class BankInfo {
     private String title;
 
     /**
-     * Column: owner
-     * Remark: 归属人，person格式
-     */
-    private String owner;
-
-    /**
-     * Column: property
-     * Remark: 归属人性质：0.个人；1.企业
-     */
-    private Integer property;
-
-    /**
      * Column: ctime
      * Remark: 创建时间
      */
@@ -71,6 +59,30 @@ public class BankInfo {
      */
     private String creator;
 
+    /**
+     * Column: master_id
+     * Remark: 业主的标识，关联运营商或地商标识
+     */
+    private String masterId;
+
+    /**
+     * Column: master_type
+     * Remark: 0为地商； 1为市商（该标记永不用，留给将来市商兼容地商业务用） 2为运营商；
+     */
+    private Integer masterType;
+
+    /**
+     * Column: master_person
+     * Remark: 业主所有权人，格式是公号，为yong yu字段，对应地商或运营商的业主字段
+     */
+    private String masterPerson;
+
+    /**
+     * Column: icon
+     * Remark: 纹银银行logo
+     */
+    private String icon;
+
     public String getId() {
         return id;
     }
@@ -85,22 +97,6 @@ public class BankInfo {
 
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void setOwner(String owner) {
-        this.owner = owner == null ? null : owner.trim();
-    }
-
-    public Integer getProperty() {
-        return property;
-    }
-
-    public void setProperty(Integer property) {
-        this.property = property;
     }
 
     public String getCtime() {
@@ -157,5 +153,37 @@ public class BankInfo {
 
     public void setCreator(String creator) {
         this.creator = creator == null ? null : creator.trim();
+    }
+
+    public String getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(String masterId) {
+        this.masterId = masterId == null ? null : masterId.trim();
+    }
+
+    public Integer getMasterType() {
+        return masterType;
+    }
+
+    public void setMasterType(Integer masterType) {
+        this.masterType = masterType;
+    }
+
+    public String getMasterPerson() {
+        return masterPerson;
+    }
+
+    public void setMasterPerson(String masterPerson) {
+        this.masterPerson = masterPerson == null ? null : masterPerson.trim();
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon == null ? null : icon.trim();
     }
 }
