@@ -11,10 +11,8 @@
     <result column="principal_ratio" jdbcType="DECIMAL" property="principalRatio" />
     <result column="reserve_ratio" jdbcType="DECIMAL" property="reserveRatio" />
     <result column="free_ratio" jdbcType="DECIMAL" property="freeRatio" />
+    <result column="licence" jdbcType="VARCHAR" property="licence" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
-    <result column="master_id" jdbcType="VARCHAR" property="masterId" />
-    <result column="master_type" jdbcType="INTEGER" property="masterType" />
-    <result column="master_person" jdbcType="VARCHAR" property="masterPerson" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -80,7 +78,7 @@
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     id, title, ctime, `location`, `state`, principal_ratio, reserve_ratio, free_ratio, 
-    creator, master_id, master_type, master_person, icon
+    licence, creator, icon
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.BankInfoExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -120,14 +118,12 @@
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into bank_info (id, title, ctime, 
       `location`, `state`, principal_ratio, 
-      reserve_ratio, free_ratio, creator, 
-      master_id, master_type, master_person, 
-      icon)
+      reserve_ratio, free_ratio, licence, 
+      creator, icon)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
       #{location,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{principalRatio,jdbcType=DECIMAL}, 
-      #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL}, #{creator,jdbcType=VARCHAR}, 
-      #{masterId,jdbcType=VARCHAR}, #{masterType,jdbcType=INTEGER}, #{masterPerson,jdbcType=VARCHAR}, 
-      #{icon,jdbcType=VARCHAR})
+      #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL}, #{licence,jdbcType=VARCHAR}, 
+      #{creator,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.BankInfo">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -157,17 +153,11 @@
       <if test="freeRatio != null">
         free_ratio,
       </if>
+      <if test="licence != null">
+        licence,
+      </if>
       <if test="creator != null">
         creator,
-      </if>
-      <if test="masterId != null">
-        master_id,
-      </if>
-      <if test="masterType != null">
-        master_type,
-      </if>
-      <if test="masterPerson != null">
-        master_person,
       </if>
       <if test="icon != null">
         icon,
@@ -198,17 +188,11 @@
       <if test="freeRatio != null">
         #{freeRatio,jdbcType=DECIMAL},
       </if>
+      <if test="licence != null">
+        #{licence,jdbcType=VARCHAR},
+      </if>
       <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="masterId != null">
-        #{masterId,jdbcType=VARCHAR},
-      </if>
-      <if test="masterType != null">
-        #{masterType,jdbcType=INTEGER},
-      </if>
-      <if test="masterPerson != null">
-        #{masterPerson,jdbcType=VARCHAR},
       </if>
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
@@ -250,17 +234,11 @@
       <if test="record.freeRatio != null">
         free_ratio = #{record.freeRatio,jdbcType=DECIMAL},
       </if>
+      <if test="record.licence != null">
+        licence = #{record.licence,jdbcType=VARCHAR},
+      </if>
       <if test="record.creator != null">
         creator = #{record.creator,jdbcType=VARCHAR},
-      </if>
-      <if test="record.masterId != null">
-        master_id = #{record.masterId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.masterType != null">
-        master_type = #{record.masterType,jdbcType=INTEGER},
-      </if>
-      <if test="record.masterPerson != null">
-        master_person = #{record.masterPerson,jdbcType=VARCHAR},
       </if>
       <if test="record.icon != null">
         icon = #{record.icon,jdbcType=VARCHAR},
@@ -281,10 +259,8 @@
       principal_ratio = #{record.principalRatio,jdbcType=DECIMAL},
       reserve_ratio = #{record.reserveRatio,jdbcType=DECIMAL},
       free_ratio = #{record.freeRatio,jdbcType=DECIMAL},
+      licence = #{record.licence,jdbcType=VARCHAR},
       creator = #{record.creator,jdbcType=VARCHAR},
-      master_id = #{record.masterId,jdbcType=VARCHAR},
-      master_type = #{record.masterType,jdbcType=INTEGER},
-      master_person = #{record.masterPerson,jdbcType=VARCHAR},
       icon = #{record.icon,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -315,17 +291,11 @@
       <if test="freeRatio != null">
         free_ratio = #{freeRatio,jdbcType=DECIMAL},
       </if>
+      <if test="licence != null">
+        licence = #{licence,jdbcType=VARCHAR},
+      </if>
       <if test="creator != null">
         creator = #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="masterId != null">
-        master_id = #{masterId,jdbcType=VARCHAR},
-      </if>
-      <if test="masterType != null">
-        master_type = #{masterType,jdbcType=INTEGER},
-      </if>
-      <if test="masterPerson != null">
-        master_person = #{masterPerson,jdbcType=VARCHAR},
       </if>
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
@@ -343,10 +313,8 @@
       principal_ratio = #{principalRatio,jdbcType=DECIMAL},
       reserve_ratio = #{reserveRatio,jdbcType=DECIMAL},
       free_ratio = #{freeRatio,jdbcType=DECIMAL},
+      licence = #{licence,jdbcType=VARCHAR},
       creator = #{creator,jdbcType=VARCHAR},
-      master_id = #{masterId,jdbcType=VARCHAR},
-      master_type = #{masterType,jdbcType=INTEGER},
-      master_person = #{masterPerson,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

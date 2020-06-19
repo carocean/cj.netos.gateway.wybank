@@ -13,7 +13,7 @@ public class BankInfo {
 
     /**
      * Column: title
-     * Remark: 行显示名
+     * Remark: 行显示名，一般为地商或运营商的简称
      */
     private String title;
 
@@ -54,28 +54,16 @@ public class BankInfo {
     private BigDecimal freeRatio;
 
     /**
+     * Column: licence
+     * Remark: 纹银银行是以什么执照营业的？LA或ISP营业执照的标识
+     */
+    private String licence;
+
+    /**
      * Column: creator
-     * Remark: 创建者
+     * Remark: 申请人的公号
      */
     private String creator;
-
-    /**
-     * Column: master_id
-     * Remark: 业主的标识，关联运营商或地商标识
-     */
-    private String masterId;
-
-    /**
-     * Column: master_type
-     * Remark: 0为地商； 1为市商（该标记永不用，留给将来市商兼容地商业务用） 2为运营商；
-     */
-    private Integer masterType;
-
-    /**
-     * Column: master_person
-     * Remark: 业主所有权人，格式是公号，为yong yu字段，对应地商或运营商的业主字段
-     */
-    private String masterPerson;
 
     /**
      * Column: icon
@@ -147,36 +135,20 @@ public class BankInfo {
         this.freeRatio = freeRatio;
     }
 
+    public String getLicence() {
+        return licence;
+    }
+
+    public void setLicence(String licence) {
+        this.licence = licence == null ? null : licence.trim();
+    }
+
     public String getCreator() {
         return creator;
     }
 
     public void setCreator(String creator) {
         this.creator = creator == null ? null : creator.trim();
-    }
-
-    public String getMasterId() {
-        return masterId;
-    }
-
-    public void setMasterId(String masterId) {
-        this.masterId = masterId == null ? null : masterId.trim();
-    }
-
-    public Integer getMasterType() {
-        return masterType;
-    }
-
-    public void setMasterType(Integer masterType) {
-        this.masterType = masterType;
-    }
-
-    public String getMasterPerson() {
-        return masterPerson;
-    }
-
-    public void setMasterPerson(String masterPerson) {
-        this.masterPerson = masterPerson == null ? null : masterPerson.trim();
     }
 
     public String getIcon() {

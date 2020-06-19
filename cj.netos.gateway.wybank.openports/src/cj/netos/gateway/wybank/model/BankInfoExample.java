@@ -658,6 +658,76 @@ public class BankInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andLicenceIsNull() {
+            addCriterion("licence is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceIsNotNull() {
+            addCriterion("licence is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceEqualTo(String value) {
+            addCriterion("licence =", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceNotEqualTo(String value) {
+            addCriterion("licence <>", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceGreaterThan(String value) {
+            addCriterion("licence >", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceGreaterThanOrEqualTo(String value) {
+            addCriterion("licence >=", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceLessThan(String value) {
+            addCriterion("licence <", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceLessThanOrEqualTo(String value) {
+            addCriterion("licence <=", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceLike(String value) {
+            addCriterion("licence like", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceNotLike(String value) {
+            addCriterion("licence not like", value, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceIn(List<String> values) {
+            addCriterion("licence in", values, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceNotIn(List<String> values) {
+            addCriterion("licence not in", values, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceBetween(String value1, String value2) {
+            addCriterion("licence between", value1, value2, "licence");
+            return (Criteria) this;
+        }
+
+        public Criteria andLicenceNotBetween(String value1, String value2) {
+            addCriterion("licence not between", value1, value2, "licence");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatorIsNull() {
             addCriterion("creator is null");
             return (Criteria) this;
@@ -725,206 +795,6 @@ public class BankInfoExample {
 
         public Criteria andCreatorNotBetween(String value1, String value2) {
             addCriterion("creator not between", value1, value2, "creator");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdIsNull() {
-            addCriterion("master_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdIsNotNull() {
-            addCriterion("master_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdEqualTo(String value) {
-            addCriterion("master_id =", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdNotEqualTo(String value) {
-            addCriterion("master_id <>", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdGreaterThan(String value) {
-            addCriterion("master_id >", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdGreaterThanOrEqualTo(String value) {
-            addCriterion("master_id >=", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdLessThan(String value) {
-            addCriterion("master_id <", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdLessThanOrEqualTo(String value) {
-            addCriterion("master_id <=", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdLike(String value) {
-            addCriterion("master_id like", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdNotLike(String value) {
-            addCriterion("master_id not like", value, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdIn(List<String> values) {
-            addCriterion("master_id in", values, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdNotIn(List<String> values) {
-            addCriterion("master_id not in", values, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdBetween(String value1, String value2) {
-            addCriterion("master_id between", value1, value2, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterIdNotBetween(String value1, String value2) {
-            addCriterion("master_id not between", value1, value2, "masterId");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeIsNull() {
-            addCriterion("master_type is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeIsNotNull() {
-            addCriterion("master_type is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeEqualTo(Integer value) {
-            addCriterion("master_type =", value, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeNotEqualTo(Integer value) {
-            addCriterion("master_type <>", value, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeGreaterThan(Integer value) {
-            addCriterion("master_type >", value, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeGreaterThanOrEqualTo(Integer value) {
-            addCriterion("master_type >=", value, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeLessThan(Integer value) {
-            addCriterion("master_type <", value, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeLessThanOrEqualTo(Integer value) {
-            addCriterion("master_type <=", value, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeIn(List<Integer> values) {
-            addCriterion("master_type in", values, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeNotIn(List<Integer> values) {
-            addCriterion("master_type not in", values, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeBetween(Integer value1, Integer value2) {
-            addCriterion("master_type between", value1, value2, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterTypeNotBetween(Integer value1, Integer value2) {
-            addCriterion("master_type not between", value1, value2, "masterType");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonIsNull() {
-            addCriterion("master_person is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonIsNotNull() {
-            addCriterion("master_person is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonEqualTo(String value) {
-            addCriterion("master_person =", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonNotEqualTo(String value) {
-            addCriterion("master_person <>", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonGreaterThan(String value) {
-            addCriterion("master_person >", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonGreaterThanOrEqualTo(String value) {
-            addCriterion("master_person >=", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonLessThan(String value) {
-            addCriterion("master_person <", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonLessThanOrEqualTo(String value) {
-            addCriterion("master_person <=", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonLike(String value) {
-            addCriterion("master_person like", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonNotLike(String value) {
-            addCriterion("master_person not like", value, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonIn(List<String> values) {
-            addCriterion("master_person in", values, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonNotIn(List<String> values) {
-            addCriterion("master_person not in", values, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonBetween(String value1, String value2) {
-            addCriterion("master_person between", value1, value2, "masterPerson");
-            return (Criteria) this;
-        }
-
-        public Criteria andMasterPersonNotBetween(String value1, String value2) {
-            addCriterion("master_person not between", value1, value2, "masterPerson");
             return (Criteria) this;
         }
 

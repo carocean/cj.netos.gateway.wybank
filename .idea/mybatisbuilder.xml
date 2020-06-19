@@ -101,6 +101,206 @@
     </option>
     <option name="tableInfoMap">
       <map>
+        <entry key="netos.wallet.main#deposit_absorb_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="DepositAbsorbActivity" />
+              <option name="tableComment" value="存入洇金处理步骤" />
+              <option name="tableName" value="deposit_absorb_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#deposit_absorb_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="DepositAbsorbRecord" />
+              <option name="tableComment" value="存入洇金" />
+              <option name="tableName" value="deposit_absorb_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#pay_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="PayActivity" />
+              <option name="tableComment" value="支付处理步骤。&#10;包括退款过程" />
+              <option name="tableName" value="pay_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#pay_channel">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="PayChannel" />
+              <option name="tableComment" value="支付渠道&#10;用户配置的支付渠道" />
+              <option name="tableName" value="pay_channel" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#pay_details">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="PayDetails" />
+              <option name="tableComment" value="交易明细，如类型是支付订单，则明细中有商户、订单号等" />
+              <option name="tableName" value="pay_details" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#pay_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="PayRecord" />
+              <option name="tableComment" value="支付记录单" />
+              <option name="tableName" value="pay_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#platform_account">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="PlatformAccount" />
+              <option name="tableComment" value="平台账户，用于记录充值和提现的总金额及余额&#10;目的是采用复试记账，池内外对账平衡。&#10;由于提现充值都是从第三方渠道决清的，因此平台账户应放到网关，以核息内部后续的决清过程是否有出错" />
+              <option name="tableName" value="platform_account" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#recharge_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="RechargeActivity" />
+              <option name="tableComment" value="充值处理步骤" />
+              <option name="tableName" value="recharge_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#recharge_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="RechargeRecord" />
+              <option name="tableComment" value="冲值流水表" />
+              <option name="tableName" value="recharge_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#trans_absorb_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="TransAbsorbActivity" />
+              <option name="tableComment" value="转洇金处理步骤" />
+              <option name="tableName" value="trans_absorb_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#trans_absorb_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="TransAbsorbRecord" />
+              <option name="tableComment" value="洇金转入零钱" />
+              <option name="tableName" value="trans_absorb_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#trans_profit_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="TransProfitActivity" />
+              <option name="tableComment" value="转收益金处理步骤" />
+              <option name="tableName" value="trans_profit_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#trans_profit_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="TransProfitRecord" />
+              <option name="tableComment" value="收益金转入零钱" />
+              <option name="tableName" value="trans_profit_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#weny_exchange_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="WenyExchangeActivity" />
+              <option name="tableComment" value="承兑处理步骤" />
+              <option name="tableName" value="weny_exchange_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#weny_exchange_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="WenyExchangeRecord" />
+              <option name="tableComment" value="纹银承兑流水表" />
+              <option name="tableName" value="weny_exchange_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#weny_purch_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="WenyPurchActivity" />
+              <option name="tableComment" value="申购处理步骤" />
+              <option name="tableName" value="weny_purch_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#weny_purch_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="WenyPurchRecord" />
+              <option name="tableComment" value="纹银申购流水表" />
+              <option name="tableName" value="weny_purch_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#withdraw_activity">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="WithdrawActivity" />
+              <option name="tableComment" value="提现处理步骤" />
+              <option name="tableName" value="withdraw_activity" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#withdraw_record">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="WithdrawRecord" />
+              <option name="tableComment" value="提现流水表" />
+              <option name="tableName" value="withdraw_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.wallet.main#work_day">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.wallet.main" />
+              <option name="domainName" value="WorkDay" />
+              <option name="tableComment" value="会计日期切换表，&#10;各账户前日余额及当前日终快照，并置日切状态为正在切换&#10;原理：当插入一条记录时，初始状态为正在日切，则继续接受交易，添加的账金变动单记录的会计日期使用下一个会计日期，而不是当前会计日期，这样只需核到开始日切前的日账&#10;可以充许一一个会计日期账有错，在一下个日切时会被纠正，纠正生成记录给用户查看" />
+              <option name="tableName" value="work_day" />
+            </TableInfo>
+          </value>
+        </entry>
         <entry key="netos.weny.main#bank_info">
           <value>
             <TableInfo>

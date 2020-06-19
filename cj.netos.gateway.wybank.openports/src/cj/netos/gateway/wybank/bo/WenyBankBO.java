@@ -8,33 +8,15 @@ public class WenyBankBO {
     private BigDecimal principalRatio;
     private BigDecimal reserveRatio;
     private BigDecimal freeRatio;
-    private String masterId;
-    private Integer masterType;
-    private String masterPerson;
+    private String licence;
     private String icon;
 
-    public String getMasterId() {
-        return masterId;
+    public String getLicence() {
+        return licence;
     }
 
-    public void setMasterId(String masterId) {
-        this.masterId = masterId;
-    }
-
-    public Integer getMasterType() {
-        return masterType;
-    }
-
-    public void setMasterType(Integer masterType) {
-        this.masterType = masterType;
-    }
-
-    public String getMasterPerson() {
-        return masterPerson;
-    }
-
-    public void setMasterPerson(String masterPerson) {
-        this.masterPerson = masterPerson;
+    public void setLicence(String licence) {
+        this.licence = licence;
     }
 
     public String getIcon() {

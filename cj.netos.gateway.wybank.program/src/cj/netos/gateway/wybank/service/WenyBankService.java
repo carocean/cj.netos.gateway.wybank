@@ -52,9 +52,7 @@ public class WenyBankService implements IWenyBankService {
         bankInfo.setState(0);
         bankInfo.setTitle(wenyBankBO.getTitle());
         bankInfo.setCreator(creator);
-        bankInfo.setMasterId(wenyBankBO.getMasterId());
-        bankInfo.setMasterType(wenyBankBO.getMasterType());
-        bankInfo.setMasterPerson(wenyBankBO.getMasterPerson());
+        bankInfo.setLicence(wenyBankBO.getLicence());
 
         bankInfoMapper.insert(bankInfo);
         return bankInfo;
