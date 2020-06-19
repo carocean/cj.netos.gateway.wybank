@@ -46,7 +46,8 @@ public class WenyBankService implements IWenyBankService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        bankInfo.setLocation(wenyBankBO.getLocation());
+        bankInfo.setDistrictCode(wenyBankBO.getDistrictCode());
+        bankInfo.setDistrictTitle(wenyBankBO.getDistrictTitle());
         bankInfo.setPrincipalRatio(wenyBankBO.getPrincipalRatio());
         bankInfo.setReserveRatio(wenyBankBO.getReserveRatio());
         bankInfo.setState(0);

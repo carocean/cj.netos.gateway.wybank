@@ -348,73 +348,143 @@ public class BankInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andLocationIsNull() {
-            addCriterion("`location` is null");
+        public Criteria andDistrictTitleIsNull() {
+            addCriterion("district_title is null");
             return (Criteria) this;
         }
 
-        public Criteria andLocationIsNotNull() {
-            addCriterion("`location` is not null");
+        public Criteria andDistrictTitleIsNotNull() {
+            addCriterion("district_title is not null");
             return (Criteria) this;
         }
 
-        public Criteria andLocationEqualTo(String value) {
-            addCriterion("`location` =", value, "location");
+        public Criteria andDistrictTitleEqualTo(String value) {
+            addCriterion("district_title =", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationNotEqualTo(String value) {
-            addCriterion("`location` <>", value, "location");
+        public Criteria andDistrictTitleNotEqualTo(String value) {
+            addCriterion("district_title <>", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationGreaterThan(String value) {
-            addCriterion("`location` >", value, "location");
+        public Criteria andDistrictTitleGreaterThan(String value) {
+            addCriterion("district_title >", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationGreaterThanOrEqualTo(String value) {
-            addCriterion("`location` >=", value, "location");
+        public Criteria andDistrictTitleGreaterThanOrEqualTo(String value) {
+            addCriterion("district_title >=", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationLessThan(String value) {
-            addCriterion("`location` <", value, "location");
+        public Criteria andDistrictTitleLessThan(String value) {
+            addCriterion("district_title <", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationLessThanOrEqualTo(String value) {
-            addCriterion("`location` <=", value, "location");
+        public Criteria andDistrictTitleLessThanOrEqualTo(String value) {
+            addCriterion("district_title <=", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationLike(String value) {
-            addCriterion("`location` like", value, "location");
+        public Criteria andDistrictTitleLike(String value) {
+            addCriterion("district_title like", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationNotLike(String value) {
-            addCriterion("`location` not like", value, "location");
+        public Criteria andDistrictTitleNotLike(String value) {
+            addCriterion("district_title not like", value, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationIn(List<String> values) {
-            addCriterion("`location` in", values, "location");
+        public Criteria andDistrictTitleIn(List<String> values) {
+            addCriterion("district_title in", values, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationNotIn(List<String> values) {
-            addCriterion("`location` not in", values, "location");
+        public Criteria andDistrictTitleNotIn(List<String> values) {
+            addCriterion("district_title not in", values, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationBetween(String value1, String value2) {
-            addCriterion("`location` between", value1, value2, "location");
+        public Criteria andDistrictTitleBetween(String value1, String value2) {
+            addCriterion("district_title between", value1, value2, "districtTitle");
             return (Criteria) this;
         }
 
-        public Criteria andLocationNotBetween(String value1, String value2) {
-            addCriterion("`location` not between", value1, value2, "location");
+        public Criteria andDistrictTitleNotBetween(String value1, String value2) {
+            addCriterion("district_title not between", value1, value2, "districtTitle");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeIsNull() {
+            addCriterion("district_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeIsNotNull() {
+            addCriterion("district_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeEqualTo(String value) {
+            addCriterion("district_code =", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeNotEqualTo(String value) {
+            addCriterion("district_code <>", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeGreaterThan(String value) {
+            addCriterion("district_code >", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("district_code >=", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeLessThan(String value) {
+            addCriterion("district_code <", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeLessThanOrEqualTo(String value) {
+            addCriterion("district_code <=", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeLike(String value) {
+            addCriterion("district_code like", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeNotLike(String value) {
+            addCriterion("district_code not like", value, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeIn(List<String> values) {
+            addCriterion("district_code in", values, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeNotIn(List<String> values) {
+            addCriterion("district_code not in", values, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeBetween(String value1, String value2) {
+            addCriterion("district_code between", value1, value2, "districtCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andDistrictCodeNotBetween(String value1, String value2) {
+            addCriterion("district_code not between", value1, value2, "districtCode");
             return (Criteria) this;
         }
 

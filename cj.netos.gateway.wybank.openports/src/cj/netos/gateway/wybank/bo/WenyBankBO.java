@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public class WenyBankBO {
     private String title;
-    private String location;
+    private String districtTitle;
+    private String districtCode;
     private BigDecimal principalRatio;
     private BigDecimal reserveRatio;
     private BigDecimal freeRatio;
@@ -35,13 +36,20 @@ public class WenyBankBO {
         this.title = title;
     }
 
-
-    public String getLocation() {
-        return location;
+    public String getDistrictTitle() {
+        return districtTitle;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setDistrictTitle(String districtTitle) {
+        this.districtTitle = districtTitle;
+    }
+
+    public String getDistrictCode() {
+        return districtCode;
+    }
+
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode;
     }
 
     public BigDecimal getPrincipalRatio() {

@@ -24,10 +24,16 @@ public class BankInfo {
     private String ctime;
 
     /**
-     * Column: location
-     * Remark: 地理位置
+     * Column: district_title
+     * Remark: 营业的行政区域，对应营业执照的区域名
      */
-    private String location;
+    private String districtTitle;
+
+    /**
+     * Column: district_code
+     * Remark: 营业的行政区域代码（高德行政区地理编码），对应营业执照的区域代码
+     */
+    private String districtCode;
 
     /**
      * Column: state
@@ -95,12 +101,20 @@ public class BankInfo {
         this.ctime = ctime == null ? null : ctime.trim();
     }
 
-    public String getLocation() {
-        return location;
+    public String getDistrictTitle() {
+        return districtTitle;
     }
 
-    public void setLocation(String location) {
-        this.location = location == null ? null : location.trim();
+    public void setDistrictTitle(String districtTitle) {
+        this.districtTitle = districtTitle == null ? null : districtTitle.trim();
+    }
+
+    public String getDistrictCode() {
+        return districtCode;
+    }
+
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode == null ? null : districtCode.trim();
     }
 
     public Integer getState() {

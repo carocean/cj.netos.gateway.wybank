@@ -6,7 +6,8 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="ctime" jdbcType="VARCHAR" property="ctime" />
-    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="district_title" jdbcType="VARCHAR" property="districtTitle" />
+    <result column="district_code" jdbcType="VARCHAR" property="districtCode" />
     <result column="state" jdbcType="INTEGER" property="state" />
     <result column="principal_ratio" jdbcType="DECIMAL" property="principalRatio" />
     <result column="reserve_ratio" jdbcType="DECIMAL" property="reserveRatio" />
@@ -77,8 +78,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, title, ctime, `location`, `state`, principal_ratio, reserve_ratio, free_ratio, 
-    licence, creator, icon
+    id, title, ctime, district_title, district_code, `state`, principal_ratio, reserve_ratio, 
+    free_ratio, licence, creator, icon
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.BankInfoExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -117,13 +118,15 @@
   <insert id="insert" parameterType="cj.netos.gateway.wybank.model.BankInfo">
     <!-- @mbg.generated: generated automatically, do not modify! -->
     insert into bank_info (id, title, ctime, 
-      `location`, `state`, principal_ratio, 
-      reserve_ratio, free_ratio, licence, 
-      creator, icon)
+      district_title, district_code, `state`, 
+      principal_ratio, reserve_ratio, free_ratio, 
+      licence, creator, icon
+      )
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
-      #{location,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, #{principalRatio,jdbcType=DECIMAL}, 
-      #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL}, #{licence,jdbcType=VARCHAR}, 
-      #{creator,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR})
+      #{districtTitle,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{principalRatio,jdbcType=DECIMAL}, #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL}, 
+      #{licence,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.BankInfo">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -138,8 +141,11 @@
       <if test="ctime != null">
         ctime,
       </if>
-      <if test="location != null">
-        `location`,
+      <if test="districtTitle != null">
+        district_title,
+      </if>
+      <if test="districtCode != null">
+        district_code,
       </if>
       <if test="state != null">
         `state`,
@@ -173,8 +179,11 @@
       <if test="ctime != null">
         #{ctime,jdbcType=VARCHAR},
       </if>
-      <if test="location != null">
-        #{location,jdbcType=VARCHAR},
+      <if test="districtTitle != null">
+        #{districtTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null">
+        #{districtCode,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
         #{state,jdbcType=INTEGER},
@@ -219,8 +228,11 @@
       <if test="record.ctime != null">
         ctime = #{record.ctime,jdbcType=VARCHAR},
       </if>
-      <if test="record.location != null">
-        `location` = #{record.location,jdbcType=VARCHAR},
+      <if test="record.districtTitle != null">
+        district_title = #{record.districtTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.districtCode != null">
+        district_code = #{record.districtCode,jdbcType=VARCHAR},
       </if>
       <if test="record.state != null">
         `state` = #{record.state,jdbcType=INTEGER},
@@ -254,7 +266,8 @@
     set id = #{record.id,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       ctime = #{record.ctime,jdbcType=VARCHAR},
-      `location` = #{record.location,jdbcType=VARCHAR},
+      district_title = #{record.districtTitle,jdbcType=VARCHAR},
+      district_code = #{record.districtCode,jdbcType=VARCHAR},
       `state` = #{record.state,jdbcType=INTEGER},
       principal_ratio = #{record.principalRatio,jdbcType=DECIMAL},
       reserve_ratio = #{record.reserveRatio,jdbcType=DECIMAL},
@@ -276,8 +289,11 @@
       <if test="ctime != null">
         ctime = #{ctime,jdbcType=VARCHAR},
       </if>
-      <if test="location != null">
-        `location` = #{location,jdbcType=VARCHAR},
+      <if test="districtTitle != null">
+        district_title = #{districtTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="districtCode != null">
+        district_code = #{districtCode,jdbcType=VARCHAR},
       </if>
       <if test="state != null">
         `state` = #{state,jdbcType=INTEGER},
@@ -308,7 +324,8 @@
     update bank_info
     set title = #{title,jdbcType=VARCHAR},
       ctime = #{ctime,jdbcType=VARCHAR},
-      `location` = #{location,jdbcType=VARCHAR},
+      district_title = #{districtTitle,jdbcType=VARCHAR},
+      district_code = #{districtCode,jdbcType=VARCHAR},
       `state` = #{state,jdbcType=INTEGER},
       principal_ratio = #{principalRatio,jdbcType=DECIMAL},
       reserve_ratio = #{reserveRatio,jdbcType=DECIMAL},
