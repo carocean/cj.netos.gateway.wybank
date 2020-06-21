@@ -3,6 +3,7 @@ package cj.netos.gateway.wybank;
 
 import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
+import cj.netos.gateway.wybank.bo.WyBankForm;
 import cj.netos.gateway.wybank.model.BankInfo;
 import cj.netos.gateway.wybank.model.Shunter;
 import cj.netos.gateway.wybank.model.TtmConfig;
@@ -39,5 +40,7 @@ public interface IWenyBankService {
     void emptyWithdrawRights(String banksn, String shunter);
 
     List<String> getWithdrawRights(String banksn, String shunter);
+
+    void createWenyBankByForm(WyBankForm form);
 
 }

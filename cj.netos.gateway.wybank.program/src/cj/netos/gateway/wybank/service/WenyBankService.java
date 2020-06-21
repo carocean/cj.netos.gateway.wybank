@@ -2,7 +2,9 @@ package cj.netos.gateway.wybank.service;
 
 import cj.netos.gateway.wybank.IWenyBankService;
 import cj.netos.gateway.wybank.bo.TTMBO;
+import cj.netos.gateway.wybank.bo.TtmInfo;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
+import cj.netos.gateway.wybank.bo.WyBankForm;
 import cj.netos.gateway.wybank.mapper.BankInfoMapper;
 import cj.netos.gateway.wybank.mapper.ShunterMapper;
 import cj.netos.gateway.wybank.mapper.TtmConfigMapper;
@@ -15,8 +17,10 @@ import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
+import cj.ultimate.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,11 +45,7 @@ public class WenyBankService implements IWenyBankService {
         BankInfo bankInfo = new BankInfo();
         bankInfo.setCtime(BankUtils.dateTimeToSecond(System.currentTimeMillis()));
         bankInfo.setFreeRatio(wenyBankBO.getFreeRatio());
-        try {
-            bankInfo.setId(IdWorker.nextId());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        bankInfo.setId(IdWorker.nextId());
         bankInfo.setDistrictCode(wenyBankBO.getDistrictCode());
         bankInfo.setDistrictTitle(wenyBankBO.getDistrictTitle());
         bankInfo.setPrincipalRatio(wenyBankBO.getPrincipalRatio());
@@ -57,6 +57,73 @@ public class WenyBankService implements IWenyBankService {
 
         bankInfoMapper.insert(bankInfo);
         return bankInfo;
+    }
+
+    @CjTransaction
+    @Override
+    public void createWenyBankByForm(WyBankForm form) {
+        BankInfo bankInfo = new BankInfo();
+        bankInfo.setCtime(BankUtils.dateTimeToSecond(System.currentTimeMillis()));
+        bankInfo.setFreeRatio(form.getServiceFeeRatio().subtract(form.getReserveRatio()));
+        bankInfo.setId(IdWorker.nextId());
+        bankInfo.setDistrictCode(form.getDistrictCode());
+        bankInfo.setDistrictTitle(form.getDistrictTitle());
+        bankInfo.setPrincipalRatio(form.getPrincipalRatio());
+        bankInfo.setReserveRatio(form.getReserveRatio());
+        bankInfo.setState(0);
+        bankInfo.setTitle(form.getTitle());
+        bankInfo.setCreator(form.getCreator());
+        bankInfo.setLicence(form.getLicence());
+
+        bankInfoMapper.insert(bankInfo);
+
+        List<Shunter> shunters = new ArrayList<>();
+        Shunter _platformShunter = new Shunter();
+        _platformShunter.setAlias("平台");
+        _platformShunter.setBankid(bankInfo.getId());
+        _platformShunter.setCode("platform");
+        _platformShunter.setRatio(form.getPlatformRatio());
+        shunters.add(_platformShunter);
+
+        Shunter _ispShunter = new Shunter();
+        _ispShunter.setAlias("运营商");
+        _ispShunter.setBankid(bankInfo.getId());
+        _ispShunter.setCode("isp");
+        _ispShunter.setRatio(form.getIspRatio());
+        shunters.add(_ispShunter);
+
+        Shunter _laShunter = new Shunter();
+        _laShunter.setAlias("地商");
+        _laShunter.setBankid(bankInfo.getId());
+        _laShunter.setCode("la");
+        _laShunter.setRatio(form.getIspRatio());
+        shunters.add(_laShunter);
+
+        Shunter _absorbShunter = new Shunter();
+        _absorbShunter.setAlias("网络洇金");
+        _absorbShunter.setBankid(bankInfo.getId());
+        _absorbShunter.setCode("absorbs");
+        _absorbShunter.setRatio(form.getIspRatio());
+        shunters.add(_absorbShunter);
+
+        setShunters(bankInfo.getId(), shunters);
+
+        //添加提现权限
+        addWithdrawRights(bankInfo.getId(), _laShunter.getCode(), Arrays.asList(form.getCreator()));
+        if (!StringUtil.isEmpty(form.getIspMaster())) {
+            addWithdrawRights(bankInfo.getId(), _ispShunter.getCode(), Arrays.asList(form.getIspMaster()));
+        }
+
+        List<TTMBO> ttmTable = new ArrayList<>();
+        for (TtmInfo ttmInfo : form.getTtmConfig()) {
+            TTMBO ttmbo = new TTMBO();
+            ttmbo.setMaxAmount(ttmInfo.getMaxAmount());
+            ttmbo.setMinAmount(ttmInfo.getMinAmount());
+            ttmbo.setTtm(ttmInfo.getTtm());
+            ttmTable.add(ttmbo);
+        }
+        setTTMTable(bankInfo.getId(), ttmTable);
+
     }
 
     @CjTransaction
