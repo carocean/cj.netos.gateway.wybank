@@ -10,7 +10,7 @@ public class WyBankForm {
     String districtTitle;
     String districtCode;
     String creator;
-    String ispMaster;
+    List<String> ispManagers;
     BigDecimal serviceFeeRatio;
     BigDecimal reserveRatio;
     BigDecimal principalRatio;
@@ -20,12 +20,12 @@ public class WyBankForm {
     BigDecimal laRatio;
     BigDecimal absorbRatio;
 
-    public String getIspMaster() {
-        return ispMaster;
+    public List<String> getIspManagers() {
+        return ispManagers;
     }
 
-    public void setIspMaster(String ispMaster) {
-        this.ispMaster = ispMaster;
+    public void setIspManagers(List<String> ispManagers) {
+        this.ispManagers = ispManagers;
     }
 
     public String getTitle() {

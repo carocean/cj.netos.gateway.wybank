@@ -19,6 +19,7 @@ import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
 import cj.ultimate.util.StringUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -64,10 +65,10 @@ public class WenyBankService implements IWenyBankService {
     public void createWenyBankByForm(WyBankForm form) {
         BankInfo bankInfo = new BankInfo();
         bankInfo.setCtime(BankUtils.dateTimeToSecond(System.currentTimeMillis()));
-        bankInfo.setFreeRatio(form.getServiceFeeRatio().subtract(form.getReserveRatio()));
         bankInfo.setId(IdWorker.nextId());
         bankInfo.setDistrictCode(form.getDistrictCode());
         bankInfo.setDistrictTitle(form.getDistrictTitle());
+        bankInfo.setFreeRatio(form.getServiceFeeRatio().subtract(form.getReserveRatio()));
         bankInfo.setPrincipalRatio(form.getPrincipalRatio());
         bankInfo.setReserveRatio(form.getReserveRatio());
         bankInfo.setState(0);
@@ -110,8 +111,10 @@ public class WenyBankService implements IWenyBankService {
 
         //添加提现权限
         addWithdrawRights(bankInfo.getId(), _laShunter.getCode(), Arrays.asList(form.getCreator()));
-        if (!StringUtil.isEmpty(form.getIspMaster())) {
-            addWithdrawRights(bankInfo.getId(), _ispShunter.getCode(), Arrays.asList(form.getIspMaster()));
+        if (form.getIspManagers() != null) {
+            for (String mananger : form.getIspManagers()) {
+                addWithdrawRights(bankInfo.getId(), _ispShunter.getCode(), Arrays.asList(mananger));
+            }
         }
 
         List<TTMBO> ttmTable = new ArrayList<>();

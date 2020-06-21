@@ -16,7 +16,7 @@ import com.rabbitmq.client.Envelope;
 
 import java.io.IOException;
 
-@CjConsumer(name = "ack")
+@CjConsumer(name = "workflow")
 @CjService(name = "/workflow/event.mhub#doWorkItem")
 public class CreateWYBankWorkflowCommand implements IConsumerCommand {
     @CjServiceRef
