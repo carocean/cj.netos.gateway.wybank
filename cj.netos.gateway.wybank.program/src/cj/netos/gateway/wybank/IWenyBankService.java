@@ -43,4 +43,6 @@ public interface IWenyBankService {
 
     void createWenyBankByForm(WyBankForm form);
 
+    BankInfo getWenyBankByLicence(String licence);
+
 }

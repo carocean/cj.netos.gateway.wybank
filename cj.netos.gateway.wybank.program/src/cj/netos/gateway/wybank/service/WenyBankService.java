@@ -149,6 +149,15 @@ public class WenyBankService implements IWenyBankService {
 
     @CjTransaction
     @Override
+    public BankInfo getWenyBankByLicence(String licence) {
+        BankInfoExample example = new BankInfoExample();
+        example.createCriteria().andLicenceEqualTo(licence);
+        List<BankInfo> list = bankInfoMapper.selectByExample(example);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @CjTransaction
+    @Override
     public void startWenyBank(String banksn) {
         bankInfoMapper.updateState(banksn, 0);
     }

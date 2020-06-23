@@ -72,6 +72,15 @@ public class WenyBankPorts implements IWenyBankPorts {
     }
 
     @Override
+    public Map<String, Object> getWenyBankByLicence(ISecuritySession securitySession, String licence) throws CircuitException {
+        if (StringUtil.isEmpty(licence)) {
+            throw new CircuitException("404", "licence 参数为空");
+        }
+        BankInfo bankInfo = wenyBankService.getWenyBankByLicence(licence);
+        return new Gson().fromJson(new Gson().toJson(bankInfo), HashMap.class);
+    }
+
+    @Override
     public BankInfo getWenyBankInfo(ISecuritySession securitySession, String banksn) throws CircuitException {
         if (StringUtil.isEmpty(banksn)) {
             throw new CircuitException("404", "banksn 参数为空");
