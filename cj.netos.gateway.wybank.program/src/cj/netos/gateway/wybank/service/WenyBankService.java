@@ -17,9 +17,7 @@ import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.openport.util.Encript;
 import cj.studio.orm.mybatis.annotation.CjTransaction;
-import cj.ultimate.util.StringUtil;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -75,6 +73,7 @@ public class WenyBankService implements IWenyBankService {
         bankInfo.setTitle(form.getTitle());
         bankInfo.setCreator(form.getCreator());
         bankInfo.setLicence(form.getLicence());
+        bankInfo.setIcon(form.getIcon());
 
         bankInfoMapper.insert(bankInfo);
 
@@ -145,6 +144,62 @@ public class WenyBankService implements IWenyBankService {
     @Override
     public BankInfo getWenyBank(String banksn) {
         return bankInfoMapper.selectByPrimaryKey(banksn);
+    }
+
+    @CjTransaction
+    @Override
+    public List<BankInfo> getMyWenyBanks(String creator) {
+        BankInfoExample example=new BankInfoExample();
+        example.createCriteria().andCreatorEqualTo(creator);
+        return bankInfoMapper.selectByExample(example);
+    }
+
+    @CjTransaction
+    @Override
+    public BankInfo getWenyBankByDistrict(String district) {
+        BankInfoExample example=new BankInfoExample();
+        example.createCriteria().andDistrictCodeEqualTo(district);
+        List<BankInfo> list= bankInfoMapper.selectByExample(example);
+        return list.isEmpty() ? null : list.get(0);
+    }
+
+    @CjTransaction
+    @Override
+    public List<BankInfo> pageWenyBankByCreators(List<String> creators, int limit, int offset) {
+        StringBuffer sb = new StringBuffer();
+        for (String creator : creators) {
+            sb.append(String.format("'%s',",creator));
+        }
+        if (!creators.isEmpty()) {
+            sb.append("''");
+        }
+        return bankInfoMapper.pageWenyBankByCreators(sb.toString(),limit,offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<BankInfo> pageWenyBankByLicences(List<String> licences, int limit, int offset) {
+        StringBuffer sb = new StringBuffer();
+        for (String creator : licences) {
+            sb.append(String.format("'%s',",creator));
+        }
+        if (!licences.isEmpty()) {
+            sb.append("''");
+        }
+        return bankInfoMapper.pageWenyBankByLicences(sb.toString(),limit,offset);
+    }
+
+    @CjTransaction
+    @Override
+    public List<BankInfo> pageWenyBankByDistricts(List<String> districts, int limit, int offset) {
+        StringBuffer sb = new StringBuffer();
+        for (String creator : districts) {
+            sb.append(String.format("'%s',",creator));
+        }
+        if (!districts.isEmpty()) {
+            sb.append("''");
+        }
+        return bankInfoMapper.pageWenyBankByDistricts(sb.toString(),limit,offset);
     }
 
     @CjTransaction

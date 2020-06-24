@@ -78,7 +78,7 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, title, ctime, district_title, district_code, `state`, principal_ratio, reserve_ratio, 
+    id, title, ctime, district_title, district_code, `state`, principal_ratio, reserve_ratio,
     free_ratio, licence, creator, icon
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.BankInfoExample" resultMap="BaseResultMap">
@@ -98,7 +98,7 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    select 
+    select
     <include refid="Base_Column_List" />
     from bank_info
     where id = #{id,jdbcType=VARCHAR}
@@ -117,14 +117,14 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.gateway.wybank.model.BankInfo">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into bank_info (id, title, ctime, 
-      district_title, district_code, `state`, 
-      principal_ratio, reserve_ratio, free_ratio, 
+    insert into bank_info (id, title, ctime,
+      district_title, district_code, `state`,
+      principal_ratio, reserve_ratio, free_ratio,
       licence, creator, icon
       )
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
-      #{districtTitle,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
-      #{principalRatio,jdbcType=DECIMAL}, #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL}, 
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR},
+      #{districtTitle,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
+      #{principalRatio,jdbcType=DECIMAL}, #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL},
       #{licence,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}
       )
   </insert>
@@ -342,7 +342,30 @@
     from bank_info
     limit #{offset},#{limit}
   </select>
-
+  <select id="pageWenyBankByCreators" parameterType="cj.netos.gateway.wybank.model.BankInfoExample" resultMap="BaseResultMap">
+    select
+      *
+    from bank_info
+    where creator in (${creators})
+    order by ctime desc
+    limit #{offset},#{limit}
+  </select>
+    <select id="pageWenyBankByLicences" parameterType="cj.netos.gateway.wybank.model.BankInfoExample" resultMap="BaseResultMap">
+        select
+            *
+        from bank_info
+        where licence in (${licences})
+        order by ctime desc
+        limit #{offset},#{limit}
+    </select>
+    <select id="pageWenyBankByDistricts" parameterType="cj.netos.gateway.wybank.model.BankInfoExample" resultMap="BaseResultMap">
+        select
+            *
+        from bank_info
+        where district_code in (${districtCodes})
+        order by ctime desc
+        limit #{offset},#{limit}
+    </select>
   <update id="updateState" parameterType="cj.netos.gateway.wybank.model.BankInfo">
     update bank_info
     set

@@ -45,4 +45,14 @@ public interface IWenyBankService {
 
     BankInfo getWenyBankByLicence(String licence);
 
+    List<BankInfo> getMyWenyBanks(String principal);
+
+    BankInfo getWenyBankByDistrict(String district);
+
+    List<BankInfo> pageWenyBankByCreators(List<String> creators, int limit, int offset);
+
+    List<BankInfo> pageWenyBankByLicences(List<String> licences, int limit, int offset);
+
+    List<BankInfo> pageWenyBankByDistricts(List<String> districts, int limit, int offset);
+
 }

@@ -13,30 +13,62 @@ import cj.studio.openport.annotations.CjOpenportParameter;
 import cj.studio.openport.annotations.CjOpenports;
 
 import java.util.List;
-import java.util.Map;
 
 @CjOpenports(usage = "纹银银行")
 public interface IWenyBankPorts extends IOpenportService {
 
     @CjOpenport(usage = "创建一个纹银银行", command = "post")
-    Map<String, Object> createWenyBank(ISecuritySession securitySession,
-                                       @CjOpenportParameter(usage = "纹银银行配置", name = "wenyBankBO", in = PKeyInRequest.content, simpleModelFile = "/WenyBankBO.html") WenyBankBO wenyBankBO
+    BankInfo createWenyBank(ISecuritySession securitySession,
+                            @CjOpenportParameter(usage = "纹银银行配置", name = "wenyBankBO", in = PKeyInRequest.content, simpleModelFile = "/WenyBankBO.html") WenyBankBO wenyBankBO
     ) throws CircuitException;
 
     @CjOpenport(usage = "分页查询")
-    List<Map<String, Object>> pageWenyBank(ISecuritySession securitySession,
-                                           @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
-                                           @CjOpenportParameter(usage = "偏移", name = "offset") int offset
+    List<BankInfo> pageWenyBank(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                @CjOpenportParameter(usage = "偏移", name = "offset") int offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页查询")
+    List<BankInfo> pageWenyBankByCreators(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "创建者集合", name = "creators") List<String> creators,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "偏移", name = "offset") int offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页查询")
+    List<BankInfo> pageWenyBankByLicences(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "营业执照集合", name = "licences") List<String> licences,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "偏移", name = "offset") int offset
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "分页查询")
+    List<BankInfo> pageWenyBankByDistricts(
+            ISecuritySession securitySession,
+            @CjOpenportParameter(usage = "营业区域代码集合", name = "districts") List<String> districts,
+            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+            @CjOpenportParameter(usage = "偏移", name = "offset") int offset
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取一个银行")
-    Map<String, Object> getWenyBank(ISecuritySession securitySession,
-                                    @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    BankInfo getWenyBank(ISecuritySession securitySession,
+                         @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取一个银行")
-    Map<String, Object> getWenyBankByLicence(ISecuritySession securitySession,
-                                             @CjOpenportParameter(usage = "营业执照", name = "licence") String licence
+    List<BankInfo> getMyWenyBank(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取一个银行")
+    BankInfo getWenyBankByDistrict(ISecuritySession securitySession,
+                                   @CjOpenportParameter(usage = "经营区域代码", name = "district") String district
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "获取一个银行")
+    BankInfo getWenyBankByLicence(ISecuritySession securitySession,
+                                  @CjOpenportParameter(usage = "营业执照", name = "licence") String licence
     ) throws CircuitException;
 
     @CjOpenport(usage = "获取一个银行的概要信息")

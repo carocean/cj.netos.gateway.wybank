@@ -13,7 +13,6 @@ import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.annotation.CjServiceSite;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
-import cj.ultimate.gson2.com.google.gson.Gson;
 import cj.ultimate.util.StringUtil;
 
 import java.math.BigDecimal;
@@ -34,7 +33,7 @@ public class WenyBankPorts implements IWenyBankPorts {
     }
 
     @Override
-    public Map<String, Object> createWenyBank(ISecuritySession securitySession, WenyBankBO wenyBankBO) throws CircuitException {
+    public BankInfo createWenyBank(ISecuritySession securitySession, WenyBankBO wenyBankBO) throws CircuitException {
         demandAdminRights(securitySession);
         if (wenyBankBO == null) {
             throw new CircuitException("404", "wenyBankBO 参数为空");
@@ -46,38 +45,62 @@ public class WenyBankPorts implements IWenyBankPorts {
         if (wenyBankBO == null) {
             throw new CircuitException("404", "wenyBankBO 参数为空");
         }
-        Object obj = wenyBankService.createWenyBank(securitySession.principal(), wenyBankBO);
-        return new Gson().fromJson(new Gson().toJson(obj), HashMap.class);
+        return wenyBankService.createWenyBank(securitySession.principal(), wenyBankBO);
     }
 
 
     @Override
-    public List<Map<String, Object>> pageWenyBank(ISecuritySession securitySession, int limit, int offset) throws CircuitException {
+    public List<BankInfo> pageWenyBank(ISecuritySession securitySession, int limit, int offset) throws CircuitException {
         demandAdminRights(securitySession);
         if (limit == 0) {
             throw new CircuitException("500", "limit为0");
         }
         List<BankInfo> list = wenyBankService.pageWenyBank(limit, offset);
-        return new Gson().fromJson(new Gson().toJson(list), ArrayList.class);
+        return list;
     }
 
     @Override
-    public Map<String, Object> getWenyBank(ISecuritySession securitySession, String banksn) throws CircuitException {
+    public List<BankInfo> getMyWenyBank(ISecuritySession securitySession) throws CircuitException {
+        return wenyBankService.getMyWenyBanks(securitySession.principal());
+    }
+
+    @Override
+    public List<BankInfo> pageWenyBankByCreators(ISecuritySession securitySession, List<String> creators, int limit, int offset) throws CircuitException {
+        return wenyBankService.pageWenyBankByCreators(creators,limit,offset);
+    }
+
+    @Override
+    public List<BankInfo> pageWenyBankByLicences(ISecuritySession securitySession, List<String> licences, int limit, int offset) throws CircuitException {
+        return wenyBankService.pageWenyBankByLicences(licences,limit,offset);
+    }
+
+    @Override
+    public List<BankInfo> pageWenyBankByDistricts(ISecuritySession securitySession, List<String> districts, int limit, int offset) throws CircuitException {
+        return wenyBankService.pageWenyBankByDistricts(districts,limit,offset);
+    }
+
+    @Override
+    public BankInfo getWenyBankByDistrict(ISecuritySession securitySession, String district) throws CircuitException {
+        return wenyBankService.getWenyBankByDistrict(district);
+    }
+
+    @Override
+    public BankInfo getWenyBank(ISecuritySession securitySession, String banksn) throws CircuitException {
         demandAdminRights(securitySession);
         if (StringUtil.isEmpty(banksn)) {
             throw new CircuitException("404", "banksn 参数为空");
         }
         BankInfo bankInfo = wenyBankService.getWenyBank(banksn);
-        return new Gson().fromJson(new Gson().toJson(bankInfo), HashMap.class);
+        return bankInfo;
     }
 
     @Override
-    public Map<String, Object> getWenyBankByLicence(ISecuritySession securitySession, String licence) throws CircuitException {
+    public BankInfo getWenyBankByLicence(ISecuritySession securitySession, String licence) throws CircuitException {
         if (StringUtil.isEmpty(licence)) {
             throw new CircuitException("404", "licence 参数为空");
         }
         BankInfo bankInfo = wenyBankService.getWenyBankByLicence(licence);
-        return new Gson().fromJson(new Gson().toJson(bankInfo), HashMap.class);
+        return bankInfo;
     }
 
     @Override

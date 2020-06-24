@@ -65,4 +65,11 @@ public interface BankInfoMapper {
     List<BankInfo> pageWenyBank(@Param(value = "limit") int limit, @Param(value = "offset") int offset);
 
     void updateState(@Param(value = "banksn") String banksn, @Param(value = "state") int state);
+
+    List<BankInfo> pageWenyBankByCreators(@Param(value = "creators") String creator, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
+
+    List<BankInfo> pageWenyBankByLicences(@Param(value = "licences") String licence, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
+
+    List<BankInfo> pageWenyBankByDistricts(@Param(value = "districtCodes") String districtCode, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
+
 }
