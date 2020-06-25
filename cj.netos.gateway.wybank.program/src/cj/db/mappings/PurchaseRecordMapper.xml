@@ -602,4 +602,13 @@
     order by ptime desc, dtime desc
     limit #{offset},#{limit}
   </select>
+  <select id="pageByState" parameterType="cj.netos.gateway.wybank.model.PurchaseRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from purchase_record
+    where bankid = #{bankid,jdbcType=VARCHAR}
+    and `state` = #{state,jdbcType=INTEGER}
+    order by ptime desc, dtime desc
+    limit #{offset},#{limit}
+  </select>
 </mapper>

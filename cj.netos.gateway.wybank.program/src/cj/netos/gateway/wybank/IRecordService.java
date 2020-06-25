@@ -23,4 +23,6 @@ public interface IRecordService {
 
     ShuntRecordResult getShuntRecord(String record_sn) throws CircuitException;
 
+    List<PurchaseRecord> pagePurchaseRecordByState(String wenyBankID, int state, int limit, long offset);
+
 }

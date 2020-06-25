@@ -35,7 +35,17 @@ public interface IRecordPorts extends IOpenportService {
                                             @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
                                             @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
     ) throws CircuitException;
-
+    @CjOpenport(usage = "分页申购单")
+    List<PurchaseRecord> pagePurchaseRecordByState(ISecuritySession securitySession,
+                                            @CjOpenportParameter(usage = "纹银银行号", name = "wenyBankID") String wenyBankID,
+                                                   @CjOpenportParameter(usage = "状态：-1申购失败\n" +
+                                                           "0申购中\n" +
+                                                           "1申购成功\n" +
+                                                           "2承兑中\n" +
+                                                           "3已承兑", name = "state") int state,
+                                            @CjOpenportParameter(usage = "页大小", name = "limit") int limit,
+                                            @CjOpenportParameter(usage = "当前记录位置", name = "offset") long offset
+    ) throws CircuitException;
     @CjOpenport(usage = "获取申购单")
     PurchaseRecord getPurchaseRecord(ISecuritySession securitySession,
                                      @CjOpenportParameter(usage = "订单号", name = "record_sn") String record_sn
