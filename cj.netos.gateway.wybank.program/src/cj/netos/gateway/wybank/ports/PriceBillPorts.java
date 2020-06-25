@@ -3,6 +3,7 @@ package cj.netos.gateway.wybank.ports;
 import cj.netos.gateway.wybank.IWenyBankService;
 import cj.netos.gateway.wybank.bo.PriceBill;
 import cj.netos.gateway.wybank.model.BankInfo;
+import cj.netos.gateway.wybank.result.BulletinBoard;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
@@ -232,5 +233,51 @@ public class PriceBillPorts implements IPriceBillPorts {
         json = (String) map.get("dataText");
         return new Gson().fromJson(json, new TypeToken<ArrayList<PriceBill>>() {
         }.getType());
+    }
+
+    @Override
+    public BulletinBoard getBulletinBoard(ISecuritySession securitySession, String wenyBankID, int year, int month, int day) throws CircuitException {
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+
+        String appid = site.getProperty("appid");
+        String appKey = site.getProperty("appKey");
+        String appSecret = site.getProperty("appSecret");
+        String ports = site.getProperty("ports.oc.wybank.bill.price");
+
+        String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
+        String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&day=%s", ports, wenyBankID, year, month, day);
+        final Request request = new Request.Builder()
+                .url(portsUrl)
+                .addHeader("Rest-Command", "getBulletinBoard")
+                .addHeader("app-id", appid)
+                .addHeader("app-key", appKey)
+                .addHeader("app-nonce", nonce)
+                .addHeader("app-sign", sign)
+                .addHeader("person", securitySession.principal())
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        return new Gson().fromJson(json, BulletinBoard.class);
     }
 }
