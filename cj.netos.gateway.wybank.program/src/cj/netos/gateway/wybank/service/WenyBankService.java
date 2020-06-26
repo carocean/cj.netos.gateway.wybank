@@ -96,14 +96,14 @@ public class WenyBankService implements IWenyBankService {
         _laShunter.setAlias("地商");
         _laShunter.setBankid(bankInfo.getId());
         _laShunter.setCode("la");
-        _laShunter.setRatio(form.getIspRatio());
+        _laShunter.setRatio(form.getLaRatio());
         shunters.add(_laShunter);
 
         Shunter _absorbShunter = new Shunter();
         _absorbShunter.setAlias("网络洇金");
         _absorbShunter.setBankid(bankInfo.getId());
         _absorbShunter.setCode("absorbs");
-        _absorbShunter.setRatio(form.getIspRatio());
+        _absorbShunter.setRatio(form.getAbsorbRatio());
         shunters.add(_absorbShunter);
 
         setShunters(bankInfo.getId(), shunters);

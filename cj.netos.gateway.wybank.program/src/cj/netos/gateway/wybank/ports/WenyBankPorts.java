@@ -182,7 +182,8 @@ public class WenyBankPorts implements IWenyBankPorts {
 
     @Override
     public List<ShunterBO> getShunters(ISecuritySession securitySession, String banksn) throws CircuitException {
-        demandAdminRights(securitySession);
+        //权限先放开，之后实现只要是统一用户下的任何账号是其创建者则充许访问
+//        demandAdminRights(securitySession);
         if (StringUtil.isEmpty(banksn)) {
             throw new CircuitException("404", "banksn 参数为空");
         }
@@ -203,7 +204,8 @@ public class WenyBankPorts implements IWenyBankPorts {
 
     @Override
     public List<TTMBO> getTTMTable(ISecuritySession securitySession, String banksn) throws CircuitException {
-        demandAdminRights(securitySession);
+        //权限先放开，之后实现只要是统一用户下的任何账号是其创建者则充许访问
+//        demandAdminRights(securitySession);
         if (StringUtil.isEmpty(banksn)) {
             throw new CircuitException("404", "banksn 参数为空");
         }

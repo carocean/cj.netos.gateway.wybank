@@ -91,6 +91,53 @@ public class FundBillPorts implements IFundBillPorts {
     }
 
     @Override
+    public List<FundBill> pageBillOfMonth(ISecuritySession securitySession, String wenyBankID, int order, int year, int month, int limit, long offset) throws CircuitException {
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+
+        String appid = site.getProperty("appid");
+        String appKey = site.getProperty("appKey");
+        String appSecret = site.getProperty("appSecret");
+        String ports = site.getProperty("ports.oc.wybank.bill.fund");
+
+        String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
+        String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
+        String portsUrl = String.format("%s?wenyBankID=%s&order=%s&year=%s&month=%s&limit=%s&offset=%s", ports, wenyBankID, order, year, month, limit, offset);
+        final Request request = new Request.Builder()
+                .url(portsUrl)
+                .addHeader("Rest-Command", "pageBillOfMonth")
+                .addHeader("app-id", appid)
+                .addHeader("app-key", appKey)
+                .addHeader("app-nonce", nonce)
+                .addHeader("app-sign", sign)
+                .addHeader("person", securitySession.principal())
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        return new Gson().fromJson(json, new TypeToken<ArrayList<FundBill>>() {
+        }.getType());
+    }
+
+    @Override
     public List<FundBill> getBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month, int limit, long offset) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
@@ -150,7 +197,7 @@ public class FundBillPorts implements IFundBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&day=%s", ports, wenyBankID, year,month,day);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&day=%s", ports, wenyBankID, year, month, day);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalPurchaseFundOfDay")
@@ -196,7 +243,7 @@ public class FundBillPorts implements IFundBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&day=%s", ports, wenyBankID, year,month,day);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&day=%s", ports, wenyBankID, year, month, day);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalExchangeFundOfDay")
@@ -232,7 +279,7 @@ public class FundBillPorts implements IFundBillPorts {
     }
 
     @Override
-    public long totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year,int month) throws CircuitException {
+    public long totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -244,7 +291,7 @@ public class FundBillPorts implements IFundBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID, year,month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID, year, month);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalInBillOfMonth")
@@ -281,7 +328,7 @@ public class FundBillPorts implements IFundBillPorts {
 
 
     @Override
-    public long totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID,int year, int month) throws CircuitException {
+    public long totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -293,7 +340,7 @@ public class FundBillPorts implements IFundBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID,year, month);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s", ports, wenyBankID, year, month);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalOutBillOfMonth")
