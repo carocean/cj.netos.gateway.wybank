@@ -2,6 +2,7 @@ package cj.netos.gateway.wybank.mapper;
 
 import cj.netos.gateway.wybank.model.ExchangeRecord;
 import cj.netos.gateway.wybank.model.ExchangeRecordExample;
+import cj.netos.gateway.wybank.model.PurchaseRecord;
 import org.apache.ibatis.annotations.Param;
 import java.math.BigDecimal;
 import java.util.List;
@@ -68,4 +69,7 @@ public interface ExchangeRecordMapper {
     void ackFailure(@Param(value = "sn") String sn, @Param(value = "status") String status, @Param(value = "message") String message, @Param(value = "dtime") String dtime);
 
     List<ExchangeRecord> page(@Param(value = "bankid") String bankid, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    List<PurchaseRecord> pageInMonth(@Param(value = "bankid") String bankid, @Param(value = "beginDayText") String beginDayText, @Param(value = "endDayText") String endDayText, @Param(value = "state") int state, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
 }

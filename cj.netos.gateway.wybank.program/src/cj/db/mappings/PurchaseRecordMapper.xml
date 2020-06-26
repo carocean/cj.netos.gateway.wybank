@@ -599,16 +599,17 @@
     <include refid="Base_Column_List" />
     from purchase_record
     where bankid = #{bankid,jdbcType=VARCHAR}
-    order by ptime desc, dtime desc
+    order by ptime asc, dtime asc
     limit #{offset},#{limit}
   </select>
-  <select id="pageByState" parameterType="cj.netos.gateway.wybank.model.PurchaseRecord" resultMap="BaseResultMap">
+  <select id="pageInMonth" parameterType="cj.netos.gateway.wybank.model.PurchaseRecord" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from purchase_record
     where bankid = #{bankid,jdbcType=VARCHAR}
+    and (ptime &gt;= #{beginDayText} and ptime &lt;= #{endDayText})
     and `state` = #{state,jdbcType=INTEGER}
-    order by ptime desc, dtime desc
+    order by ptime asc, dtime asc
     limit #{offset},#{limit}
   </select>
 </mapper>

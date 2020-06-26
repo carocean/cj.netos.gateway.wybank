@@ -520,7 +520,17 @@
     <include refid="Base_Column_List" />
     from exchange_record
     where bankid = #{bankid,jdbcType=VARCHAR}
-    order by ctime desc, dtime desc
+    order by ctime asc, dtime asc
+    limit #{offset},#{limit}
+  </select>
+  <select id="pageInMonth" parameterType="cj.netos.gateway.wybank.model.ExchangeRecord" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from exchange_record
+    where bankid = #{bankid,jdbcType=VARCHAR}
+    and (ctime &gt;= #{beginDayText} and ctime &lt;= #{endDayText})
+    and `state` = #{state,jdbcType=INTEGER}
+    order by ctime asc, dtime asc
     limit #{offset},#{limit}
   </select>
 </mapper>

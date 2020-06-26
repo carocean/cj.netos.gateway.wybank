@@ -3,6 +3,7 @@ package cj.netos.gateway.wybank.mapper;
 import cj.netos.gateway.wybank.model.PurchaseRecord;
 import cj.netos.gateway.wybank.model.PurchaseRecordExample;
 import org.apache.ibatis.annotations.Param;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -73,6 +74,7 @@ public interface PurchaseRecordMapper {
 
     List<PurchaseRecord> page(@Param(value = "bankid") String bankid, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
-    List<PurchaseRecord> pageByState(@Param(value = "bankid") String bankid, @Param(value = "state") int state,  @Param(value = "limit") int limit, @Param(value = "offset") long offset);
+
+    List<PurchaseRecord> pageInMonth(@Param(value = "bankid") String bankid, @Param(value = "beginDayText") String beginDayText, @Param(value = "endDayText") String endDayText, @Param(value = "state") int state, @Param(value = "limit") int limit, @Param(value = "offset") long offset);
 
 }

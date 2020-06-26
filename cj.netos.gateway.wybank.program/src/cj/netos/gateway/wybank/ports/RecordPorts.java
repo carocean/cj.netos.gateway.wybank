@@ -56,8 +56,13 @@ public class RecordPorts implements IRecordPorts {
     }
 
     @Override
-    public List<PurchaseRecord> pagePurchaseRecordByState(ISecuritySession securitySession, String wenyBankID, int state, int limit, long offset) throws CircuitException {
-        return recordService.pagePurchaseRecordByState(wenyBankID, state,limit, offset);
+    public List<PurchaseRecord> pagePurchaseRecordInMonth(ISecuritySession securitySession, String wenyBankID, String monthText, int state, int limit, long offset) throws CircuitException {
+        return recordService.pagePurchaseRecordByState(wenyBankID,String.format("%s00",monthText),String.format("%s31",monthText), state,limit, offset);
+    }
+
+    @Override
+    public List<PurchaseRecord> pageExchangeRecordInMonth(ISecuritySession securitySession, String wenyBankID, String monthText, int state, int limit, long offset) throws CircuitException {
+        return recordService.pageExchangeRecordByState(wenyBankID,String.format("%s00",monthText),String.format("%s31",monthText), state,limit, offset);
     }
 
     @Override

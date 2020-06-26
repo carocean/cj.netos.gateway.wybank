@@ -51,8 +51,13 @@ public class RecordService implements IRecordService {
     }
     @CjTransaction
     @Override
-    public List<PurchaseRecord> pagePurchaseRecordByState(String wenyBankID, int state, int limit, long offset) {
-        return purchaseRecordMapper.pageByState(wenyBankID,state, limit, offset);
+    public List<PurchaseRecord> pagePurchaseRecordByState(String wenyBankID, String beginDayText, String endDayText, int state, int limit, long offset) {
+        return purchaseRecordMapper.pageInMonth(wenyBankID,beginDayText,endDayText,state, limit, offset);
+    }
+    @CjTransaction
+    @Override
+    public List<PurchaseRecord> pageExchangeRecordByState(String wenyBankID, String beginDayText, String endDayText, int state, int limit, long offset) {
+        return exchangeRecordMapper.pageInMonth(wenyBankID,beginDayText,endDayText,state, limit, offset);
     }
 
     @CjTransaction

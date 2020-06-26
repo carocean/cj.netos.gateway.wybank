@@ -409,7 +409,7 @@
         <include refid="Base_Column_List" />
         from shunt_record
         where bankid = #{bankid,jdbcType=VARCHAR}
-        order by ctime desc, dtime desc
+        order by ctime asc, dtime asc
         limit #{offset},#{limit}
     </select>
 </mapper>
