@@ -139,7 +139,7 @@ public class StockBillPorts implements IStockBillPorts {
 
     @Override
     public List<StockBill> getBillOfMonth(ISecuritySession securitySession, String wenyBankID, int year, int month, int limit, long offset) throws CircuitException {
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 

@@ -53,7 +53,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&limit=%s&offset=%s&shunter=%s", ports, wenyBankID, limit, offset,shunter);
+        String portsUrl = String.format("%s?wenyBankID=%s&limit=%s&offset=%s&shunter=%s", ports, wenyBankID, limit, offset, shunter);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "pageBill")
@@ -92,7 +92,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
     @Override
     public List<ShunterBill> getBillOfMonth(ISecuritySession securitySession, String wenyBankID, String shunter, int year, int month, int limit, long offset) throws CircuitException {
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -103,7 +103,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&shunter=%s&limit=%s&offset=%s", ports, wenyBankID,year, month,shunter,limit,offset);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&shunter=%s&limit=%s&offset=%s", ports, wenyBankID, year, month, shunter, limit, offset);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "getBillOfMonth")
@@ -140,7 +140,54 @@ public class ShuntBillPorts implements IShuntBillPorts {
     }
 
     @Override
-    public long totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID,String shunter,int year, int month) throws CircuitException {
+    public List<ShunterBill> pageBillOfMonth(ISecuritySession securitySession, String wenyBankID, String shunter, int order, int year, int month, int limit, long offset) throws CircuitException {
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+
+        String appid = site.getProperty("appid");
+        String appKey = site.getProperty("appKey");
+        String appSecret = site.getProperty("appSecret");
+        String ports = site.getProperty("ports.oc.shunter.bill.shunt");
+
+        String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
+        String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
+        String portsUrl = String.format("%s?wenyBankID=%s&order=%s&year=%s&month=%s&shunter=%s&limit=%s&offset=%s", ports, wenyBankID, order, year, month, shunter, limit, offset);
+        final Request request = new Request.Builder()
+                .url(portsUrl)
+                .addHeader("Rest-Command", "pageBillOfMonth")
+                .addHeader("app-id", appid)
+                .addHeader("app-key", appKey)
+                .addHeader("app-nonce", nonce)
+                .addHeader("app-sign", sign)
+                .addHeader("person", securitySession.principal())
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        return new Gson().fromJson(json, new TypeToken<ArrayList<ShunterBill>>() {
+        }.getType());
+    }
+
+    @Override
+    public long totalInBillOfMonth(ISecuritySession securitySession, String wenyBankID, String shunter, int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -152,7 +199,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&shunter=%s", ports, wenyBankID,year, month,shunter);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&shunter=%s", ports, wenyBankID, year, month, shunter);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalInBillOfMonth")
@@ -189,7 +236,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
 
     @Override
-    public long totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID,String shunter,int year, int month) throws CircuitException {
+    public long totalOutBillOfMonth(ISecuritySession securitySession, String wenyBankID, String shunter, int year, int month) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -201,7 +248,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&shunter=%s", ports, wenyBankID,year, month,shunter);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&month=%s&shunter=%s", ports, wenyBankID, year, month, shunter);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalOutBillOfMonth")
@@ -237,7 +284,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
     }
 
     @Override
-    public long totalOutBillOfYear(ISecuritySession securitySession, String wenyBankID,String shunter, int year) throws CircuitException {
+    public long totalOutBillOfYear(ISecuritySession securitySession, String wenyBankID, String shunter, int year) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -249,7 +296,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&shunter=%s", ports, wenyBankID, year,shunter);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&shunter=%s", ports, wenyBankID, year, shunter);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalOutBillOfYear")
@@ -285,7 +332,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
     }
 
     @Override
-    public long totalInBillOfYear(ISecuritySession securitySession, String wenyBankID,String shunter, int year) throws CircuitException {
+    public long totalInBillOfYear(ISecuritySession securitySession, String wenyBankID, String shunter, int year) throws CircuitException {
         demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
@@ -297,7 +344,7 @@ public class ShuntBillPorts implements IShuntBillPorts {
 
         String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
         String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
-        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&shunter=%s", ports, wenyBankID, year,shunter);
+        String portsUrl = String.format("%s?wenyBankID=%s&year=%s&shunter=%s", ports, wenyBankID, year, shunter);
         final Request request = new Request.Builder()
                 .url(portsUrl)
                 .addHeader("Rest-Command", "totalInBillOfYear")
