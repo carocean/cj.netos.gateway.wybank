@@ -1,9 +1,8 @@
 package cj.netos.gateway.wybank.cmd;
 
-import cj.netos.gateway.wybank.IShuntReceiptBusinessService;
 import cj.netos.gateway.wybank.ITradeEventNotify;
+import cj.netos.gateway.wybank.IWenyBankService;
 import cj.netos.gateway.wybank.IWithdrawReceiptBusinessService;
-import cj.netos.gateway.wybank.model.ShuntRecord;
 import cj.netos.gateway.wybank.model.WithdrawRecord;
 import cj.netos.rabbitmq.CjConsumer;
 import cj.netos.rabbitmq.RabbitMQException;
@@ -23,6 +22,7 @@ public class AckWithdrawCommand implements IConsumerCommand {
     IWithdrawReceiptBusinessService withdrawReceiptBusinessService;
     @CjServiceRef
     ITradeEventNotify tradeEventNotify;
+
     @Override
     public void command(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws RabbitMQException, RetryCommandException {
         LongString state = (LongString) properties.getHeaders().get("state");
@@ -34,7 +34,11 @@ public class AckWithdrawCommand implements IConsumerCommand {
             record.setState(1);
             record.setRealAmount(response.getRealAmount());
             withdrawReceiptBusinessService.ackSuccess(record_sn.toString(), response.getRealAmount());
-            tradeEventNotify.send("withdraw", response.getStatus(), response.getMessage(),response);
+            if ("absorbs".equals(record.getShunter()) && IWenyBankService._KEY_ABSORB_WITHDRAWER.equals(record.getWithdrawer())) {
+                tradeEventNotify.sendToAbsorbRobot("withdraw", response.getStatus(), response.getMessage(), response);
+            } else {
+                tradeEventNotify.sendToWallet("withdraw", response.getStatus(), response.getMessage(), response);
+            }
             return;
         }
         String msg = message == null ? "" : message.toString();
@@ -42,6 +46,10 @@ public class AckWithdrawCommand implements IConsumerCommand {
             msg = msg.substring(0, 200);
         }
         withdrawReceiptBusinessService.ackFailure(record_sn.toString(), state.toString(), msg);
-        tradeEventNotify.send("withdraw", state.toString(),msg,record);
+        if ("absorbs".equals(record.getShunter()) && IWenyBankService._KEY_ABSORB_WITHDRAWER.equals(record.getWithdrawer())) {
+            tradeEventNotify.sendToAbsorbRobot("withdraw", state.toString(), msg, record);
+        } else {
+            tradeEventNotify.sendToWallet("withdraw", state.toString(), msg, record);
+        }
     }
 }

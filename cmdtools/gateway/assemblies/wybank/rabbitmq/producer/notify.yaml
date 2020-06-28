@@ -53,3 +53,11 @@ routing:
         - wallet.gateway.2
         - wallet.gateway.3
         - wallet.gateway.4
+    absorbRobot:
+      title: 洇金吸收机器人
+      castmode: unicast
+      routingKeys:
+        - absorb.robot.1
+        - absorb.robot.2
+        - absorb.robot.3
+        - absorb.robot.4

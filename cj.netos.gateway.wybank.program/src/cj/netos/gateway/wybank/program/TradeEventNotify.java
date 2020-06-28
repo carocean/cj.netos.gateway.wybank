@@ -1,6 +1,7 @@
 package cj.netos.gateway.wybank.program;
 
 import cj.netos.gateway.wybank.ITradeEventNotify;
+import cj.netos.gateway.wybank.model.WithdrawRecord;
 import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
@@ -16,7 +17,7 @@ public class TradeEventNotify implements ITradeEventNotify {
     IRabbitMQProducer rabbitMQProducer;
 
     @Override
-    public void send(String command, String status, String message, Object content) {
+    public void sendToWallet(String command, String status, String message, Object content) {
         AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
                 .type("/wybank/trade/settle.mq")
                 .headers(new HashMap<String, Object>() {{
@@ -32,4 +33,20 @@ public class TradeEventNotify implements ITradeEventNotify {
         }
     }
 
+    @Override
+    public void sendToAbsorbRobot(String command, String status, String message, Object content) {
+        AMQP.BasicProperties properties = new AMQP.BasicProperties().builder()
+                .type("/wybank/trade/settle.mq")
+                .headers(new HashMap<String, Object>() {{
+                    put("command", command);
+                    put("status", status);
+                    put("message", message);
+                }}).build();
+        try {
+            rabbitMQProducer.publish("absorbRobot", properties, new Gson().toJson(content).getBytes());
+        } catch (CircuitException e) {
+            e.printStackTrace();
+        } finally {
+        }
+    }
 }

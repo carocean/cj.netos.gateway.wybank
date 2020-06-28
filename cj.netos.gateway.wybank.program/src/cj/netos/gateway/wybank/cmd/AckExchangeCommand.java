@@ -4,7 +4,6 @@ import cj.netos.gateway.wybank.IExchangeReceiptBusinessService;
 import cj.netos.gateway.wybank.IPurchaseReceiptBusinessService;
 import cj.netos.gateway.wybank.ITradeEventNotify;
 import cj.netos.gateway.wybank.model.ExchangeRecord;
-import cj.netos.gateway.wybank.model.PurchaseRecord;
 import cj.netos.rabbitmq.CjConsumer;
 import cj.netos.rabbitmq.RabbitMQException;
 import cj.netos.rabbitmq.RetryCommandException;
@@ -38,7 +37,7 @@ public class AckExchangeCommand implements IConsumerCommand {
             record.setPrice(response.getPrice());
             exchangeReceiptBusinessService.ackSuccess(record_sn.toString(), response.getAmount(), response.getProfit(), response.getPrice());
             purchaseReceiptBusinessService.ackExchangedSuccess(record.getRefPurchase());
-            tradeEventNotify.send("exchange", response.getStatus(), response.getMessage(),response);
+            tradeEventNotify.sendToWallet("exchange", response.getStatus(), response.getMessage(),response);
             return;
         }
         String msg = message == null ? "" : message.toString();
@@ -49,6 +48,6 @@ public class AckExchangeCommand implements IConsumerCommand {
         if (record != null) {
             purchaseReceiptBusinessService.ackExchangedFailure(record.getRefPurchase());
         }
-        tradeEventNotify.send("exchange", state.toString(),msg,record);
+        tradeEventNotify.sendToWallet("exchange", state.toString(),msg,record);
     }
 }

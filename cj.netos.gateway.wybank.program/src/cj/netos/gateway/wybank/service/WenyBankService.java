@@ -109,6 +109,7 @@ public class WenyBankService implements IWenyBankService {
         setShunters(bankInfo.getId(), shunters);
 
         //添加提现权限
+        addWithdrawRights(bankInfo.getId(), _absorbShunter.getCode(), Arrays.asList(_KEY_ABSORB_WITHDRAWER));//吸收机器人，用于分发网络洇金
         addWithdrawRights(bankInfo.getId(), _laShunter.getCode(), Arrays.asList(form.getCreator()));
         if (form.getIspManagers() != null) {
             for (String mananger : form.getIspManagers()) {
@@ -149,7 +150,7 @@ public class WenyBankService implements IWenyBankService {
     @CjTransaction
     @Override
     public List<BankInfo> getMyWenyBanks(String creator) {
-        BankInfoExample example=new BankInfoExample();
+        BankInfoExample example = new BankInfoExample();
         example.createCriteria().andCreatorEqualTo(creator);
         return bankInfoMapper.selectByExample(example);
     }
@@ -157,9 +158,9 @@ public class WenyBankService implements IWenyBankService {
     @CjTransaction
     @Override
     public BankInfo getWenyBankByDistrict(String district) {
-        BankInfoExample example=new BankInfoExample();
+        BankInfoExample example = new BankInfoExample();
         example.createCriteria().andDistrictCodeEqualTo(district);
-        List<BankInfo> list= bankInfoMapper.selectByExample(example);
+        List<BankInfo> list = bankInfoMapper.selectByExample(example);
         return list.isEmpty() ? null : list.get(0);
     }
 
@@ -168,12 +169,12 @@ public class WenyBankService implements IWenyBankService {
     public List<BankInfo> pageWenyBankByCreators(List<String> creators, int limit, int offset) {
         StringBuffer sb = new StringBuffer();
         for (String creator : creators) {
-            sb.append(String.format("'%s',",creator));
+            sb.append(String.format("'%s',", creator));
         }
         if (!creators.isEmpty()) {
             sb.append("''");
         }
-        return bankInfoMapper.pageWenyBankByCreators(sb.toString(),limit,offset);
+        return bankInfoMapper.pageWenyBankByCreators(sb.toString(), limit, offset);
     }
 
     @CjTransaction
@@ -181,12 +182,12 @@ public class WenyBankService implements IWenyBankService {
     public List<BankInfo> pageWenyBankByLicences(List<String> licences, int limit, int offset) {
         StringBuffer sb = new StringBuffer();
         for (String creator : licences) {
-            sb.append(String.format("'%s',",creator));
+            sb.append(String.format("'%s',", creator));
         }
         if (!licences.isEmpty()) {
             sb.append("''");
         }
-        return bankInfoMapper.pageWenyBankByLicences(sb.toString(),limit,offset);
+        return bankInfoMapper.pageWenyBankByLicences(sb.toString(), limit, offset);
     }
 
     @CjTransaction
@@ -194,12 +195,12 @@ public class WenyBankService implements IWenyBankService {
     public List<BankInfo> pageWenyBankByDistricts(List<String> districts, int limit, int offset) {
         StringBuffer sb = new StringBuffer();
         for (String creator : districts) {
-            sb.append(String.format("'%s',",creator));
+            sb.append(String.format("'%s',", creator));
         }
         if (!districts.isEmpty()) {
             sb.append("''");
         }
-        return bankInfoMapper.pageWenyBankByDistricts(sb.toString(),limit,offset);
+        return bankInfoMapper.pageWenyBankByDistricts(sb.toString(), limit, offset);
     }
 
     @CjTransaction

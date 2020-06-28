@@ -11,6 +11,8 @@ import cj.netos.gateway.wybank.model.TtmConfig;
 import java.util.List;
 
 public interface IWenyBankService {
+    String _KEY_ABSORB_WITHDRAWER="absorbRobot@system.netos";
+
     BankInfo createWenyBank(String creator, WenyBankBO wenyBankBO);
 
     List<BankInfo> pageWenyBank(int limit, int offset);

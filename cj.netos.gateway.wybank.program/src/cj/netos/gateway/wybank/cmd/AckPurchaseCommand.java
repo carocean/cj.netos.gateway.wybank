@@ -7,7 +7,6 @@ import cj.netos.gateway.wybank.IWenyBankService;
 import cj.netos.gateway.wybank.model.PurchaseRecord;
 import cj.netos.gateway.wybank.model.ShuntRecord;
 import cj.netos.gateway.wybank.model.Shunter;
-import cj.netos.gateway.wybank.ports.IReceiptBusinessPorts;
 import cj.netos.rabbitmq.CjConsumer;
 import cj.netos.rabbitmq.IRabbitMQProducer;
 import cj.netos.rabbitmq.RabbitMQException;
@@ -54,7 +53,7 @@ public class AckPurchaseCommand implements IConsumerCommand {
             record.setStock(response.getStock());
             record.setPrice(response.getPrice());
             purchaseReceiptBusinessService.ackSuccess(record_sn.toString(), response.getStock(), response.getPrice());
-            tradeEventNotify.send("purchase", response.getStatus(), response.getMessage(),response);
+            tradeEventNotify.sendToWallet("purchase", response.getStatus(), response.getMessage(),response);
             //触发分账
             try {
                 onshunt(record);
@@ -68,7 +67,7 @@ public class AckPurchaseCommand implements IConsumerCommand {
             msg = msg.substring(0, 200);
         }
         purchaseReceiptBusinessService.ackFailure(record_sn.toString(), state.toString(), msg);
-        tradeEventNotify.send("purchase", state.toString(),msg,record);
+        tradeEventNotify.sendToWallet("purchase", state.toString(),msg,record);
     }
 
     private void onshunt(PurchaseRecord purchaseRecord) throws CircuitException {
