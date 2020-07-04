@@ -49,15 +49,15 @@ routing:
       title: 钱包交易网关
       castmode: unicast
       routingKeys:
-        - node.1
-        - node.2
-        - node.3
-        - node.4
+        - wallet.gateway.1
+        - wallet.gateway.2
+        - wallet.gateway.3
+        - wallet.gateway.4
     absorbRobot:
       title: 洇金吸收机器人
       castmode: unicast
       routingKeys:
-        - node.1
-        - node.2
-        - node.3
-        - node.4
+        - absorb.robot.1
+        - absorb.robot.2
+        - absorb.robot.3
+        - absorb.robot.4
