@@ -16,7 +16,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.LongString;
 
-@CjConsumer(name = "ack")
+@CjConsumer(name = "fromOC_ack_shunt")
 @CjService(name = "/wybank.ports#ackShunt")
 public class AckShuntCommand implements IConsumerCommand {
     @CjServiceRef

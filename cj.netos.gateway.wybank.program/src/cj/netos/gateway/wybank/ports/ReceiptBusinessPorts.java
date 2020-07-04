@@ -20,8 +20,17 @@ import java.util.List;
 
 @CjService(name = "/trade/receipt.ports")
 public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
-    @CjServiceRef(refByName = "@.rabbitmq.producer.trade")
-    IRabbitMQProducer rabbitMQ;
+    @CjServiceRef(refByName = "@.rabbitmq.producer.toOC_receipt_purchase")
+    IRabbitMQProducer toOC_receipt_purchase;
+
+    @CjServiceRef(refByName = "@.rabbitmq.producer.toOC_receipt_exchange")
+    IRabbitMQProducer toOC_receipt_exchange;
+
+    @CjServiceRef(refByName = "@.rabbitmq.producer.toShunter_withdraw")
+    IRabbitMQProducer toShunter_withdraw;
+
+    @CjServiceRef(refByName = "@.rabbitmq.producer.toShunter_shunt")
+    IRabbitMQProducer toShunter_shunt;
 
     @CjServiceRef
     IPurchaseReceiptBusinessService purchaseReceiptBusinessService;
@@ -62,7 +71,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish("oc",properties, body);
+        toOC_receipt_purchase.publish("oc",properties, body);
 
         PurchaseBO bo = new PurchaseBO();
         bo.setOutTradeSn(record.getOutTradeSn());
@@ -114,7 +123,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                     }
                 }).build();
         byte[] body = new Gson().toJson(exchangeRecord).getBytes();
-        rabbitMQ.publish("oc",properties, body);
+        toOC_receipt_exchange.publish("oc",properties, body);
 
         ExchangeBO bo = new ExchangeBO();
         bo.setBankid(exchangeRecord.getBankid());
@@ -167,7 +176,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish("shunt",properties, body);
+        toShunter_withdraw.publish("shunt",properties, body);
 
         WithdrawBO bo = new WithdrawBO();
         bo.load(record);
@@ -210,7 +219,7 @@ public class ReceiptBusinessPorts implements IReceiptBusinessPorts {
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish("shunt",properties, body);
+        toShunter_shunt.publish("shunt",properties, body);
 
         ShuntRecordBO bo = new ShuntRecordBO();
         bo.load(record);

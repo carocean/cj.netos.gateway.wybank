@@ -24,13 +24,13 @@ import com.rabbitmq.client.LongString;
 import java.util.HashMap;
 import java.util.List;
 
-@CjConsumer(name = "ack")
+@CjConsumer(name = "fromOC_ack_purchase")
 @CjService(name = "/wybank.ports#ackPurchase")
 public class AckPurchaseCommand implements IConsumerCommand {
     @CjServiceRef(refByName = "purchaseReceiptBusinessService")
     IPurchaseReceiptBusinessService purchaseReceiptBusinessService;
-    @CjServiceRef(refByName = "@.rabbitmq.producer.trade")
-    IRabbitMQProducer rabbitMQ;
+    @CjServiceRef(refByName = "@.rabbitmq.producer.toShunter_shunt")
+    IRabbitMQProducer toShunter_shunt;
 
     @CjServiceRef
     IShuntReceiptBusinessService shuntReceiptBusinessService;
@@ -87,6 +87,6 @@ public class AckPurchaseCommand implements IConsumerCommand {
                     }
                 }).build();
         byte[] body = new Gson().toJson(record).getBytes();
-        rabbitMQ.publish("shunt",properties, body);
+        toShunter_shunt.publish("shunt",properties, body);
     }
 }

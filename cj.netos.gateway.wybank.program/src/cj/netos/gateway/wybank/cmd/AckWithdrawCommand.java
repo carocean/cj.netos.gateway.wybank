@@ -15,7 +15,7 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.LongString;
 
-@CjConsumer(name = "ack")
+@CjConsumer(name = "fromOC_ack_withdraw")
 @CjService(name = "/wybank.ports#ackWithdraw")
 public class AckWithdrawCommand implements IConsumerCommand {
     @CjServiceRef
