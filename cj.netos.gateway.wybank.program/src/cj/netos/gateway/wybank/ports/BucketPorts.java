@@ -29,22 +29,22 @@ public class BucketPorts implements IBucketPorts {
     IWenyBankService wenyBankService;
 
 
-    BankInfo demandBankOwner(ISecuritySession securitySession, String bankid) throws CircuitException {
-        BankInfo bankInfo = wenyBankService.getWenyBank(bankid);
-        if (bankInfo == null) {
-            throw new CircuitException("404", "纹银银行不存在:" + bankid);
-        }
-        if (!securitySession.roleIn("platform:administrators") && !securitySession.principal().equals(bankInfo.getCreator())) {
-            throw new CircuitException("800", String.format("拒绝访问。行号=%s", bankid));
-        }
-        return bankInfo;
-    }
-
-    void demandAdmin(ISecuritySession securitySession) throws CircuitException {
-        if (!securitySession.roleIn("platform:administrators")) {
-            throw new CircuitException("800", String.format("拒绝访问。"));
-        }
-    }
+//    BankInfo demandBankOwner(ISecuritySession securitySession, String bankid) throws CircuitException {
+//        BankInfo bankInfo = wenyBankService.getWenyBank(bankid);
+//        if (bankInfo == null) {
+//            throw new CircuitException("404", "纹银银行不存在:" + bankid);
+//        }
+//        if (!securitySession.roleIn("platform:administrators") && !securitySession.principal().equals(bankInfo.getCreator())) {
+//            throw new CircuitException("800", String.format("拒绝访问。行号=%s", bankid));
+//        }
+//        return bankInfo;
+//    }
+//
+//    void demandAdmin(ISecuritySession securitySession) throws CircuitException {
+//        if (!securitySession.roleIn("platform:administrators")) {
+//            throw new CircuitException("800", String.format("拒绝访问。"));
+//        }
+//    }
 
     @Override
     public PriceResult getPriceBucket(ISecuritySession securitySession, String wenyBankID) throws CircuitException {
@@ -98,7 +98,7 @@ public class BucketPorts implements IBucketPorts {
 
     @Override
     public List<PriceResult> pagePriceBucket(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        demandAdmin(securitySession);
+//        demandAdmin(securitySession);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -150,7 +150,7 @@ public class BucketPorts implements IBucketPorts {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -198,7 +198,7 @@ public class BucketPorts implements IBucketPorts {
 
     @Override
     public List<FundResult> pageFundBucket(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        demandAdmin(securitySession);
+//        demandAdmin(securitySession);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -250,7 +250,7 @@ public class BucketPorts implements IBucketPorts {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -298,7 +298,7 @@ public class BucketPorts implements IBucketPorts {
 
     @Override
     public List<FreezenResult> pageFreezenBucket(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        demandAdmin(securitySession);
+//        demandAdmin(securitySession);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -350,7 +350,7 @@ public class BucketPorts implements IBucketPorts {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -398,7 +398,7 @@ public class BucketPorts implements IBucketPorts {
 
     @Override
     public List<FreeResult> pageFreeBucket(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        demandAdmin(securitySession);
+//        demandAdmin(securitySession);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -450,7 +450,7 @@ public class BucketPorts implements IBucketPorts {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -498,7 +498,7 @@ public class BucketPorts implements IBucketPorts {
 
     @Override
     public List<StockResult> pageStockBucket(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        demandAdmin(securitySession);
+//        demandAdmin(securitySession);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -550,7 +550,7 @@ public class BucketPorts implements IBucketPorts {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -603,7 +603,7 @@ public class BucketPorts implements IBucketPorts {
 
     @Override
     public List<ShuntResult> pageShuntBucket(ISecuritySession securitySession, int limit, long offset) throws CircuitException {
-        demandAdmin(securitySession);
+//        demandAdmin(securitySession);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -655,7 +655,7 @@ public class BucketPorts implements IBucketPorts {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
@@ -706,7 +706,7 @@ public class BucketPorts implements IBucketPorts {
         if (StringUtil.isEmpty(wenyBankID)) {
             throw new CircuitException("404", "行号为空");
         }
-        demandBankOwner(securitySession, wenyBankID);
+//        demandBankOwner(securitySession, wenyBankID);
 
         OkHttpClient client = (OkHttpClient) site.getService("@.http");
 
