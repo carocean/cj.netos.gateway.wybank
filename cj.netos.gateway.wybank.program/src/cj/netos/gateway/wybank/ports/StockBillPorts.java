@@ -35,9 +35,9 @@ public class StockBillPorts implements IStockBillPorts {
         if (bankInfo == null) {
             throw new CircuitException("404", "纹银银行不存在:" + bankid);
         }
-        if (!securitySession.roleIn("platform:administrators") && !securitySession.principal().equals(bankInfo.getCreator())) {
-            throw new CircuitException("800", String.format("拒绝访问。行号=%s", bankid));
-        }
+//        if (!securitySession.roleIn("platform:administrators") && !securitySession.principal().equals(bankInfo.getCreator())) {
+//            throw new CircuitException("800", String.format("拒绝访问。行号=%s", bankid));
+//        }
         return bankInfo;
     }
 
