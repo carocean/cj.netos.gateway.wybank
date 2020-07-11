@@ -27,7 +27,7 @@ public class WenyBankPorts implements IWenyBankPorts {
     IWenyBankService wenyBankService;
 
     private void demandAdminRights(ISecuritySession securitySession) throws CircuitException {
-        if (!securitySession.roleIn("platform:administrators") && !securitySession.roleIn("tenant:administrators") && !securitySession.roleIn("app:administrators")) {
+        if (!securitySession.roleIn("platform:administrators") && !securitySession.roleIn("tenant:administrators") && !securitySession.roleIn("app:administrators") && !"system.netos".equals(securitySession.property("appid"))) {
             throw new CircuitException("800", "没有创建权限");
         }
     }
@@ -66,17 +66,17 @@ public class WenyBankPorts implements IWenyBankPorts {
 
     @Override
     public List<BankInfo> pageWenyBankByCreators(ISecuritySession securitySession, List<String> creators, int limit, int offset) throws CircuitException {
-        return wenyBankService.pageWenyBankByCreators(creators,limit,offset);
+        return wenyBankService.pageWenyBankByCreators(creators, limit, offset);
     }
 
     @Override
     public List<BankInfo> pageWenyBankByLicences(ISecuritySession securitySession, List<String> licences, int limit, int offset) throws CircuitException {
-        return wenyBankService.pageWenyBankByLicences(licences,limit,offset);
+        return wenyBankService.pageWenyBankByLicences(licences, limit, offset);
     }
 
     @Override
     public List<BankInfo> pageWenyBankByDistricts(ISecuritySession securitySession, List<String> districts, int limit, int offset) throws CircuitException {
-        return wenyBankService.pageWenyBankByDistricts(districts,limit,offset);
+        return wenyBankService.pageWenyBankByDistricts(districts, limit, offset);
     }
 
     @Override
@@ -192,7 +192,7 @@ public class WenyBankPorts implements IWenyBankPorts {
         for (Shunter shunter : rules) {
             ShunterBO bo = new ShunterBO();
             bo.setAlias(shunter.getAlias());
-            bo.setBankid( shunter.getBankid());
+            bo.setBankid(shunter.getBankid());
             bo.setRatio(shunter.getRatio());
             bo.setCode(shunter.getCode());
             bo.setNote(shunter.getNote());
@@ -253,7 +253,7 @@ public class WenyBankPorts implements IWenyBankPorts {
             throw new CircuitException("404", "persons 参数为空");
         }
         List<String> personList = new ArrayList<>();
-        String[] arr=persons.split(";");
+        String[] arr = persons.split(";");
         for (String p : arr) {
             if (StringUtil.isEmpty(p)) {
                 continue;
@@ -284,6 +284,6 @@ public class WenyBankPorts implements IWenyBankPorts {
         if (StringUtil.isEmpty(shunter)) {
             throw new CircuitException("404", "shunter 参数为空");
         }
-      return  wenyBankService.getWithdrawRights(banksn, shunter);
+        return wenyBankService.getWithdrawRights(banksn, shunter);
     }
 }
