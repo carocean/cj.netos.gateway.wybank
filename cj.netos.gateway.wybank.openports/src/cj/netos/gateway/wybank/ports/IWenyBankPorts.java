@@ -66,6 +66,11 @@ public interface IWenyBankPorts extends IOpenportService {
                                    @CjOpenportParameter(usage = "经营区域代码", name = "district") String district
     ) throws CircuitException;
 
+    @CjOpenport(usage = "获取一个银行，如果不存在则创建")
+    BankInfo getAndAutoCreateWenyBankByDistrict(ISecuritySession securitySession,
+                                                @CjOpenportParameter(usage = "经营区域代码", name = "district") String district
+    ) throws CircuitException;
+
     @CjOpenport(usage = "获取一个银行")
     BankInfo getWenyBankByLicence(ISecuritySession securitySession,
                                   @CjOpenportParameter(usage = "营业执照", name = "licence") String licence

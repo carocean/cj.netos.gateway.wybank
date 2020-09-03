@@ -60,7 +60,7 @@ public class WenyBankService implements IWenyBankService {
 
     @CjTransaction
     @Override
-    public void createWenyBankByForm(WyBankForm form) {
+    public BankInfo createWenyBankByForm(WyBankForm form) {
         BankInfo bankInfo = new BankInfo();
         bankInfo.setCtime(BankUtils.dateTimeToSecond(System.currentTimeMillis()));
         bankInfo.setId(IdWorker.nextId());
@@ -126,7 +126,7 @@ public class WenyBankService implements IWenyBankService {
             ttmTable.add(ttmbo);
         }
         setTTMTable(bankInfo.getId(), ttmTable);
-
+        return bankInfo;
     }
 
     @CjTransaction

@@ -1,9 +1,7 @@
 package cj.netos.gateway.wybank.ports;
 
 import cj.netos.gateway.wybank.IWenyBankService;
-import cj.netos.gateway.wybank.bo.ShunterBO;
-import cj.netos.gateway.wybank.bo.TTMBO;
-import cj.netos.gateway.wybank.bo.WenyBankBO;
+import cj.netos.gateway.wybank.bo.*;
 import cj.netos.gateway.wybank.model.BankInfo;
 import cj.netos.gateway.wybank.model.Shunter;
 import cj.netos.gateway.wybank.model.TtmConfig;
@@ -13,8 +11,15 @@ import cj.studio.ecm.annotation.CjServiceRef;
 import cj.studio.ecm.annotation.CjServiceSite;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.ISecuritySession;
+import cj.studio.openport.util.Encript;
+import cj.ultimate.gson2.com.google.gson.Gson;
 import cj.ultimate.util.StringUtil;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
@@ -82,6 +87,164 @@ public class WenyBankPorts implements IWenyBankPorts {
     @Override
     public BankInfo getWenyBankByDistrict(ISecuritySession securitySession, String district) throws CircuitException {
         return wenyBankService.getWenyBankByDistrict(district);
+    }
+
+    @Override
+    public BankInfo getAndAutoCreateWenyBankByDistrict(ISecuritySession securitySession, String district) throws CircuitException {
+        BankInfo bankInfo = wenyBankService.getWenyBankByDistrict(district);
+        if (bankInfo != null) {
+            return bankInfo;
+        }
+        bankInfo = _selectPlatformSelfWenyBankDistrict();
+        if (bankInfo == null) {
+            throw new CircuitException("500", String.format("平台自营纹银银行一个都没有"));
+        }
+        WyBankForm form = _createBankForm(district, bankInfo);
+
+        bankInfo = wenyBankService.createWenyBankByForm(form);
+        return bankInfo;
+    }
+
+    private BankInfo _selectPlatformSelfWenyBankDistrict() throws CircuitException {
+        //调用远程的org服务
+
+
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+
+        String appid = site.getProperty("appid");
+        String appKey = site.getProperty("appKey");
+        String appSecret = site.getProperty("appSecret");
+        String ports = site.getProperty("ports.org.licence");
+
+        String nonce = Encript.md5(String.format("%s%s", UUID.randomUUID().toString(), System.currentTimeMillis()));
+        String sign = Encript.md5(String.format("%s%s%s", appKey, nonce, appSecret));
+        String portsUrl = String.format("%s?limit=1&offset=0", ports);
+        final Request request = new Request.Builder()
+                .url(portsUrl)
+                .addHeader("Rest-Command", "listLicenceOfPlatformSelf")
+                .addHeader("app-id", appid)
+                .addHeader("app-key", appKey)
+                .addHeader("app-nonce", nonce)
+                .addHeader("app-sign", sign)
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (Double.parseDouble(map.get("status") + "") >= 400) {
+            throw new CircuitException(map.get("status") + "", map.get("message") + "");
+        }
+        json = (String) map.get("dataText");
+        List<Map<String, Object>> list = new Gson().fromJson(json, ArrayList.class);
+        if (list.isEmpty()) {
+            return null;
+        }
+        Map<String, Object> licence = list.get(0);
+        String licenceId = (String) licence.get("id");
+        return wenyBankService.getWenyBankByLicence(licenceId);
+    }
+
+    private WyBankForm _createBankForm(String district, BankInfo bankInfo) throws CircuitException {
+        WyBankForm form = new WyBankForm();
+        form.setCreator(bankInfo.getCreator());
+        form.setDistrictCode(district);
+        String districtTitle = _getDistrictTitleByAmap(district);
+        if (StringUtil.isEmpty(districtTitle)) {
+            throw new CircuitException("500", String.format("行政区%s不存在", district));
+        }
+        form.setDistrictTitle(districtTitle);
+        form.setTitle(String.format("%s-%s", bankInfo.getTitle(), districtTitle));
+        form.setIcon(bankInfo.getIcon());
+        form.setLicence(bankInfo.getLicence());
+
+        form.setPrincipalRatio(bankInfo.getPrincipalRatio());
+        form.setServiceFeeRatio(bankInfo.getReserveRatio().add(bankInfo.getFreeRatio()));
+        form.setReserveRatio(bankInfo.getReserveRatio());
+
+        List<Shunter> shunters = wenyBankService.getShunters(bankInfo.getId());
+        for (Shunter shunter : shunters) {
+            switch (shunter.getCode()) {
+                case "platform":
+                    form.setPlatformRatio(shunter.getRatio());
+                    break;
+                case "isp":
+                    form.setIspRatio(shunter.getRatio());
+                    break;
+                case "la":
+                    form.setLaRatio(shunter.getRatio());
+                    break;
+                case "absorbs":
+                    form.setAbsorbRatio(shunter.getRatio());
+                    break;
+            }
+        }
+        List<TtmConfig> ttmConfigList = wenyBankService.getTTMTable(bankInfo.getId());
+        List<TtmInfo> ttmInfoList = new ArrayList<>();
+        for (TtmConfig config : ttmConfigList) {
+            TtmInfo info = new TtmInfo();
+            info.setMaxAmount(config.getMaxAmount());
+            info.setMinAmount(config.getMinAmount());
+            info.setTtm(config.getTtm());
+            ttmInfoList.add(info);
+        }
+        form.setTtmConfig(ttmInfoList);
+
+        List<String> ispWithdrawers = new ArrayList<>();
+        List<String> withdrawers = wenyBankService.getWithdrawRights(bankInfo.getId(), "isp");
+        ispWithdrawers.addAll(withdrawers);
+        form.setIspManagers(ispWithdrawers);
+
+        return form;
+    }
+
+    private String _getDistrictTitleByAmap(String district) throws CircuitException {
+        String ports = site.getProperty("amap.ports");
+        ports = String.format("%s&keywords=%s&subdistrict=0&extensions=base", ports, district);
+        OkHttpClient client = (OkHttpClient) site.getService("@.http");
+        final Request request = new Request.Builder()
+                .url(ports)
+                .get()
+                .build();
+        final Call call = client.newCall(request);
+        Response response = null;
+        try {
+            response = call.execute();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        if (response.code() >= 400) {
+            throw new CircuitException("1002", String.format("远程访问失败:%s", response.message()));
+        }
+        String json = null;
+        try {
+            json = response.body().string();
+        } catch (IOException e) {
+            throw new CircuitException("1002", e);
+        }
+        Map<String, Object> map = new Gson().fromJson(json, HashMap.class);
+        if (map.get("status").equals("0")) {
+            throw new CircuitException(map.get("infocode") + "", String.format("远程访问高德失败:%s", map.get("info") + ""));
+        }
+        List<Map<String, Object>> districts = (List<Map<String, Object>>) map.get("districts");
+        if (districts.isEmpty()) {
+            return null;
+        }
+        Map<String, Object> obj = districts.get(0);
+        return (String) obj.get("name");
     }
 
     @Override

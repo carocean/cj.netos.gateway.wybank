@@ -11,7 +11,7 @@ import cj.netos.gateway.wybank.model.TtmConfig;
 import java.util.List;
 
 public interface IWenyBankService {
-    String _KEY_ABSORB_WITHDRAWER="absorbRobot@system.netos";
+    String _KEY_ABSORB_WITHDRAWER = "absorbRobot@system.netos";
 
     BankInfo createWenyBank(String creator, WenyBankBO wenyBankBO);
 
@@ -43,7 +43,7 @@ public interface IWenyBankService {
 
     List<String> getWithdrawRights(String banksn, String shunter);
 
-    void createWenyBankByForm(WyBankForm form);
+    BankInfo createWenyBankByForm(WyBankForm form);
 
     BankInfo getWenyBankByLicence(String licence);
 
@@ -56,5 +56,6 @@ public interface IWenyBankService {
     List<BankInfo> pageWenyBankByLicences(List<String> licences, int limit, int offset);
 
     List<BankInfo> pageWenyBankByDistricts(List<String> districts, int limit, int offset);
+
 
 }
