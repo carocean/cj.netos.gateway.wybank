@@ -167,7 +167,12 @@ public class WenyBankPorts implements IWenyBankPorts {
             throw new CircuitException("500", String.format("行政区%s不存在", district));
         }
         form.setDistrictTitle(districtTitle);
-        form.setTitle(String.format("%s-%s", bankInfo.getTitle(), districtTitle));
+        String title=bankInfo.getTitle();
+        int pos=title.lastIndexOf("-");
+        if (pos > -1) {
+            title = title.substring(0, pos);
+        }
+        form.setTitle(String.format("%s-%s", title, districtTitle));
         form.setIcon(bankInfo.getIcon());
         form.setLicence(bankInfo.getLicence());
 
