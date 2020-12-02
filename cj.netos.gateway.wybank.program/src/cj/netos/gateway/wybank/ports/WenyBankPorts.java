@@ -366,6 +366,15 @@ public class WenyBankPorts implements IWenyBankPorts {
     }
 
     @Override
+    public void unforceUseWenyBank(ISecuritySession securitySession, String banksn) throws CircuitException {
+        demandAdminRights(securitySession);
+        if (StringUtil.isEmpty(banksn)) {
+            throw new CircuitException("404", "banksn 参数为空");
+        }
+        wenyBankService.unforceUseWenyBank(banksn);
+    }
+
+    @Override
     public void startWenyBank(ISecuritySession securitySession, String banksn) throws CircuitException {
         demandAdminRights(securitySession);
         if (StringUtil.isEmpty(banksn)) {

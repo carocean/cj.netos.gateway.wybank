@@ -123,6 +123,11 @@ public interface IWenyBankPorts extends IOpenportService {
                       @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
 
+    @CjOpenport(usage = "解除强制本地用户使用当地纹银银行")
+    void unforceUseWenyBank(ISecuritySession securitySession,
+                          @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
+
     @CjOpenport(usage = "运营")
     void startWenyBank(ISecuritySession securitySession,
                        @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn

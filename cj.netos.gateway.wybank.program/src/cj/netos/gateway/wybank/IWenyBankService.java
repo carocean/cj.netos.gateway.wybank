@@ -72,4 +72,6 @@ public interface IWenyBankService {
 
     List<Incubator> listAvailableBankOnIncubator();
 
+    void unforceUseWenyBank(String banksn);
+
 }

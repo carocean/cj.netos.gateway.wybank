@@ -247,6 +247,12 @@ public class WenyBankService implements IWenyBankService {
 
     @CjTransaction
     @Override
+    public void unforceUseWenyBank(String banksn) {
+        bankInfoMapper.updateForceUsed(banksn, 0);
+    }
+
+    @CjTransaction
+    @Override
     public BankInfo getWenyBank(String banksn) {
         return bankInfoMapper.selectByPrimaryKey(banksn);
     }
