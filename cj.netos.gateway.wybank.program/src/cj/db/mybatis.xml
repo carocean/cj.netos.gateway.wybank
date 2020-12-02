@@ -30,6 +30,8 @@
         </environment>
     </environments>
     <mappers>
+        <mapper resource="cj/db/mappings/IncubatorMapper.xml"/>
+        <mapper resource="cj/db/mappings/IncubatorEventsMapper.xml"/>
         <mapper resource="cj/db/mappings/BankInfoMapper.xml"/>
         <mapper resource="cj/db/mappings/ExchangeRecordMapper.xml"/>
         <mapper resource="cj/db/mappings/PurchaseRecordMapper.xml"/>

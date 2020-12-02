@@ -5,10 +5,7 @@ import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.TtmInfo;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
 import cj.netos.gateway.wybank.bo.WyBankForm;
-import cj.netos.gateway.wybank.mapper.BankInfoMapper;
-import cj.netos.gateway.wybank.mapper.ShunterMapper;
-import cj.netos.gateway.wybank.mapper.TtmConfigMapper;
-import cj.netos.gateway.wybank.mapper.WithdrawRightsMapper;
+import cj.netos.gateway.wybank.mapper.*;
 import cj.netos.gateway.wybank.model.*;
 import cj.netos.gateway.wybank.util.BankUtils;
 import cj.netos.gateway.wybank.util.IdWorker;
@@ -38,6 +35,105 @@ public class WenyBankService implements IWenyBankService {
     @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.WithdrawRightsMapper")
     WithdrawRightsMapper withdrawRightsMapper;
 
+    @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.IncubatorMapper")
+    IncubatorMapper incubatorMapper;
+
+    @CjServiceRef(refByName = "mybatis.cj.netos.gateway.wybank.mapper.IncubatorEventsMapper")
+    IncubatorEventsMapper incubatorEventsMapper;
+
+    @CjTransaction
+    @Override
+    public void putBankOnIncubator(String banksn) {
+        BankInfo bankInfo = getWenyBank(banksn);
+        if (bankInfo == null) {
+            return;
+        }
+        Incubator incubator = new Incubator();
+        incubator.setBank(banksn);
+        incubator.setDistrictCode(bankInfo.getDistrictCode());
+        incubator.setDistrictTitle(bankInfo.getDistrictTitle());
+        incubator.setState(1);
+        incubatorMapper.insert(incubator);
+
+        IncubatorEvents events = new IncubatorEvents();
+        events.setId(new IdWorker().nextId());
+        events.setCtime(BankUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        events.setBank(banksn);
+        events.setType("put");
+        events.setName("放入");
+        incubatorEventsMapper.insert(events);
+
+        IncubatorEvents events2 = new IncubatorEvents();
+        events2.setId(new IdWorker().nextId());
+        events2.setCtime(BankUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        events2.setBank(banksn);
+        events2.setType("start");
+        events2.setName("启用");
+        incubatorEventsMapper.insert(events2);
+    }
+
+    @CjTransaction
+    @Override
+    public void stopBankOnIncubator(String banksn) {
+        incubatorMapper.updateState(banksn, 0);
+        IncubatorEvents events = new IncubatorEvents();
+        events.setId(new IdWorker().nextId());
+        events.setCtime(BankUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        events.setBank(banksn);
+        events.setType("stop");
+        events.setName("停止");
+        incubatorEventsMapper.insert(events);
+    }
+
+    @CjTransaction
+    @Override
+    public void restartBankOnIncubator(String banksn) {
+        incubatorMapper.updateState(banksn, 1);
+        IncubatorEvents events = new IncubatorEvents();
+        events.setId(new IdWorker().nextId());
+        events.setCtime(BankUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        events.setBank(banksn);
+        events.setType("restart");
+        events.setName("重启");
+        incubatorEventsMapper.insert(events);
+    }
+
+    @CjTransaction
+    @Override
+    public void removeBankOnIncubator(String banksn) {
+        incubatorMapper.deleteByPrimaryKey(banksn);
+        IncubatorEvents events = new IncubatorEvents();
+        events.setId(new IdWorker().nextId());
+        events.setCtime(BankUtils.dateTimeToMicroSecond(System.currentTimeMillis()));
+        events.setBank(banksn);
+        events.setType("remove");
+        events.setName("移除");
+        incubatorEventsMapper.insert(events);
+    }
+
+    @CjTransaction
+    @Override
+    public List<Incubator> listBankOnIncubator() {
+        IncubatorExample example = new IncubatorExample();
+        return incubatorMapper.selectByExample(example);
+    }
+
+    @CjTransaction
+    @Override
+    public List<Incubator> listAvailableBankOnIncubator() {
+        IncubatorExample example = new IncubatorExample();
+        example.createCriteria().andStateEqualTo(1);
+        return incubatorMapper.selectByExample(example);
+    }
+
+    @CjTransaction
+    @Override
+    public List<IncubatorEvents> listBankEventsOnIncubator(String banksn) {
+        IncubatorEventsExample example = new IncubatorEventsExample();
+        example.createCriteria().andBankEqualTo(banksn);
+        return incubatorEventsMapper.selectByExample(example);
+    }
+
     @CjTransaction
     @Override
     public BankInfo createWenyBank(String creator, WenyBankBO wenyBankBO) {
@@ -50,6 +146,7 @@ public class WenyBankService implements IWenyBankService {
         bankInfo.setPrincipalRatio(wenyBankBO.getPrincipalRatio());
         bankInfo.setReserveRatio(wenyBankBO.getReserveRatio());
         bankInfo.setState(0);
+        bankInfo.setForceUsed(0);
         bankInfo.setTitle(wenyBankBO.getTitle());
         bankInfo.setCreator(creator);
         bankInfo.setLicence(wenyBankBO.getLicence());
@@ -70,6 +167,7 @@ public class WenyBankService implements IWenyBankService {
         bankInfo.setPrincipalRatio(form.getPrincipalRatio());
         bankInfo.setReserveRatio(form.getReserveRatio());
         bankInfo.setState(0);
+        bankInfo.setForceUsed(0);
         bankInfo.setTitle(form.getTitle());
         bankInfo.setCreator(form.getCreator());
         bankInfo.setLicence(form.getLicence());
@@ -139,6 +237,12 @@ public class WenyBankService implements IWenyBankService {
     @Override
     public void stopWenyBank(String banksn) {
         bankInfoMapper.updateState(banksn, 1);
+    }
+
+    @CjTransaction
+    @Override
+    public void forceUseWenyBank(String banksn) {
+        bankInfoMapper.updateForceUsed(banksn, 1);
     }
 
     @CjTransaction

@@ -72,4 +72,6 @@ public interface BankInfoMapper {
 
     List<BankInfo> pageWenyBankByDistricts(@Param(value = "districtCodes") String districtCode, @Param(value = "limit") int limit, @Param(value = "offset") int offset);
 
+    void updateForceUsed(@Param(value = "banksn")String banksn,@Param(value = "forceUsed") int forceUsed);
+
 }

@@ -4,9 +4,7 @@ package cj.netos.gateway.wybank;
 import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
 import cj.netos.gateway.wybank.bo.WyBankForm;
-import cj.netos.gateway.wybank.model.BankInfo;
-import cj.netos.gateway.wybank.model.Shunter;
-import cj.netos.gateway.wybank.model.TtmConfig;
+import cj.netos.gateway.wybank.model.*;
 
 import java.util.List;
 
@@ -57,5 +55,21 @@ public interface IWenyBankService {
 
     List<BankInfo> pageWenyBankByDistricts(List<String> districts, int limit, int offset);
 
+
+    void putBankOnIncubator(String banksn);
+
+    void stopBankOnIncubator(String banksn);
+
+    void restartBankOnIncubator(String banksn);
+
+    void removeBankOnIncubator(String banksn);
+
+    List<Incubator> listBankOnIncubator();
+
+    List<IncubatorEvents> listBankEventsOnIncubator(String banksn);
+
+    void forceUseWenyBank(String banksn);
+
+    List<Incubator> listAvailableBankOnIncubator();
 
 }

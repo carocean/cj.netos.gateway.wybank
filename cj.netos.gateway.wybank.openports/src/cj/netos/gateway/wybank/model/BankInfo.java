@@ -72,6 +72,12 @@ public class BankInfo {
     private String creator;
 
     /**
+     * Column: force_used
+     * Remark: 强制优先使用此纹银银行 该字段用于在参与孵化器完成孵化下沉后标识此属性，表示当地的发文不再向孵化器搜索而强制使用当地的纹银银行账户 0 表示不强制 1 表示强制
+     */
+    private Integer forceUsed;
+
+    /**
      * Column: icon
      * Remark: 纹银银行logo
      */
@@ -163,6 +169,14 @@ public class BankInfo {
 
     public void setCreator(String creator) {
         this.creator = creator == null ? null : creator.trim();
+    }
+
+    public Integer getForceUsed() {
+        return forceUsed;
+    }
+
+    public void setForceUsed(Integer forceUsed) {
+        this.forceUsed = forceUsed;
     }
 
     public String getIcon() {

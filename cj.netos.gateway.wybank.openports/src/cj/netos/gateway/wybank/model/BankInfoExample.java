@@ -868,6 +868,66 @@ public class BankInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andForceUsedIsNull() {
+            addCriterion("force_used is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedIsNotNull() {
+            addCriterion("force_used is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedEqualTo(Integer value) {
+            addCriterion("force_used =", value, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedNotEqualTo(Integer value) {
+            addCriterion("force_used <>", value, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedGreaterThan(Integer value) {
+            addCriterion("force_used >", value, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedGreaterThanOrEqualTo(Integer value) {
+            addCriterion("force_used >=", value, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedLessThan(Integer value) {
+            addCriterion("force_used <", value, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedLessThanOrEqualTo(Integer value) {
+            addCriterion("force_used <=", value, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedIn(List<Integer> values) {
+            addCriterion("force_used in", values, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedNotIn(List<Integer> values) {
+            addCriterion("force_used not in", values, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedBetween(Integer value1, Integer value2) {
+            addCriterion("force_used between", value1, value2, "forceUsed");
+            return (Criteria) this;
+        }
+
+        public Criteria andForceUsedNotBetween(Integer value1, Integer value2) {
+            addCriterion("force_used not between", value1, value2, "forceUsed");
+            return (Criteria) this;
+        }
+
         public Criteria andIconIsNull() {
             addCriterion("icon is null");
             return (Criteria) this;

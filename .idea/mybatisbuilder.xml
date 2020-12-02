@@ -9,7 +9,7 @@
           <option name="driverClass" value="" />
           <option name="driverLibrary" value="" />
           <option name="driverType" value="MySQL" />
-          <option name="host" value="47.104.128.137" />
+          <option name="host" value="120.27.15.205" />
           <option name="id" value="fb955481558446d6a2516b34d77a3d77" />
           <option name="name" value="netos.weny.main" />
           <option name="port" value="3306" />
@@ -318,6 +318,26 @@
               <option name="domainName" value="ExchangeRecord" />
               <option name="tableComment" value="承兑流水表。&#10;到达市盈率自动承况，即实现结算程序" />
               <option name="tableName" value="exchange_record" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.weny.main#incubator">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="Incubator" />
+              <option name="tableComment" value="纹银银行浮化器" />
+              <option name="tableName" value="incubator" />
+            </TableInfo>
+          </value>
+        </entry>
+        <entry key="netos.weny.main#incubator_events">
+          <value>
+            <TableInfo>
+              <option name="database" value="netos.weny.main" />
+              <option name="domainName" value="IncubatorEvents" />
+              <option name="tableComment" value="浮华器事件" />
+              <option name="tableName" value="incubator_events" />
             </TableInfo>
           </value>
         </entry>

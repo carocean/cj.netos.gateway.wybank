@@ -14,6 +14,7 @@
     <result column="free_ratio" jdbcType="DECIMAL" property="freeRatio" />
     <result column="licence" jdbcType="VARCHAR" property="licence" />
     <result column="creator" jdbcType="VARCHAR" property="creator" />
+    <result column="force_used" jdbcType="INTEGER" property="forceUsed" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -78,8 +79,8 @@
   </sql>
   <sql id="Base_Column_List">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    id, title, ctime, district_title, district_code, `state`, principal_ratio, reserve_ratio,
-    free_ratio, licence, creator, icon
+    id, title, ctime, district_title, district_code, `state`, principal_ratio, reserve_ratio, 
+    free_ratio, licence, creator, force_used, icon
   </sql>
   <select id="selectByExample" parameterType="cj.netos.gateway.wybank.model.BankInfoExample" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -98,7 +99,7 @@
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    select
+    select 
     <include refid="Base_Column_List" />
     from bank_info
     where id = #{id,jdbcType=VARCHAR}
@@ -117,16 +118,16 @@
   </delete>
   <insert id="insert" parameterType="cj.netos.gateway.wybank.model.BankInfo">
     <!-- @mbg.generated: generated automatically, do not modify! -->
-    insert into bank_info (id, title, ctime,
-      district_title, district_code, `state`,
-      principal_ratio, reserve_ratio, free_ratio,
-      licence, creator, icon
-      )
-    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR},
-      #{districtTitle,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER},
-      #{principalRatio,jdbcType=DECIMAL}, #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL},
-      #{licence,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}
-      )
+    insert into bank_info (id, title, ctime, 
+      district_title, district_code, `state`, 
+      principal_ratio, reserve_ratio, free_ratio, 
+      licence, creator, force_used, 
+      icon)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{ctime,jdbcType=VARCHAR}, 
+      #{districtTitle,jdbcType=VARCHAR}, #{districtCode,jdbcType=VARCHAR}, #{state,jdbcType=INTEGER}, 
+      #{principalRatio,jdbcType=DECIMAL}, #{reserveRatio,jdbcType=DECIMAL}, #{freeRatio,jdbcType=DECIMAL}, 
+      #{licence,jdbcType=VARCHAR}, #{creator,jdbcType=VARCHAR}, #{forceUsed,jdbcType=INTEGER}, 
+      #{icon,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cj.netos.gateway.wybank.model.BankInfo">
     <!-- @mbg.generated: generated automatically, do not modify! -->
@@ -165,6 +166,9 @@
       <if test="creator != null">
         creator,
       </if>
+      <if test="forceUsed != null">
+        force_used,
+      </if>
       <if test="icon != null">
         icon,
       </if>
@@ -202,6 +206,9 @@
       </if>
       <if test="creator != null">
         #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="forceUsed != null">
+        #{forceUsed,jdbcType=INTEGER},
       </if>
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
@@ -252,6 +259,9 @@
       <if test="record.creator != null">
         creator = #{record.creator,jdbcType=VARCHAR},
       </if>
+      <if test="record.forceUsed != null">
+        force_used = #{record.forceUsed,jdbcType=INTEGER},
+      </if>
       <if test="record.icon != null">
         icon = #{record.icon,jdbcType=VARCHAR},
       </if>
@@ -274,6 +284,7 @@
       free_ratio = #{record.freeRatio,jdbcType=DECIMAL},
       licence = #{record.licence,jdbcType=VARCHAR},
       creator = #{record.creator,jdbcType=VARCHAR},
+      force_used = #{record.forceUsed,jdbcType=INTEGER},
       icon = #{record.icon,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -313,6 +324,9 @@
       <if test="creator != null">
         creator = #{creator,jdbcType=VARCHAR},
       </if>
+      <if test="forceUsed != null">
+        force_used = #{forceUsed,jdbcType=INTEGER},
+      </if>
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
       </if>
@@ -332,6 +346,7 @@
       free_ratio = #{freeRatio,jdbcType=DECIMAL},
       licence = #{licence,jdbcType=VARCHAR},
       creator = #{creator,jdbcType=VARCHAR},
+      force_used = #{forceUsed,jdbcType=INTEGER},
       icon = #{icon,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -370,6 +385,12 @@
     update bank_info
     set
     `state` = #{state,jdbcType=INTEGER}
+    where id = #{banksn,jdbcType=VARCHAR}
+  </update>
+  <update id="updateForceUsed" parameterType="cj.netos.gateway.wybank.model.BankInfo">
+    update bank_info
+    set
+    force_used = #{forceUsed,jdbcType=INTEGER}
     where id = #{banksn,jdbcType=VARCHAR}
   </update>
 </mapper>

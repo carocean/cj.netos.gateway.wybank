@@ -4,6 +4,8 @@ import cj.netos.gateway.wybank.bo.ShunterBO;
 import cj.netos.gateway.wybank.bo.TTMBO;
 import cj.netos.gateway.wybank.bo.WenyBankBO;
 import cj.netos.gateway.wybank.model.BankInfo;
+import cj.netos.gateway.wybank.model.Incubator;
+import cj.netos.gateway.wybank.model.IncubatorEvents;
 import cj.studio.ecm.net.CircuitException;
 import cj.studio.openport.IOpenportService;
 import cj.studio.openport.ISecuritySession;
@@ -20,6 +22,35 @@ public interface IWenyBankPorts extends IOpenportService {
     @CjOpenport(usage = "创建一个纹银银行", command = "post")
     BankInfo createWenyBank(ISecuritySession securitySession,
                             @CjOpenportParameter(usage = "纹银银行配置", name = "wenyBankBO", in = PKeyInRequest.content, simpleModelFile = "/WenyBankBO.html") WenyBankBO wenyBankBO
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "放入一个纹银银行进入孵化器并开启")
+    void putBankOnIncubator(ISecuritySession securitySession,
+                            @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "放入一个纹银银行进入孵化器并开启")
+    void stopBankOnIncubator(ISecuritySession securitySession,
+                             @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "放入一个纹银银行进入孵化器并开启")
+    void restartBankOnIncubator(ISecuritySession securitySession,
+                                @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "放入一个纹银银行进入孵化器并开启")
+    void removeBankOnIncubator(ISecuritySession securitySession,
+                               @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "列出孵化器中的银行")
+    List<Incubator> listBankOnIncubator(ISecuritySession securitySession
+    ) throws CircuitException;
+
+    @CjOpenport(usage = "列表孵化器中的银行事件")
+    List<IncubatorEvents> listBankEventsOnIncubator(ISecuritySession securitySession,
+                                                    @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
 
     @CjOpenport(usage = "分页查询")
@@ -86,6 +117,11 @@ public interface IWenyBankPorts extends IOpenportService {
                       @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
     ) throws CircuitException;
 
+
+    @CjOpenport(usage = "强制本地用户使用当地纹银银行，一般是孵化完下沉后")
+    void forceUseWenyBank(ISecuritySession securitySession,
+                      @CjOpenportParameter(usage = "纹银银行行号", name = "banksn") String banksn
+    ) throws CircuitException;
 
     @CjOpenport(usage = "运营")
     void startWenyBank(ISecuritySession securitySession,

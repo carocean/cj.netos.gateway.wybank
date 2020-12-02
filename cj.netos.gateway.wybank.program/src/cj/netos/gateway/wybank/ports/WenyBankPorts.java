@@ -2,9 +2,7 @@ package cj.netos.gateway.wybank.ports;
 
 import cj.netos.gateway.wybank.IWenyBankService;
 import cj.netos.gateway.wybank.bo.*;
-import cj.netos.gateway.wybank.model.BankInfo;
-import cj.netos.gateway.wybank.model.Shunter;
-import cj.netos.gateway.wybank.model.TtmConfig;
+import cj.netos.gateway.wybank.model.*;
 import cj.studio.ecm.IServiceSite;
 import cj.studio.ecm.annotation.CjService;
 import cj.studio.ecm.annotation.CjServiceRef;
@@ -35,6 +33,42 @@ public class WenyBankPorts implements IWenyBankPorts {
         if (!securitySession.roleIn("platform:administrators") && !securitySession.roleIn("tenant:administrators") && !securitySession.roleIn("app:administrators") && !"system.netos".equals(securitySession.property("appid"))) {
             throw new CircuitException("800", "没有创建权限");
         }
+    }
+
+    @Override
+    public void putBankOnIncubator(ISecuritySession securitySession, String banksn) throws CircuitException {
+        demandAdminRights(securitySession);
+        wenyBankService.putBankOnIncubator(banksn);
+    }
+
+    @Override
+    public void stopBankOnIncubator(ISecuritySession securitySession, String banksn) throws CircuitException {
+        demandAdminRights(securitySession);
+        wenyBankService.stopBankOnIncubator(banksn);
+    }
+
+    @Override
+    public void restartBankOnIncubator(ISecuritySession securitySession, String banksn) throws CircuitException {
+        demandAdminRights(securitySession);
+        wenyBankService.restartBankOnIncubator(banksn);
+    }
+
+    @Override
+    public void removeBankOnIncubator(ISecuritySession securitySession, String banksn) throws CircuitException {
+        demandAdminRights(securitySession);
+        wenyBankService.removeBankOnIncubator(banksn);
+    }
+
+    @Override
+    public List<Incubator> listBankOnIncubator(ISecuritySession securitySession) throws CircuitException {
+        demandAdminRights(securitySession);
+        return wenyBankService.listBankOnIncubator();
+    }
+
+    @Override
+    public List<IncubatorEvents> listBankEventsOnIncubator(ISecuritySession securitySession, String banksn) throws CircuitException {
+        demandAdminRights(securitySession);
+        return wenyBankService.listBankEventsOnIncubator(banksn);
     }
 
     @Override
@@ -93,6 +127,12 @@ public class WenyBankPorts implements IWenyBankPorts {
     public BankInfo getAndAutoCreateWenyBankByDistrict(ISecuritySession securitySession, String district) throws CircuitException {
         BankInfo bankInfo = wenyBankService.getWenyBankByDistrict(district);
         if (bankInfo != null) {
+            if (bankInfo.getForceUsed() == null || bankInfo.getForceUsed() == 0) {
+                BankInfo onIncubator = _selectBankIncubator(district);
+                if (onIncubator != null) {
+                    return onIncubator;
+                }
+            }
             return bankInfo;
         }
         bankInfo = _selectPlatformSelfWenyBankDistrict();
@@ -102,7 +142,34 @@ public class WenyBankPorts implements IWenyBankPorts {
         WyBankForm form = _createBankForm(district, bankInfo);
 
         bankInfo = wenyBankService.createWenyBankByForm(form);
+
+        //前面是如果没有则创建银行是要其创建功能的，但如果孵化器中有则优先使用
+        BankInfo onIncubator = _selectBankIncubator(district);
+        if (onIncubator != null) {
+            return onIncubator;
+        }
         return bankInfo;
+    }
+
+    private BankInfo _selectBankIncubator(String district) {
+        //在孵化器中优先选择当地行政区的
+        List<Incubator> incubators = wenyBankService.listAvailableBankOnIncubator();
+        Incubator selected = null;
+        for (Incubator incubator : incubators) {
+            if (district.equals(incubator.getDistrictCode())) {
+                selected = incubator;
+                break;
+            }
+        }
+        if (selected == null && !incubators.isEmpty()) {
+            //按行政区分布发文申购需求
+            int index = Math.abs(district.hashCode()) % incubators.size();
+            selected = incubators.get(index);
+        }
+        if (selected == null) {
+            return null;
+        }
+        return wenyBankService.getWenyBank(selected.getBank());
     }
 
     private BankInfo _selectPlatformSelfWenyBankDistrict() throws CircuitException {
@@ -167,8 +234,8 @@ public class WenyBankPorts implements IWenyBankPorts {
             throw new CircuitException("500", String.format("行政区%s不存在", district));
         }
         form.setDistrictTitle(districtTitle);
-        String title=bankInfo.getTitle();
-        int pos=title.lastIndexOf("-");
+        String title = bankInfo.getTitle();
+        int pos = title.lastIndexOf("-");
         if (pos > -1) {
             title = title.substring(0, pos);
         }
@@ -287,6 +354,15 @@ public class WenyBankPorts implements IWenyBankPorts {
             throw new CircuitException("404", "banksn 参数为空");
         }
         wenyBankService.stopWenyBank(banksn);
+    }
+
+    @Override
+    public void forceUseWenyBank(ISecuritySession securitySession, String banksn) throws CircuitException {
+        demandAdminRights(securitySession);
+        if (StringUtil.isEmpty(banksn)) {
+            throw new CircuitException("404", "banksn 参数为空");
+        }
+        wenyBankService.forceUseWenyBank(banksn);
     }
 
     @Override
